@@ -1,0 +1,40 @@
+.paddingBlock{
+    padding: 0 40px;
+}
+header{
+    height: 200px;
+    background: #fff;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logoWrap{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.logoWrap>a{
+    display: block;
+    height: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.logoWrap>a>.logo{
+    height: 100%;
+}
+.sideboard{
+    width: 4.5rem;
+    position: absolute;
+}
+.exit{
+    height: 50%;
+}
+.exit a{
+    display: block;
+    height: 100%;
+}
+.exit a img{
+    height: 100%;
+}

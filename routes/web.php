@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('home');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -45,7 +45,7 @@
                                             @enderror
                                     </div>
                                 </form>
-                                <div class="form-group row mb-0">
+                                <div class="form-group row mb-0 submit_link">
                                     <button type="submit" class="btn btn-primary" form="logIn">
                                         {{ __('Вход') }}
                                     </button>

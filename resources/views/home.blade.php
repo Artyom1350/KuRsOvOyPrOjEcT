@@ -3,7 +3,7 @@
 @section('title',"Главная")
 
 @section('content')
-<div class="container">
+<div class="container paddingBlock">
     <table>
         <tr>
             <td>день</td>

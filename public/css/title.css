@@ -1,8 +1,8 @@
 .paddingBlock{
-    padding: 0 40px;
+    padding: 0 100px;
 }
 header{
-    height: 200px;
+    height: 150px;
     background: #fff;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
@@ -25,7 +25,7 @@ header{
     height: 100%;
 }
 .sideboard{
-    width: 4.5rem;
+    width: 15%;
     position: absolute;
 }
 .exit{
@@ -37,4 +37,14 @@ header{
 }
 .exit a img{
     height: 100%;
+}
+.homeLink{
+    display: flex;
+    justify-content: center;
+}
+.homeLink img{
+    width: 30%;
+}
+.bg-color{
+    background-color: #949AA5;
 }

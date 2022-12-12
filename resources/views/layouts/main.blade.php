@@ -34,15 +34,14 @@
             </a>
         </div>
     </header>
-    <main>
+    <main class="main d-flex">
         <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
             <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
                 <img src="image/icons/home.svg" class="" alt="Главная">
             </a>
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item ">
-                    {{-- active --}}
-                    <a href="#" class="nav-link calendar py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="#" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Календарь
                     </a>
                 </li>
@@ -65,8 +64,8 @@
         </div>    
         @yield('content');
     </main>
-    <footer>
-
+    <footer class="d-flex align-items-center paddingBlock">
+        &copy; КГАПОУ Пермский Авиационный техникум
     </footer>
 </body>
 </html>

@@ -4,52 +4,7 @@
 
 @section('content')
 <div class="container">
-    <table>
-        <tr>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-        </tr>
-        <tr>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-        </tr>
-        <tr>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-        </tr>
-        <tr>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-        </tr>
-        <tr>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-            <td>день</td>
-        </tr>
-    </table>
+    <?$text= $calendar->getMonth(date('n'), date('Y'));
+    echo $text;?>
 </div>
 @endsection

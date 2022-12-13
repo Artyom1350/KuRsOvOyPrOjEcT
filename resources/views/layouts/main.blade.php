@@ -16,6 +16,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/title.css') }}" rel="stylesheet">
+    <?
+        $css="http://127.0.0.1:8000/css/calendar.css";
+        echo '<link href='.$css.' rel="stylesheet">'    
+    ?>
 
 </head>
 <body>
@@ -41,7 +45,7 @@
             </a>
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item ">
-                    <a href="#" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="{{ route('home') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Календарь
                     </a>
                 </li>

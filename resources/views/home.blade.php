@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container">
-    <?$text= $calendar->getMonth(date('n'), date('Y'));
-    echo $text;?>
+    <?echo $calendar->getMonth(date('n'), date('Y'));?>
 </div>
 @endsection

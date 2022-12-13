@@ -1,32 +1,35 @@
 .calendar-item {
-	width: 200px;
+	width: 100%;
+	height: 85%;
 	display: inline-block;
 	vertical-align: top;
-	margin: 0 16px 20px;
+	margin: 5px 16px 20px;
 	font: 14px/1.2 Arial, sans-serif;
 }
 .calendar-head {
 	text-align: center;
 	padding: 5px;
 	font-weight: 700;
-	font-size: 14px;
+	font-size: 24px;
 }
 .calendar-item table {
 	border-collapse: collapse;
 	width: 100%;
+	height: 100%;
 }
 .calendar-item th {
-	font-size: 12px;
-	padding: 6px 7px;
+	font-size: 14px;
+	padding: 6px 8px;
 	text-align: center;
-	color: #888;
-	font-weight: normal;
+	color: rgb(83, 83, 83);
+	font-weight:bold;
+	height: 20px;
 }
 .calendar-item td {
 	font-size: 13px;
 	padding: 6px 5px;
 	text-align: center;
-	border: 1px solid #ddd;
+	border: 2px solid #ddd;
 }
 .calendar-item tr th:nth-child(6), .calendar-item tr th:nth-child(7),
 .calendar-item tr td:nth-child(6), .calendar-item tr td:nth-child(7)  {

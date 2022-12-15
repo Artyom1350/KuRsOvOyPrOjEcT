@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function documents(){
+        return $this->hasMany(Documents::class);
+    }
+
+    public function departmentParts(){
+        return $this->belongsTo(Departments::class);
+    }
 }

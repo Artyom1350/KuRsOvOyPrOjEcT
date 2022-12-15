@@ -24,3 +24,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/myAppl', [HomeController::class, 'myApplication'])->name('myApplacation');
 
+Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation');
+
+Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allApplacation');

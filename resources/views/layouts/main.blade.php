@@ -51,12 +51,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="{{route('incApplacation')}}" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Входящие заявки
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="{{route('allApplacation')}}" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Все заявки
                     </a>
                 </li>

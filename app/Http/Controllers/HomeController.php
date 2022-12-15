@@ -26,11 +26,26 @@ class HomeController extends Controller
     public function index()
     {
         $calendar=new Calendar;
+        //ВАЖНО!!!!!!!!!!!!!!!!
+        //получение событий из БД
         return view('home',['calendar'=>$calendar]);
     }
 
     public function myApplication(){
-        
+        //исходящие
+        //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
         return view('myAppl');
+    }
+
+    public function incApplication(){
+        //входящие
+        //логика получения из бд тех заявок, на которые нужно ответить пользователю
+        return view('incAppl');
+    }
+
+    public function allApplication(){
+        //комбо myApplication() и incApplication()
+        //передача в 2 переменные
+        return view('allAppl');
     }
 }

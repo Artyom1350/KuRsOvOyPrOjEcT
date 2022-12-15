@@ -13,6 +13,11 @@
     display: block;
     margin: auto 35px;
 }
+.application a{
+    display: block;
+    margin: auto 35px;
+}
+
 .answer h4{
     display: block;
     margin: auto 35px;

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        @foreach($record as $records)
+        {{-- @foreach($record as $records)
             <div class="application">
                 <h3>{{$record->title}}</h3>
                 <img src="../../public/image/icons/arrowdown.svg" alt="Развернуть">
@@ -19,6 +19,9 @@
                     @endforeach
                 </ul>
             @endif
-        @endforeach
+        @endforeach --}}
+        <div class="application">
+            
+        </div>
     </div>
 @endsection

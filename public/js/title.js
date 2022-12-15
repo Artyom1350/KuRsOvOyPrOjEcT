@@ -18,3 +18,7 @@ $('.personArea').hover(function(){
 },function(){
     $('.personArea').removeClass('active');
 });
+
+function slideAppl(idElem){
+    $(".application"+idElem+"-slide").slideToggle("slow");
+}

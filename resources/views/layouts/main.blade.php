@@ -46,18 +46,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Мои заявки
+                    <a href="{{route('myApplacation')}}" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        Исходящие заявки
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Заявки в процессе
+                        Входящие заявки
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Личный кабинет
+                        Все заявки
                     </a>
                 </li>
             </ul>

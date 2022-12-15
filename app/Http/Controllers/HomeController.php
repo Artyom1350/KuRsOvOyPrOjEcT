@@ -12,7 +12,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    
+
     // public function __construct()
     // {
     //     $this->middleware('auth');
@@ -27,5 +27,10 @@ class HomeController extends Controller
     {
         $calendar=new Calendar;
         return view('home',['calendar'=>$calendar]);
+    }
+
+    public function myApplication(){
+        
+        return view('myAppl');
     }
 }

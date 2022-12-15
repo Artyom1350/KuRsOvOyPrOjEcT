@@ -12,7 +12,7 @@ header{
 }
 .main{
     min-height: 500px;
-    height: 60vh;
+    height: auto;
 }
 .logoWrap{
     height: 100%;

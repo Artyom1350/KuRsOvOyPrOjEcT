@@ -16,10 +16,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/title.css') }}" rel="stylesheet">
-    <?
-        $css="http://127.0.0.1:8000/css/calendar.css";
-        echo '<link href='.$css.' rel="stylesheet">'    
-    ?>
 
 </head>
 <body>

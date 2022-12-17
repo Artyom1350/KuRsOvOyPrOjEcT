@@ -17,6 +17,7 @@
             return{
                 arrayAppl: this.$props.incdata
             }
-        }
+        },
+        
     }
 </script>

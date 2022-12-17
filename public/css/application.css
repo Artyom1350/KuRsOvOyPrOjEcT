@@ -9,6 +9,17 @@
     border-radius: 15px 15px 0 15px;
     margin-top: 5px ;
 }
+.applicationImgDown{
+    display: block;
+    margin: auto 18px;
+    height: 137%;
+    margin-top: -10px;
+}
+.applicationImgLeft{
+    display: block;
+    margin: auto 35px;
+    height: 80%;
+}
 .application h3{
     display: block;
     margin: auto 35px;

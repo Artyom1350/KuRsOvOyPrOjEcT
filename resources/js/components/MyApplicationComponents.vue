@@ -15,7 +15,7 @@
         <div  class="wrap-card" v-for="(applicat,index) in mydata">
             <div class="application d-flex justify-content-between" :key="index" v-on:click="">
                 <h3>{{applicat.name}}</h3>
-                <img class="rounded float-end" v-if="slide[index]" :src="slide[index][1] ? imgDown : imgLeft" alt="Развернуть">
+                <img class="float-end" :class="slide[index][1] ? 'applicationImgDown' : 'applicationImgLeft'" v-if="slide[index]" :src="slide[index][1] ? imgDown : imgLeft" alt="Развернуть">
             </div>
             <ul class="applicationSlide" :class="'application'+index+'-slide'">
                 <li>
@@ -47,6 +47,9 @@
                 slide:[],
             };
         },methods:{
+
+        },
+        computed:{
 
         }
     }

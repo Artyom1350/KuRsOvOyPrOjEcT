@@ -2149,7 +2149,8 @@ __webpack_require__.r(__webpack_exports__);
       slide: []
     };
   },
-  methods: {}
+  methods: {},
+  computed: {}
 });
 
 /***/ }),
@@ -37787,7 +37788,10 @@ var render = function () {
             _vm._v(" "),
             _vm.slide[index]
               ? _c("img", {
-                  staticClass: "rounded float-end",
+                  staticClass: "float-end",
+                  class: _vm.slide[index][1]
+                    ? "applicationImgDown"
+                    : "applicationImgLeft",
                   attrs: {
                     src: _vm.slide[index][1] ? _vm.imgDown : _vm.imgLeft,
                     alt: "Развернуть",

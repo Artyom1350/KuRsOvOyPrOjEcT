@@ -7,9 +7,9 @@
 
     <div class="container">
 
-        <my-applic :data='@json($data)'></my-applic>
+        <my-applic :mydata='@json($myApplData)'></my-applic>
 
-        <inc-applic :data='@json($data)'></inc-applic>
+        <inc-applic :incdata='@json($incAplData)'></inc-applic>
         
 
     </div>

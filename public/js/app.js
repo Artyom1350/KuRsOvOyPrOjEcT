@@ -2122,17 +2122,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var _this = this;
+    this.mydata.forEach(function (element, index) {
+      _this.slide.push(['application' + index + '-slide', false]);
+    });
+    console.log(this.slide[0][1]);
+  },
   props: ['mydata'],
   data: function data() {
     return {
-      imgDown: '../../../public/image/icons/arrowdown.svg',
-      imgLeft: '../../../public/image/icons/arrowLeft.svg',
-      slide: true
+      imgDown: './images/arrowdown.svg',
+      imgLeft: './images/arrowLeft.svg',
+      slide: []
     };
-  }
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -37756,17 +37773,61 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.mydata, function (applicat) {
-      return _c("div", [
-        _c("p", [_vm._v(_vm._s(applicat.id))]),
+    _vm._l(_vm.mydata, function (applicat, index) {
+      return _c("div", { staticClass: "wrap-card" }, [
+        _c(
+          "div",
+          {
+            key: index,
+            staticClass: "application d-flex justify-content-between",
+            on: { click: function ($event) {} },
+          },
+          [
+            _c("h3", [_vm._v(_vm._s(applicat.name))]),
+            _vm._v(" "),
+            _vm.slide[index]
+              ? _c("img", {
+                  staticClass: "rounded float-end",
+                  attrs: {
+                    src: _vm.slide[index][1] ? _vm.imgDown : _vm.imgLeft,
+                    alt: "Развернуть",
+                  },
+                })
+              : _vm._e(),
+          ]
+        ),
         _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(applicat.name))]),
+        _c(
+          "ul",
+          {
+            staticClass: "applicationSlide",
+            class: "application" + index + "-slide",
+          },
+          [_vm._m(0, true)]
+        ),
       ])
     }),
     0
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("div", { staticClass: "answer d-flex justify-content-between" }, [
+        _c("h4", [_vm._v("Ответ от пользователя")]),
+        _vm._v(" "),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("button", { staticClass: "btn btn-primary" }, [
+            _vm._v("Ссылка на скачивание"),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 

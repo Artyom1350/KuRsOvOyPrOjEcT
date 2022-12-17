@@ -65,10 +65,9 @@ class HomeController extends Controller
 
         $application2=[
             ['id' => 1, 'name' => 'Admin2'],
-            ['id' => 2, 'name' => 'Truehero2'],
-            ['id' => 3, 'name' => 'Truecoder2'],
+
         ];
 
-        return view('allAppl',['data1'=>$application1,'data2'=>$application2]);
+        return view('allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
     }
 }

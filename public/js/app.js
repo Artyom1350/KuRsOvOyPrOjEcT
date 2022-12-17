@@ -2132,14 +2132,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
     this.mydata.forEach(function (element, index) {
-      _this.slide.push(['application' + index + '-slide', false]);
+      _this.slide.push(['application' + index + '-slide', false, _this.imgLeft]);
     });
-    console.log(this.slide[0][1]);
+    this.mydata.forEach(function (element, index) {
+      _this.slideAppl(index);
+    });
   },
   props: ['mydata'],
   data: function data() {
@@ -2149,7 +2153,22 @@ __webpack_require__.r(__webpack_exports__);
       slide: []
     };
   },
-  methods: {},
+  methods: {
+    slideAppl: function slideAppl(idElem) {
+      $(".application" + idElem + "-slide").slideToggle("fast");
+      console.log(this.slide[idElem][2]);
+      console.log(this.slide[idElem][1]);
+      if (this.slide[idElem][1]) {
+        this.slide[idElem][2] = this.imgDown;
+        this.slide[idElem][1] = !this.slide[idElem][1];
+      } else {
+        this.slide[idElem][2] = this.imgLeft;
+        this.slide[idElem][1] = !this.slide[idElem][1];
+      }
+      console.log(this.slide[idElem][2]);
+      console.log(this.slide[idElem][1]);
+    }
+  },
   computed: {}
 });
 
@@ -37781,7 +37800,11 @@ var render = function () {
           {
             key: index,
             staticClass: "application d-flex justify-content-between",
-            on: { click: function ($event) {} },
+            on: {
+              click: function ($event) {
+                return _vm.slideAppl(index)
+              },
+            },
           },
           [
             _c("h3", [_vm._v(_vm._s(applicat.name))]),
@@ -37790,12 +37813,9 @@ var render = function () {
               ? _c("img", {
                   staticClass: "float-end",
                   class: _vm.slide[index][1]
-                    ? "applicationImgDown"
-                    : "applicationImgLeft",
-                  attrs: {
-                    src: _vm.slide[index][1] ? _vm.imgDown : _vm.imgLeft,
-                    alt: "Развернуть",
-                  },
+                    ? "applicationImgLeft"
+                    : "applicationImgDown",
+                  attrs: { src: _vm.slide[index][2], alt: "Развернуть" },
                 })
               : _vm._e(),
           ]

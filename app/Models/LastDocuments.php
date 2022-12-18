@@ -9,7 +9,7 @@ class LastDocuments extends Model
 {
     use HasFactory;
 
-    //protected $fillable=['lastDocuments'];
+    protected $fillable=['date'];
 
     public function user(){
         return $this->belongsTo(User::class);

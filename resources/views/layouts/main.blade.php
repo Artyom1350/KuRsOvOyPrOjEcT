@@ -1,3 +1,4 @@
+@auth
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -29,9 +30,14 @@
             СДО КГАПОУ Пермский Авиационный техникум
         </h1>
         <div class="exit">
-            <a href="#">
+            <a href="{{ url('/logout') }}"
+            onclick="event.preventDefault();
+               document.getElementById('logout-form').submit();">
                 <img src="image/icons/logout_icon.svg" alt="Выход">
             </a>
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+             </form>
         </div>
     </header>
     <main class="main d-flex">
@@ -61,7 +67,7 @@
                     </a>
                 </li>
             </ul>
-        </div>    
+        </div>   
         @yield('content');
     </main>
     <footer class="d-flex align-items-center paddingBlock">
@@ -69,3 +75,9 @@
     </footer>
 </body>
 </html>
+@endauth
+@guest
+<script>
+window.location.href = 'login';
+</script>
+@endguest

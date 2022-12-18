@@ -22,11 +22,14 @@
                 </ul>
             @endif
         @endforeach --}}
-        <div class="application d-flex justify-content-between " onclick="slideAppl(1)">
-            <h3>Заголовок</h3>
+        {{--dd($documents)--}}
+        @foreach($documents as $document)
+
+        <div class="application d-flex justify-content-between " onclick="slideAppl({{$document['id']}})">
+            <h3>{{$document['title']}}</h3>
             <img class=" rounded float-end " src="../image/icons/arrowdown.svg" alt="Развернуть">
         </div>
-        <ul class="applicationSlide application1-slide">
+        <ul class="applicationSlide application{{$document['id']}}-slide">
             <li>
                 <div class="answer d-flex justify-content-between">
                     <h4>Ответ от пользователя</h4>
@@ -34,7 +37,13 @@
                 </div>
             </li>
         </ul>
-        <div class="application d-flex justify-content-between " onclick="slideAppl(2)">
+
+        @endforeach
+
+
+
+
+        {{--<div class="application d-flex justify-content-between " onclick="slideAppl(2)">
             <h3>Заголовок</h3>
             <img class=" rounded float-end " src="../image/icons/arrowdown.svg" alt="Развернуть">
         </div>
@@ -54,6 +63,8 @@
                 </div>
             </li>
         </ul>
+        --}}
+        
         <div class="createApplic d-flex flex-row-reverse ">
             <a href="#"><button class="btn btn-primary">Создание заявки</button></a>
         </div>

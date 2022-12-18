@@ -13,10 +13,10 @@
             </li>
         </ul> -->
         <div  class="wrap-card" v-for="(applicat,index) in mydata">
-            <div class="application d-flex justify-content-between" :key="index" v-on:click="slideAppl(index)">
+            <div class="application d-flex justify-content-between" :key="index" @click="slideAppl(index)">
                 <h3>{{applicat.name}}</h3>
                 <img class="float-end" :class="slide[index][1] ? 'applicationImgLeft' : 'applicationImgDown'" 
-                v-if="slide[index]" 
+                v-if="slide[index]"
                 :src="slide[index][2]" alt="Развернуть">
             </div>
             <ul class="applicationSlide" :class="'application'+index+'-slide'">
@@ -54,23 +54,16 @@
             slideAppl(idElem){
                 $(".application"+idElem+"-slide").slideToggle("fast");
 
-                console.log(this.slide[idElem][2]);
-                console.log(this.slide[idElem][1]);
-
                 if(this.slide[idElem][1]){
                     this.slide[idElem][2]= this.imgDown;
                     this.slide[idElem][1]=!this.slide[idElem][1];}
                 else
-                    {this.slide[idElem][2]= this.imgLeft;
+                {
+                    this.slide[idElem][2]= this.imgLeft;
                     this.slide[idElem][1]=!this.slide[idElem][1];}
-
-                console.log(this.slide[idElem][2]);
-                console.log(this.slide[idElem][1]);
-
+                    
+                this.$forceUpdate()
             }
-        },
-        computed:{
-
         }
     }
 </script>

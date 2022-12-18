@@ -34,6 +34,7 @@ class HomeController extends Controller
     public function myApplication(){
         //исходящие
         //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
+        //applacationsAnswer отвечает за ответы на заявку
         $application=[
             ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
             ['id' => 2, 'name' => 'Truehero'],

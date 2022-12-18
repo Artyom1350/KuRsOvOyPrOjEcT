@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('home'));
-});
+Route::redirect('/', 'home');
 
 // Auth::routes();
 
@@ -27,3 +25,4 @@ Route::get('/myAppl', [HomeController::class, 'myApplication'])->name('myApplaca
 Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation');
 
 Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allApplacation');
+

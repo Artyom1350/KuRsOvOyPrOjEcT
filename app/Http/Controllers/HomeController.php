@@ -40,7 +40,7 @@ class HomeController extends Controller
             ['id' => 2, 'name' => 'Truehero'],
             ['id' => 3, 'name' => 'Truecoder'],
         ];
-        return view('myAppl',['myApplData'=>$application]);
+        return view('application/myAppl',['myApplData'=>$application]);
     }
 
     public function incApplication(){
@@ -51,7 +51,7 @@ class HomeController extends Controller
             ['id' => 2, 'name' => 'Truehero'],
             ['id' => 3, 'name' => 'Truecoder'],
         ];
-        return view('incAppl',['incAplData'=>$application]);
+        return view('application/incAppl',['incAplData'=>$application]);
     }
 
     public function allApplication(){
@@ -69,6 +69,6 @@ class HomeController extends Controller
 
         ];
 
-        return view('allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
+        return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
     }
 }

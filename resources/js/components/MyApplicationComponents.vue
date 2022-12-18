@@ -15,14 +15,16 @@
         <div  class="wrap-card" v-for="(applicat,index) in mydata">
             <div class="application d-flex justify-content-between" :key="index" @click="slideAppl(index)">
                 <h3>{{applicat.name}}</h3>
+                
                 <img class="float-end" :class="slide[index][1] ? 'applicationImgLeft' : 'applicationImgDown'" 
-                v-if="slide[index]"
+                v-if="slide[index] && applicat.applacationsAnswer"
                 :src="slide[index][2]" alt="Развернуть">
+                <p v-else>Ответы не предоставлены</p> 
             </div>
-            <ul class="applicationSlide" :class="'application'+index+'-slide'">
+            <ul v-if="applicat.applacationsAnswer" class="applicationSlide" :class="'application'+index+'-slide'">
                 <li>
                     <div class="answer d-flex justify-content-between">
-                        <h4>Ответ от пользователя</h4>
+                        <h4>{{applicat.applacationsAnswer.nameUser}}</h4>
                         <a href="#"><button class="btn btn-primary">Ссылка на скачивание</button></a>
                     </div>
                 </li>

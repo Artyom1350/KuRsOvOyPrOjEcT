@@ -28,7 +28,10 @@
     display: block;
     margin: auto 35px;
 }
-
+.application p {
+    display: block;
+    margin: auto 35px;
+}
 .answer h4{
     display: block;
     margin: auto 35px;

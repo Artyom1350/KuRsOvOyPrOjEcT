@@ -35,7 +35,7 @@ class HomeController extends Controller
         //исходящие
         //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
         $application=[
-            ['id' => 1, 'name' => 'Admin'],
+            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
             ['id' => 2, 'name' => 'Truehero'],
             ['id' => 3, 'name' => 'Truecoder'],
         ];
@@ -58,9 +58,9 @@ class HomeController extends Controller
         //передача в 2 переменные
 
         $application1=[
-            ['id' => 1, 'name' => 'Admin1'],
-            ['id' => 2, 'name' => 'Truehero1'],
-            ['id' => 3, 'name' => 'Truecoder1'],
+            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
+            ['id' => 2, 'name' => 'Truehero'],
+            ['id' => 3, 'name' => 'Truecoder'],
         ];
 
         $application2=[

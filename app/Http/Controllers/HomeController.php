@@ -71,4 +71,9 @@ class HomeController extends Controller
 
         return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
     }
+
+    public function doApplication(){
+
+        return view('applicationsDo/createApplication');
+    }
 }

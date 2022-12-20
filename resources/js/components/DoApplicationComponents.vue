@@ -82,13 +82,7 @@
             },
             delFile(){
                 $('#field__file-2')[0].value = '';
-                // let newControl = this.control.cloneNode( true )
-
-                // this.control.replaceWith( newControl );
-
-                // this.control = newControl;
                 this.changeMessage();
-
             }
         },
         validations (){

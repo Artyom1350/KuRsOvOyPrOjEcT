@@ -33,8 +33,8 @@
                 </div>
             </div>
         </div>
-        <div class="buttonWrap d-flex align-items-center justify-content-around   mt-5">
-            <button class="btn btn-primary w-50 " :disabled="!disabledButton">Выбрать</button>
+        <div class="buttonWrap d-flex align-items-center justify-content-around mt-5">
+            <button class="btn btn-primary w-50 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
             <button class="btn btn-danger w-50 " @click="closeModal">Отмена</button>
         </div>
         
@@ -45,11 +45,15 @@
     export default{
         data(){
             return{
-                groupSelect:[],
-                peopleSelect:[],
+                groupSelect:this.groupSelectParrent,
+                peopleSelect:this.peopleSelectParrent,
                 disabledButton:false
             }
         },
+        props:[
+            'groupSelectParrent',
+            'peopleSelectParrent'
+        ],
         methods:{
             closeModal(){
                 this.$emit('close');
@@ -61,9 +65,15 @@
                 else{
                     this.disabledButton=false;
                 }
+                this.udpadeParrentArray();
+            },
+            udpadeParrentArray(){
+                this.$emit('udpadeParrentArray', {
+                    groupSelectChild: this.groupSelect,
+                    peopleSelectChild: this.peopleSelect
+                })
             }
         },
-
     }
 </script>
 

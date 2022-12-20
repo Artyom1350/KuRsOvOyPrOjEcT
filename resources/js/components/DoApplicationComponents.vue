@@ -15,28 +15,42 @@
             <input type="date" class="form-control" id="dateApplicate" name="dateAppl" placeholder="Дата">
         </div>
         <div class="mb-3">
-            <!-- прикрепление нескольких человек -->
             <label for="dateApplicate" class="form-label">Получатель/Получатели:</label>
             <div class="d-flex align-items-start justify-content-between">
-                <div class="peopleOrGroup">
-
+                <div class="peopleOrGroup w-75">
+                    <div v-if="groupSelect[0]">
+                        <h2 class="text-center">Группы пользователей</h2>
+                        <div class="mb-3 d-flex justify-content-between" v-for="group in groupSelect">
+                            <p>{{group}}</p>
+                            <input type="button" class="btn btn-danger" value="-" @click=""/>
+                        </div>
+                    </div>
+                    <div v-if="peopleSelect[0]">
+                        <h2 class="text-center">Пользователи</h2>
+                        <div class="mb-3 d-flex justify-content-between " v-for="group in peopleSelect">
+                            <p>{{group}}</p>
+                            <input type="button" class="btn btn-danger" value="-" @click=""/>
+                        </div>
+                    </div>
+                    <div v-if="!issetGroupPeopl">
+                        <h2 class="text-center">Никто не выбран</h2>
+                    </div>
                 </div>
-                <!-- вызов модального окна для выбора человек/групп людей -->
                 <input type="button" class="btn btn-primary" value="+" @click="openModal()"/>
             </div>
         </div>
-        <div class="mb-3">       
+        <div class="mb-3 d-flex">       
             <input ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label class="field__file-wrapper" for="field__file-2">
                 <div class="field__file-fake">{{ message }}</div>
                 <div class="field__file-button field__file-button-add">Выбрать</div>
             </label>
-            <input type="button" class="btn btn-danger" value="Отменить выбор" @click="delFile()"/>
+            <input type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
         </div>  
 
         <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
-    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false"></ModalWindow>
+    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 
 </div>
     
@@ -54,18 +68,27 @@
         components:{
             ModalWindow
         },
-        props: [],
         data(){
             return{
                 nameAppl:'',
                 descriptionAppl:'',
                 dateAppl:'',
-                recipients:[],
+                peopleSelect:[],
+                groupSelect:[],
                 file:'',
                 message:'Файл заявки не выбран',
                 isModalOpen:false,
+                issetGroupPeopl:false,
             }
         },
+        watch:{
+            peopleSelect(){
+                this.issetGroupPeopl=true;
+            },
+            groupSelect(){
+                this.issetGroupPeopl=true;
+            }
+        },  
         methods:{
             changeMessage(){
 
@@ -96,6 +119,10 @@
             },
             openModal(){
                 this.isModalOpen=true;
+            },
+            updateArrays(data){
+                this.groupSelect=data.groupSelectChild;
+                this.peopleSelect=data.peopleSelectChild
             }
         },
         validations (){
@@ -110,7 +137,6 @@
     .field__wrapper {
         width: 100%;
         position: relative;
-        margin: 15px 0;
         text-align: center;
     }
     .field__file {
@@ -131,9 +157,10 @@
                 align-items: center;
         -ms-flex-wrap: wrap;
             flex-wrap: wrap;
+            margin: 0;
+            line-height: 1.6;
     }
     .field__file-fake {
-        height: 30px;
         width: calc(100% - 130px);
         padding: 5px;
         display: -webkit-box;
@@ -148,7 +175,7 @@
     }
     .field__file-button {
         width: 130px;
-        height: 30px;
+        height: 100%;
         background: #3490dc;
         color: #fff;
         border-color: #3490dc;
@@ -161,13 +188,14 @@
         -webkit-box-pack: center;
             -ms-flex-pack: center;
                 justify-content: center;
-        border-radius: 0 15px 15px 0;
         cursor: pointer;
     }
+    .field__file-button:hover{
+        background: #28679b !important;
+        border-color: #28679b !important;
+        color: #fff;
+    }
     .field__file-button-remove{
-        border-radius: 0;
-        background: #dc3448;
-        border-color: #dc3448;
-
+        border-radius: 0 15px 15px 0 !important;
     }
 </style>

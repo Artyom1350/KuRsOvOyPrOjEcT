@@ -42,6 +42,7 @@
 
     export default {
         mounted() {
+            this.control=$('#field__file-2')[0];
         },
         props: [],
         data(){
@@ -51,7 +52,8 @@
                 dateAppl:'',
                 recipients:[],
                 file:'',
-                message:'Файл заявки не выбран'
+                message:'Файл заявки не выбран',
+                control:''
             }
         },
         methods:{
@@ -60,7 +62,6 @@
                 if(this.$refs.file!=null){
 
                     this.file=this.$refs.file.files[0];
-                    console.log(this.$refs.file.files);
 
                     let countFiles = '';
                     if (this.file)
@@ -74,17 +75,20 @@
 
                     this.$refs.file=$('.field')[0];
                     this.$refs.file.files=null;
-                    console.log(this.$refs.file.files[0]);
 
                     this.changeMessage();
                 }
                 
             },
             delFile(){
+                $('#field__file-2')[0].value = '';
+                // let newControl = this.control.cloneNode( true )
 
-                this.$refs.file=null;
+                // this.control.replaceWith( newControl );
 
+                // this.control = newControl;
                 this.changeMessage();
+
             }
         },
         validations (){

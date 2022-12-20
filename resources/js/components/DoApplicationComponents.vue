@@ -1,4 +1,6 @@
 <template>
+    <div class="wrap">
+
     <form class=" d-block w-50 m-auto ">
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
@@ -20,29 +22,37 @@
 
                 </div>
                 <!-- вызов модального окна для выбора человек/групп людей -->
-                <input type="button" class="btn btn-primary" value="+"/>
+                <input type="button" class="btn btn-primary" value="+" @click="openModal()"/>
             </div>
         </div>
         <div class="mb-3">       
-            <input ref="file" name="file" type="file" id="field__file-2" class="field field__file" v-on:change="changeMessage()">
+            <input ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label class="field__file-wrapper" for="field__file-2">
                 <div class="field__file-fake">{{ message }}</div>
                 <div class="field__file-button field__file-button-add">Выбрать</div>
             </label>
-            <input type="button" class="btn btn-danger" value="Отменить выбор" v-on:click="delFile()"/>
+            <input type="button" class="btn btn-danger" value="Отменить выбор" @click="delFile()"/>
         </div>  
+
         <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
+    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false"></ModalWindow>
+
+</div>
     
 </template>
 
 <script>
     import vuelidator from '@vuelidate/core';
     import {required}  from '@vuelidate/validators'
+    import ModalWindow from './ModalWindowPeople';
 
     export default {
         mounted() {
             this.control=$('#field__file-2')[0];
+        },
+        components:{
+            ModalWindow
         },
         props: [],
         data(){
@@ -53,7 +63,7 @@
                 recipients:[],
                 file:'',
                 message:'Файл заявки не выбран',
-                control:''
+                isModalOpen:false,
             }
         },
         methods:{
@@ -83,6 +93,9 @@
             delFile(){
                 $('#field__file-2')[0].value = '';
                 this.changeMessage();
+            },
+            openModal(){
+                this.isModalOpen=true;
             }
         },
         validations (){

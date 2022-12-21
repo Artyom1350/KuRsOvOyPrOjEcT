@@ -155,7 +155,8 @@
             delElemPeople(index){
                 this.peopleSelect.splice(index,1);
             },
-
+            getAnswerApplic(){
+            }
         },
         validations (){
             return{

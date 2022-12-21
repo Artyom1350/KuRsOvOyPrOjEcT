@@ -10,8 +10,8 @@
                     </label>
                 </div>
                 <div class="form-check mr-3">
-                    <input class="form-check-input" type="checkbox" value="Учебная часть" id="selectGroup1" @change="checkArray" v-model='groupSelect'>
-                    <label class="form-check-label" for="selectGroup1">
+                    <input class="form-check-input" type="checkbox" value="Учебная часть" id="selectGroup2" @change="checkArray" v-model='groupSelect'>
+                    <label class="form-check-label" for="selectGroup2">
                         Учебная часть
                     </label>
                 </div>
@@ -20,14 +20,14 @@
             <h2 class='text-center mt-5'>Выбор пользователей</h2>
             <div class="people d-flex flex-wrap">
                 <div class="form-check mr-3">
-                    <input class="form-check-input" type="checkbox" value="Багина Ксения Евгеньевна" id="selectGroup1" @change="checkArray" v-model='peopleSelect'>
-                    <label class="form-check-label" for="selectGroup1">
+                    <input class="form-check-input" type="checkbox" value="Багина Ксения Евгеньевна" id="selectGroup4" @change="checkArray" v-model='peopleSelect'>
+                    <label class="form-check-label" for="selectGroup4">
                         Багина Ксения Евгеньевна
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Аристова Елена Генадьевна" id="selectGroup1" @change="checkArray" v-model='peopleSelect'>
-                    <label class="form-check-label" for="selectGroup1">
+                    <input class="form-check-input" type="checkbox" value="Аристова Елена Генадьевна" id="selectGroup3" @change="checkArray" v-model='peopleSelect'>
+                    <label class="form-check-label" for="selectGroup3">
                         Аристова Елена Генадьевна
                     </label>
                 </div>

@@ -33,9 +33,9 @@
                 </div>
             </div>
         </div>
-        <div class="buttonWrap d-flex align-items-center justify-content-around mt-5">
-            <button class="btn btn-primary w-50 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
-            <button class="btn btn-danger w-50 " @click="closeModal">Отмена</button>
+        <div class="buttonWrap d-flex align-items-center mt-5">
+            <button class="btn btn-primary w-25 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
+            <button class="btn btn-danger w-25 " @click="closeModal">Отмена</button>
         </div>
         
     </div>

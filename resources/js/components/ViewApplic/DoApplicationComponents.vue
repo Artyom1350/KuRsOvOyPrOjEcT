@@ -2,7 +2,7 @@
     <div class="wrap">
 
     <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
-        <!--     -->
+        <!--Название-->
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
             <input :class="((trigersField.name && (v$.nameAppl.required.$invalid||v$.nameAppl.minLength.$invalid||v$.nameAppl.maxLength.$invalid)) ? 'is-invalid' : '')"  type="text" class="form-control" id="nameApplicate" name="nameAppl" placeholder="Название" v-model="nameAppl">

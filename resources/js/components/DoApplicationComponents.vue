@@ -1,27 +1,31 @@
 <template>
     <div class="wrap">
 
-    <form class=" d-block w-50 m-auto ">
+    <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
+        <!--     -->
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
-            <input :class="((v$.nameAppl.required.$invalid||v$.nameAppl.minLength.$invalid||v$.nameAppl.maxLength.$invalid) ? 'is-invalid' : '')"  type="text" class="form-control" id="nameApplicate" name="nameAppl" placeholder="Название" v-model="nameAppl">
+            <input :class="((trigersField.name && (v$.nameAppl.required.$invalid||v$.nameAppl.minLength.$invalid||v$.nameAppl.maxLength.$invalid)) ? 'is-invalid' : '')"  type="text" class="form-control" id="nameApplicate" name="nameAppl" placeholder="Название" v-model="nameAppl">
             <span v-if="v$.nameAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
             <span v-if="v$.nameAppl.minLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не менее 10 символов</span>
             <span v-if="v$.nameAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 100 символов</span>
 
         </div>
+        <!-- описание -->
         <div class="mb-3">
             <label for="descripApplicate" class="form-label">Описание:</label>
-            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(v$.descriptionAppl.maxLength.$invalid ? 'is-invalid' : '')"></textarea>
+            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && v$.descriptionAppl.maxLength.$invalid ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
             
         </div>
+        <!-- дата -->
         <div class="mb-3">
             <label for="dateApplicate" class="form-label">Срок выполнения до:</label>
-            <input type="date" class="form-control" id="dateApplicate" name="dateAppl" placeholder="Дата" v-model="dateAppl" :class="(v$.dateAppl.required.$invalid ? 'is-invalid' : '')">
+            <input type="date" class="form-control" id="dateApplicate" name="dateAppl" placeholder="Дата" v-model="dateAppl" :class="(((trigersField.date && v$.dateAppl.required.$invalid) || incorrectDate) ? 'is-invalid' : '')">
             <span v-if="v$.dateAppl.required.$invalid" class="invalid-feedback ">Дата должна быть выставлена</span>
-
+            <span v-if="incorrectDate" class="invalid-feedback ">Дата должна быть выставлена корректно <br> (минимум 2 дня на выполнение и воскресенье не рабочий день)</span>
         </div>
+        <!-- получатели -->
         <div class="mb-3">
             <label for="dateApplicate" class="form-label">Получатель/Получатели:</label>
             <div class="d-flex align-items-start justify-content-between">
@@ -40,7 +44,7 @@
                             <input type="button" class="btn btn-danger" value="-" @click="delElemPeople(index)"/>
                         </div>
                     </div>
-                    <div v-if="!issetGroupPeopl" class="errorMessageGroup">
+                    <div v-if="!issetGroupPeopl">
                         <p class="text-center"> <b> Никто не выбран</b></p>
                     </div>
                 </div>
@@ -48,17 +52,18 @@
             </div>
 
         </div>
+        <!-- файл -->
         <div class="mb-3 d-flex" >       
-            <input  ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
+            <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
-                <div :class="((v$.file.required.$invalid) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
+                <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
                 <div class="field__file-button field__file-button-add">Выбрать</div>
             </label>
             <input  type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
         </div>  
-        <span v-if="v$.file.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
-
-        <button type="submit" class="btn btn-primary">Добавить</button>
+        <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
+        <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
+        <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 
@@ -68,7 +73,7 @@
 
 <script>
     import { useVuelidate } from '@vuelidate/core'
-    import {required, minLength, maxLength, maxValue}  from '@vuelidate/validators'
+    import {required, minLength, maxLength}  from '@vuelidate/validators'
     import ModalWindow from './ModalWindowPeople';
 
     export default {
@@ -85,6 +90,12 @@
         },
         data(){
             return{
+                trigersField:{
+                    name:false,
+                    descr:false,
+                    date:false,
+                    file:false
+                },
                 nameAppl:'',
                 descriptionAppl:'',
                 dateAppl:'',
@@ -94,6 +105,8 @@
                 message:'Файл заявки не выбран',
                 isModalOpen:false,
                 issetGroupPeopl:false,
+                incorrectDate:false,
+                incorrectFile:false
             }
         },
         watch:{
@@ -112,6 +125,46 @@
                 else{
                     this.issetGroupPeopl=false;
                 }
+            },
+            nameAppl(){
+                this.trigersField.name=true
+            },
+            descriptionAppl(){
+                this.trigersField.descr=true
+            },
+            dateAppl(oldValue, newValue){
+                var date1 = new Date(oldValue.split('-')[0],oldValue.split('-')[1]-1,oldValue.split('-')[2]);
+                var date2 = new Date();
+                if(date1.getDay()!=0){
+                    if((date1 - date2)<0){
+                        this.incorrectDate=true
+                    }else{
+                        let days = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24) % 30)
+                        if(days<2){
+                            this.incorrectDate=true
+                        }else{
+                            this.incorrectDate=false
+                        }
+                    }   
+                }
+                else{
+                    this.incorrectDate=true
+                }
+                this.trigersField.date=true
+
+            },
+            file(){
+                if(this.$refs.file.files[0]){
+                    if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
+                        this.incorrectFile=true
+                    }
+                    else{
+                        this.incorrectFile=false
+                    }
+                }else{
+                    this.incorrectFile=true
+                } 
+            this.trigersField.file=true
             },
         },  
         methods:{
@@ -156,7 +209,12 @@
                 this.peopleSelect.splice(index,1);
             },
             getAnswerApplic(){
-            }
+                if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                    alert('Запрос на сервер')
+                }else{
+                    alert('Ошибка')
+                }
+            },  
         },
         validations (){
             return{
@@ -173,7 +231,6 @@
                 },
                 file:{
                     required,
-                    maxValue:maxValue(400),
                 },
             }
         }
@@ -198,6 +255,13 @@
                 align-items: center;
         border-radius: 15px 0 0 15px;
         border-right: none;
+    }
+    .invalid-feedbackCustom{
+        display: block;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: #e3342f;
     }
     .wrap-grpeo>p{
         border-bottom: 2px solid #000;

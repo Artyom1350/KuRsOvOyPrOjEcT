@@ -1,8 +1,10 @@
 import Vue from 'vue';
-import MyApplic from './components/MyApplicationComponents.vue';
-import IncApplic from './components/IncApplicationComponents.vue';
-import DoApplic from './components/DoApplicationComponents.vue';
-import ModalWindow from './components/ModalWindowPeople.vue'
+import MyApplic from './components/outputApplic/MyApplicationComponents.vue';
+import IncApplic from './components/outputApplic/IncApplicationComponents.vue';
+import DoApplic from './components/ViewApplic/DoApplicationComponents.vue';
+import ModalWindow from './components/ModalWindowPeople.vue';
+import ViewAppl from './components/ViewApplic/ViewApplicationComponents.vue';
+import ChangeAppl from './components/ViewApplic/ChangeApplicationComponents.vue';
 
 require('./bootstrap');
 
@@ -12,6 +14,8 @@ const container= new Vue({
         MyApplic,
         IncApplic,
         DoApplic,
-        ModalWindow
+        ModalWindow,
+        ViewAppl,
+        ChangeAppl
     }
 });

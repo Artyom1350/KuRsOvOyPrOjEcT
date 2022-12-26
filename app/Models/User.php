@@ -43,10 +43,14 @@ class User extends Authenticatable
     ];
 
     public function documents(){
-        return $this->hasMany(Documents::class);
+        return $this->hasMany(Document::class);
     }
 
     public function departmentParts(){
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(DepartmentPart::class);
+    }
+    
+    public function access_users(){
+        return $this->hasMany(AccessUser::class);
     }
 }

@@ -19,6 +19,7 @@
 
 </head>
 <body>
+    @auth
     <header class="paddingBlock">
         <div class="logoWrap">
             <a href="{{ route('home') }}">
@@ -29,9 +30,14 @@
             СДО КГАПОУ Пермский Авиационный техникум
         </h1>
         <div class="exit">
-            <a href="#">
+            <a href="{{ url('/logout') }}"
+            onclick="event.preventDefault();
+               document.getElementById('logout-form').submit();">
                 <img src="image/icons/logout_icon.svg" alt="Выход">
             </a>
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+             </form>
         </div>
     </header>
     <main class="main d-flex">
@@ -64,6 +70,7 @@
         </div>    
         @yield('content');
     </main>
+    @endauth
     <footer class="d-flex align-items-center paddingBlock">
         &copy; КГАПОУ Пермский Авиационный техникум
     </footer>

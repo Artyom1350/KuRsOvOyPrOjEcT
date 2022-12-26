@@ -37,11 +37,7 @@ class HomeController extends Controller
         //исходящие
         //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
         //applacationsAnswer отвечает за ответы на заявку
-        $application=[
-            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
-            ['id' => 2, 'name' => 'Truehero'],
-            ['id' => 3, 'name' => 'Truecoder'],
-        ];
+
         $application=array();
         $documents=auth()->user()->documents()->get();
         
@@ -49,33 +45,22 @@ class HomeController extends Controller
         foreach($documents as $item){
             //$access=$item->access_users()->get(); позже
 
-           // dd($item);
             array_push($application,array('id' => 1, 'name' => $item['title']));
         }
-
-        //array_push($application,$array);
-
-
 
         return view('application/myAppl',['myApplData'=>$application]);
     }
 
     public function incApplication(){
         //входящие
-        //логика получения из бд тех заявок, на которые нужно ответить пользователю
-        //$application=[
-        //    ['id' => 1, 'name' => 'Admin'],
-        //    ['id' => 2, 'name' => 'Truehero'],
-        //    ['id' => 3, 'name' => 'Truecoder'],
-        //];
 
         // ['userName','userId','fileName','title','description','dateCreate']
         //переменные(вдруг ошибки будут тип они за областью видимости)
-        $documentName;
-        $user;
-        $description;
-        $dateCreate;
-        $file;
+        $documentName="";
+        $user="";
+        $description="";
+        $dateCreate="";
+        $file="";
 
         $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
         $application=array(); //создал массив для хранения дичи
@@ -86,14 +71,13 @@ class HomeController extends Controller
             foreach($documents as $document){
                 $documentName=$document['title']; //Название документа
                 $user=$document->user()->get(); //Кто создал?
-                //dd($user->first());
+
                 $id=$document['id'];
                 $file=$document['file'];
                 $title=$document['title'];
                 $description=$document['description']; //описание документа
                 $dateCreate=$document['created_at']; //Когда создали
             }
-            //dd($user);
             //ниже массив для пуша
             $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'fileName'=>$file,'description'=>$description,'dateCreate'=>$dateCreate,'title'=>$title, 'idDocument'=>$id);
             array_push($application,$itemToArray);
@@ -105,24 +89,58 @@ class HomeController extends Controller
     public function allApplication(){
         //комбо myApplication() и incApplication()
         //передача в 2 переменные
+        // ['userName','userId','fileName','title','description','dateCreate']
+        //переменные(вдруг ошибки будут тип они за областью видимости)
+        $documentName="";
+        $user="";
+        $description="";
+        $dateCreate="";
+        $file="";
 
-        $application1=[
-            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
-            ['id' => 2, 'name' => 'Truehero'],
-            ['id' => 3, 'name' => 'Truecoder'],
-        ];
+        $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
+        $application2=array(); //создал массив для хранения дичи
+        //просто да(перебор)
 
-        $application2=[
-            ['id' => 1, 'name' => 'Admin2'],
+        foreach($access as $item){
+            $documents=$item->document()->get(); //выборка доступных доков
+            foreach($documents as $document){
+                $documentName=$document['title']; //Название документа
+                $user=$document->user()->get(); //Кто создал?
 
-        ];
+                $id=$document['id'];
+                $file=$document['file'];
+                $title=$document['title'];
+                $description=$document['description']; //описание документа
+                $dateCreate=$document['created_at']; //Когда создали
+            }
+            //ниже массив для пуша
+            $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'fileName'=>$file,'description'=>$description,'dateCreate'=>$dateCreate,'title'=>$title, 'idDocument'=>$id);
+            array_push($application2,$itemToArray);
+        }
+
+         //исходящие
+        //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
+        //applacationsAnswer отвечает за ответы на заявку
+
+        $application1=array();
+        $documents=auth()->user()->documents()->get();
+        
+        //$array;
+        foreach($documents as $item){
+            //$access=$item->access_users()->get(); позже
+
+            array_push($application1,array('id' => 1, 'name' => $item['title']));
+        }
+
+
 
         return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
     }
 
     public function viewOne($id){
-        //dd($application);
-    return view('application/OneAppl'/*,['data'=>$application]*/);
+        $application="";
+        dd($application);
+        return view('application/OneAppl',[ 'applic'=> $application]);
     }
 
     public function doApplication(){

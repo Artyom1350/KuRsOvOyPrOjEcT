@@ -1,7 +1,9 @@
 <template>
     <div>
         <div v-for="applicat in arrayAppl" :key="applicat.id" class="application d-flex justify-content-between">
-            <h3>{{applicat.id}}</h3>
+            <h3>{{applicat.userName}}</h3>
+            <h3>{{applicat.title}}</h3>
+            <a :href="'incAppl/'+applicat.idDocument"><button class="btn btn-primary">Просмотреть заявку</button></a>
             <a href="#"><button class="btn btn-primary">Дать ответ на заявку</button></a>
         </div>
     </div>

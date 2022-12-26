@@ -16,7 +16,10 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('file');
-            $table->foreignId('user')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('description');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('acess_users_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

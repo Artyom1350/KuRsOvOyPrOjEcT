@@ -13,6 +13,7 @@
 <script>
     export default {
         mounted() {
+            console.log(this.$props.incdata);
         },
         props: ['incdata'],
         data(){

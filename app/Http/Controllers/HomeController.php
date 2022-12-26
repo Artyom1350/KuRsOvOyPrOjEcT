@@ -90,12 +90,11 @@ class HomeController extends Controller
         //комбо myApplication() и incApplication()
         //передача в 2 переменные
         // ['userName','userId','fileName','title','description','dateCreate']
-        //переменные(вдруг ошибки будут тип они за областью видимости)
-        $documentName="";
-        $user="";
-        $description="";
-        $dateCreate="";
-        $file="";
+        // $documentName="";
+        // $user="";
+        // $description="";
+        // $dateCreate="";
+        // $file="";
 
         $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
         $application2=array(); //создал массив для хранения дичи
@@ -131,8 +130,6 @@ class HomeController extends Controller
 
             array_push($application1,array('id' => 1, 'name' => $item['title']));
         }
-
-
 
         return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
     }

@@ -6,7 +6,7 @@
 <link href="{{ asset('css/application.css') }}" rel="stylesheet">
 
     <div class="container">
-        <one-Incl :OneIncl='@json($app)'></one-Incl>
+        <one-Incl :applic='@json($applic)'></one-Incl>
     </div>
     
 @endsection

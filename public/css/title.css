@@ -1,0 +1,62 @@
+.paddingBlock{
+    padding: 0 10%;
+}
+header{
+    height: 150px;
+    background: #fff;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.main{
+    min-height: 500px;
+    height: auto;
+}
+.logoWrap{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.logoWrap>a{
+    display: block;
+    height: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.logoWrap>a>.logo{
+    height: 100%;
+}
+.sideboard{
+    width: 10%;
+    min-width: 150px;
+    height: 100%;
+}
+.exit{
+    height: 50%;
+}
+.exit a{
+    display: block;
+    height: 100%;
+}
+.exit a img{
+    height: 100%;
+}
+.homeLink{
+    display: flex;
+    justify-content: center;
+}
+.homeLink img{
+    width: 30%;
+}
+.bg-color{
+    background-color: #949AA5;
+}
+footer{
+    background: #fff;
+    height: 150px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    font-size: x-large;
+}

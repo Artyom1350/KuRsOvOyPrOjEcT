@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Calendar;
 
 use Illuminate\Http\Request;
 
@@ -11,10 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -23,6 +25,55 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $calendar=new Calendar;
+        //ВАЖНО!!!!!!!!!!!!!!!!
+        //получение событий из БД
+        return view('home',['calendar'=>$calendar]);
+    }
+
+    public function myApplication(){
+        //исходящие
+        //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
+        //applacationsAnswer отвечает за ответы на заявку
+        $application=[
+            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
+            ['id' => 2, 'name' => 'Truehero'],
+            ['id' => 3, 'name' => 'Truecoder'],
+        ];
+        return view('application/myAppl',['myApplData'=>$application]);
+    }
+
+    public function incApplication(){
+        //входящие
+        //логика получения из бд тех заявок, на которые нужно ответить пользователю
+        $application=[
+            ['id' => 1, 'name' => 'Admin'],
+            ['id' => 2, 'name' => 'Truehero'],
+            ['id' => 3, 'name' => 'Truecoder'],
+        ];
+        return view('application/incAppl',['incAplData'=>$application]);
+    }
+
+    public function allApplication(){
+        //комбо myApplication() и incApplication()
+        //передача в 2 переменные
+
+        $application1=[
+            ['id' => 1, 'name' => 'Admin', 'applacationsAnswer'=>['idAppl'=>1, 'nameUser'=>'Truehero']],
+            ['id' => 2, 'name' => 'Truehero'],
+            ['id' => 3, 'name' => 'Truecoder'],
+        ];
+
+        $application2=[
+            ['id' => 1, 'name' => 'Admin2'],
+
+        ];
+
+        return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
+    }
+
+    public function doApplication(){
+
+        return view('applicationsDo/createApplication');
     }
 }

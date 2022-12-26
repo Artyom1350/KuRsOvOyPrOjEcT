@@ -5,6 +5,7 @@ import DoApplic from './components/ViewApplic/DoApplicationComponents.vue';
 import ModalWindow from './components/ModalWindowPeople.vue';
 import ViewAppl from './components/ViewApplic/ViewApplicationComponents.vue';
 import ChangeAppl from './components/ViewApplic/ChangeApplicationComponents.vue';
+import OneIncl from './components/outputApplic/oneIncComponents.vue';
 
 require('./bootstrap');
 
@@ -16,6 +17,7 @@ const container= new Vue({
         DoApplic,
         ModalWindow,
         ViewAppl,
-        ChangeAppl
+        ChangeAppl,
+        OneIncl
     }
 });

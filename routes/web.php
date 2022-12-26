@@ -27,3 +27,5 @@ Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incAppl
 Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allApplacation');
 
 Route::get('/doItAppl', [HomeController::class, 'doApplication'])->name('doApplacation');
+
+Route::get('/viewApplic/{idApplic}', [HomeController::class, 'viewApplic'])->name('viewApplication');

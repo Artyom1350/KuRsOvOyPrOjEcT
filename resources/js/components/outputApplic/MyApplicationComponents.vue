@@ -2,11 +2,12 @@
     <div>
         <div  class="wrap-card" v-for="(applicat,index) in mydata">
             <div class="application d-flex justify-content-between" :key="index" @click="slideAppl(index)">
-                <h3>{{applicat.name}}</h3>
+                <h3 class="w-50 overflow-hidden ">{{applicat.name}}</h3>
+                <div class="w-50 overflow-hidden">
+                    <p class="">{{applicat.decript}}</p>
+                </div>
                 
-                <img class="float-end" :class="slide[index][1] ? 'applicationImgLeft' : 'applicationImgDown'" 
-                v-if="slide[index] && applicat.applacationsAnswer"
-                :src="slide[index][2]" alt="Развернуть">
+                <img class="float-end" :class="slide[index][1] ? 'applicationImgLeft' : 'applicationImgDown'" v-if="slide[index] && applicat.applacationsAnswer" :src="slide[index][2]" alt="Развернуть">
                 <p v-else>Ответы не предоставлены</p> 
             </div>
             <ul v-if="applicat.applacationsAnswer" class="applicationSlide" :class="'application'+index+'-slide'">
@@ -57,3 +58,10 @@
         }
     }
 </script>
+
+<style>
+    h3{
+        height: 70%;
+        text-align: start;
+    }
+</style>

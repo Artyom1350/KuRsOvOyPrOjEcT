@@ -135,8 +135,18 @@ class HomeController extends Controller
     }
 
     public function viewOne($id){
-        $application="";
-        dd($application);
+         //входящая 1 заявка
+
+        $document=auth()->user()->access_users()->where('document_id',$id)->first()->document()->get();
+
+        $title=$document->first()['title'];
+        $user=$document->first()->user()->first()['name'];
+        $description=$document->first()['description'];
+        $dateCreate=$document->first()['created_at'];
+        $file=$document->first()['file'];
+
+        $application=array('userName'=>$user,'fileName'=>$file,'description'=>$description,'dateCreate'=>$dateCreate,'title'=>$title);
+
         return view('application/OneAppl',[ 'applic'=> $application]);
     }
 

@@ -50,6 +50,9 @@
                 disabledButton:false
             }
         },
+        mounted(){
+            
+        },
         props:[
             'groupSelectParrent',
             'peopleSelectParrent'

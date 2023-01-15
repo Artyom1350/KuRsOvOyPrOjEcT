@@ -33,12 +33,17 @@
         <div class="exit">
             <a href="{{ url('/logout') }}"
             onclick="event.preventDefault();
+<<<<<<< HEAD
                document.getElementById('logout-form').submit();">
                 <img src="{{asset('image/icons/logout_icon.svg')}}" alt="Выход">
+=======
+            document.getElementById('logout-form').submit();">
+                <img src="image/icons/logout_icon.svg" alt="Выход">
+>>>>>>> e6a9a40bc05dda522c080efdb34ba4a385760546
             </a>
             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
-             </form>
+            </form>
         </div>
     </header>
     <main class="main d-flex">

@@ -18,3 +18,10 @@ $('.personArea').hover(function(){
 },function(){
     $('.personArea').removeClass('active');
 });
+$('#watchPassword').change(function(){
+    if($('#watchPassword').is(":checked")){
+        $('#password').prop("type", "text");
+    }else{
+        $('#password').prop("type", "password");
+    }
+});

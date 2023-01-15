@@ -59,6 +59,9 @@
             };
             
         },
+        mounted(){
+            
+        },
         props:[
             'groupSelectParrent',
             'peopleSelectParrent',

@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/title.js') }}" defer></script>
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -23,7 +24,7 @@
     <header class="paddingBlock">
         <div class="logoWrap">
             <a href="{{ route('home') }}">
-                <img src="image/logo/logo.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
+                <img src="{{asset('image/logo/logo.png')}}" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
             </a>
         </div>
         <h1>
@@ -33,7 +34,7 @@
             <a href="{{ url('/logout') }}"
             onclick="event.preventDefault();
                document.getElementById('logout-form').submit();">
-                <img src="image/icons/logout_icon.svg" alt="Выход">
+                <img src="{{asset('image/icons/logout_icon.svg')}}" alt="Выход">
             </a>
             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
@@ -43,7 +44,7 @@
     <main class="main d-flex">
         <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
             <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
-                <img src="image/icons/home.svg" class="" alt="Главная">
+                <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
             </a>
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item ">

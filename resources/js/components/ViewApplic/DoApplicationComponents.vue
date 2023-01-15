@@ -40,7 +40,7 @@
                     <div v-if="peopleSelect[0]" class="wrap-grpeo">
                         <p class="text-center"><b>Пользователи</b></p>
                         <div class="mb-3 d-flex justify-content-between " v-for="(group,index) in peopleSelect">
-                            <p>{{group}}</p>
+                            <p>{{group.name}}</p>
                             <input type="button" class="btn btn-danger" value="-" @click="delElemPeople(index)"/>
                         </div>
                     </div>
@@ -66,7 +66,6 @@
         <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
-
 </div>
     
 </template>
@@ -101,7 +100,7 @@
                 dateAppl:'',
                 peopleSelect:[],
                 groupSelect:[],
-                file:'',
+                file:null,
                 message:'Файл заявки не выбран',
                 isModalOpen:false,
                 issetGroupPeopl:false,
@@ -200,20 +199,39 @@
             },
             updateArrays(data){
                 this.groupSelect=data.groupSelectChild;
-                this.peopleSelect=data.peopleSelectChild
+                this.peopleSelect=data.peopleSelectChild;
+                this.peopleIdSelect=data.peopleIdSelectChild;
             },
             delElemGroup(index){
                 this.groupSelect.splice(index,1);
             },
             delElemPeople(index){
                 this.peopleSelect.splice(index,1);
+                this.peopleIdSelect.splice(index,1);
             },
             getAnswerApplic(){
-                if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                /*if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     alert('Запрос на сервер')
                 }else{
                     alert('Ошибка')
-                }
+                }*/
+                var mas=new Array();
+                this.peopleSelect.forEach(item => {
+                    mas.push(item['id']);
+                });
+
+                const config = { 'content-type': 'multipart/file.type' }
+                var form=new FormData();
+                form.append('nameAppl',this.nameAppl);
+                form.append('descriptionAppl',this.descriptionAppl);
+                form.append('dateAppl',this.dateAppl);
+                form.append('peopleSelect', mas);
+                form.append('groupSelect',this.groupSelect);
+                form.append('file',this.file);
+                form.append('fileName',this.file.name);
+                form.append('dateAppl',this.dateAppl);
+                axios.post('/addApplication',form,config)
+                .then(response=>console.log(response));
             },  
         },
         validations (){

@@ -16,6 +16,6 @@ const container= new Vue({
         DoApplic,
         ModalWindow,
         ViewAppl,
-        ChangeAppl
+        ChangeAppl,
     }
 });

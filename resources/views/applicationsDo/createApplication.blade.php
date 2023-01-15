@@ -4,7 +4,7 @@
 
 @section('content')
 <link href="{{ asset('css/application.css') }}" rel="stylesheet">
-
+<!--:users='json($users)'-->
     <div class="container">
         <do-applic></do-applic>
     </div>

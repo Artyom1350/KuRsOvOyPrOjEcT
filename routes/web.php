@@ -18,14 +18,19 @@ Route::redirect('/', 'login');
 
 Auth::routes();
 
-Route::get('/incAppl/{id}',[HomeController::class,'viewOne'])->name('viewOne')->middleware('auth');
-
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::get('/myAppl', [HomeController::class, 'myApplication'])->name('myApplacation')->middleware('auth');;
+Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation')->middleware('auth');
+Route::get('/incAppl/{id}',[HomeController::class,'viewOne'])->name('viewOne')->middleware('auth');
 
-Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation')->middleware('auth');;
+Route::get('/myAppl', [HomeController::class, 'myApplication'])->name('myApplacation')->middleware('auth');
+Route::post('/myAppl/addApplication',[HomeController::class,'addApplication'])->middleware('auth');
+Route::get('/myAppl/changeApplication/{id}',[HomeController::class,'changeAppl'])->middleware('auth');
+Route::get('/myAppl/Download/{id}',[HomeController::class,'downloadAppl'])->middleware('auth');
+Route::get('/myAppl/doItAppl', [HomeController::class, 'doApplication'])->name('doApplacation')->middleware('auth');;
 
-Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allApplacation')->middleware('auth');;
+Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allApplacation')->middleware('auth');
 
-Route::get('/doItAppl', [HomeController::class, 'doApplication'])->name('doApplacation')->middleware('auth');;
+Route::post('/getDocument',[HomeController::class,'getDocument'])->middleware('auth');
+Route::post('/changeApplSend',[HomeController::class,'changeApplSend'])->middleware('auth');
+Route::get('/getUsers',[HomeController::class,'getUsers'])->middleware('auth');

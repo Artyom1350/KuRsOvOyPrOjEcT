@@ -9,16 +9,11 @@ class AccessUser extends Model
 {
     use HasFactory;
 
+    protected $fillable=['document_id','user_id'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
-
-    //public function document($id){
-    //    $da=Document::where('id',$id);
-    //    return $da;
-    //    //return $this->belongsTo(Documents::class);
-    //}
-
     public function document(){
         $da=$this->belongsTo(Document::class);
         return $da;

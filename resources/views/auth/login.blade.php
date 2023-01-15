@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/title.js') }}" defer></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -43,6 +45,12 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+                                    </div>
+                                    <div class="form-group row row-form form-check">
+                                        <input class="form-check-input" type="checkbox"  id="watchPassword">
+                                        <label class="form-check-label" for="watchPassword">
+                                            Показать пароль
+                                        </label>
                                     </div>
                                 </form>
                                 <div class="form-group row mb-0 submit_link">

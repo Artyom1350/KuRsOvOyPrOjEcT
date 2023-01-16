@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-
+        
     <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
         <!--     -->
         <div class="mb-3">
@@ -40,7 +40,7 @@
                     <div v-if="peopleSelect[0]" class="wrap-grpeo">
                         <p class="text-center"><b>Пользователи</b></p>
                         <div class="mb-3 d-flex justify-content-between " v-for="(group,index) in peopleSelect">
-                            <p>{{group}}</p>
+                            <p>{{group.name}}</p>
                             <input type="button" class="btn btn-danger" value="-" @click="delElemPeople(index)"/>
                         </div>
                     </div>
@@ -50,10 +50,10 @@
                 </div>
                 <input type="button" class="btn btn-primary" value="+" @click="openModal()"/>
             </div>
-
         </div>
         <!-- файл -->
-        <div class="mb-3 d-flex" >       
+        <p>Ранее выбранный файл: <a :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
+        <div class="mb-3 d-flex" > 
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
                 <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
@@ -63,7 +63,7 @@
         </div>  
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
+        <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Сохранить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+    import { assertExistsTypeAnnotation } from '@babel/types';
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
     import ModalWindow from '../ModalWindowPeople.vue';
@@ -89,6 +90,7 @@
         components:{
             ModalWindow
         },
+        props:['doc','users','path','fileName'],
         data(){
             return{
                 trigersField:{
@@ -97,10 +99,10 @@
                     date:false,
                     file:false
                 },
-                nameAppl:'',
-                descriptionAppl:'',
-                dateAppl:'',
-                peopleSelect:[],
+                nameAppl:this.$props.doc[0].title,
+                descriptionAppl:this.$props.doc[0].description,
+                dateAppl:this.$props.doc[0].dateAppl,
+                peopleSelect:this.$props.users,
                 groupSelect:[],
                 file:'',
                 message:'Файл заявки не выбран',
@@ -109,6 +111,39 @@
                 incorrectDate:false,
                 incorrectFile:false
             }
+        },
+        created(){
+            //не рабочая дичь (файл получается битый)
+           /* var reader=new FileReader();
+            data=fetch(this.$props.path);
+            console.log(this.$props.path);
+            console.log(data)
+            var file1=new File(this.$props.path,this.$props.docName);
+            console.log(file1);
+            this.file=file1;
+            var form=new FormData();
+            form.append('path',this.$props.path)
+            axios.post('/getDocument',form).then((response)=>{
+
+                const blob = new Blob([response],{type: "application/json"});
+                var file1=new File([blob], this.$props.doc[0].file);
+
+                проверка
+                var url=URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', this.$props.doc[0].file);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                console.log(file1);
+                console.log(blob);
+                this.file=file;
+                console.log(response)
+                
+            })*/
         },
         watch:{
             peopleSelect(){
@@ -155,6 +190,7 @@
 
             },
             file(){
+                console.log(this.file);
                 if(this.$refs.file.files[0]){
                     if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
                         this.incorrectFile=true
@@ -210,11 +246,30 @@
                 this.peopleSelect.splice(index,1);
             },
             getAnswerApplic(){
-                if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                /*if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     alert('Запрос на сервер')
                 }else{
                     alert('Ошибка')
-                }
+                }*/
+
+                var mas=new Array();
+                this.peopleSelect.forEach(item => {
+                    mas.push(item['id']);
+                });
+
+                const config = { 'content-type': 'multipart/file.type' }
+                var form=new FormData();
+                form.append('nameAppl',this.nameAppl);
+                form.append('descriptionAppl',this.descriptionAppl);
+                form.append('dateAppl',this.dateAppl);
+                form.append('peopleSelect', mas);
+                form.append('groupSelect',this.groupSelect);
+                form.append('file',this.file);
+                form.append('fileName',this.file.name);
+                form.append('dateAppl',this.dateAppl);
+                form.append('doc_id',this.$props.doc[0].id);
+                axios.post('/changeApplSend',form,config)
+                .then(response=>console.log(response));
             },  
         },
         validations (){

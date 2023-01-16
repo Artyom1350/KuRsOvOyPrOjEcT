@@ -3,7 +3,8 @@
         <div  class="wrap-card" v-for="(applicat,index) in mydata">
             <div class="application d-flex justify-content-between" :key="index" @click="slideAppl(index)">
                 <h3>{{applicat.name}}</h3>
-                
+                <a :href="'/myAppl/Download/'+applicat.id"><button class="btn btn-primary">Скачать документ</button></a>
+                <a :href="'/myAppl/changeApplication/'+applicat.id"><button class="btn btn-primary">Редактировать заявку</button></a>
                 <img class="float-end" :class="slide[index][1] ? 'applicationImgLeft' : 'applicationImgDown'" 
                 v-if="slide[index] && applicat.applacationsAnswer"
                 :src="slide[index][2]" alt="Развернуть">
@@ -13,7 +14,6 @@
                 <li>
                     <div class="answer d-flex justify-content-between">
                         <h4>{{applicat.applacationsAnswer.nameUser}}</h4>
-                        <a href="#"><button class="btn btn-primary">Ссылка на скачивание</button></a>
                     </div>
                 </li>
             </ul>
@@ -53,7 +53,7 @@
                     this.slide[idElem][1]=!this.slide[idElem][1];}
                     
                 this.$forceUpdate()
-            }
+            },
         }
     }
 </script>

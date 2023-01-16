@@ -18,7 +18,7 @@
                 
             </div>
             <h2 class='text-center mt-5'>Выбор пользователей</h2>
-            <div class="people d-flex flex-wrap">
+            <!--<div class="people d-flex flex-wrap">
                 <div class="form-check mr-3">
                     <input class="form-check-input" type="checkbox" value="Багина Ксения Евгеньевна" id="selectGroup4" @change="checkArray" v-model='peopleSelect'>
                     <label class="form-check-label" for="selectGroup4">
@@ -31,14 +31,21 @@
                         Аристова Елена Генадьевна
                     </label>
                 </div>
+            </div>-->
+            <div class="people d-flex flex-wrap" v-for="user in users">
+                <div class="form-check mr-3">
+                    <input class="form-check-input" type="checkbox" :value="user" id="selectGroup3" @change="checkArray" v-model='peopleSelect'>
+                    <label class="form-check-label" for="selectGroup3">
+                        {{ user.name }}
+                    </label>
+                </div>
             </div>
         </div>
         <div class="buttonWrap d-flex align-items-center mt-5">
             <button class="btn btn-primary w-25 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
             <button class="btn btn-danger w-25 " @click="closeModal">Отмена</button>
         </div>
-        
-    </div>
+    </div>  
 </template>
 
 <script>
@@ -47,15 +54,17 @@
             return{
                 groupSelect:this.groupSelectParrent,
                 peopleSelect:this.peopleSelectParrent,
-                disabledButton:false
-            }
+                disabledButton:false,
+                users:{},
+            };
+            
         },
         mounted(){
             
         },
         props:[
             'groupSelectParrent',
-            'peopleSelectParrent'
+            'peopleSelectParrent',
         ],
         methods:{
             closeModal(){
@@ -73,10 +82,19 @@
             udpadeParrentArray(){
                 this.$emit('udpadeParrentArray', {
                     groupSelectChild: this.groupSelect,
-                    peopleSelectChild: this.peopleSelect
+                    peopleSelectChild: this.peopleSelect,
+                })
+            },
+            getUsers(){
+                axios.get('/getUsers').then((response)=>{
+                    this.users=response.data.users;
+                    console.log(response)
                 })
             }
         },
+        created(){
+            this.getUsers();
+        }
     }
 </script>
 

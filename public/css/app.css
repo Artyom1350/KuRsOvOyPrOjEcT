@@ -155,7 +155,7 @@ sup {
 }
 
 a {
-  color: #3490dc;
+  color: var(--white);
   text-decoration: none;
   background-color: transparent;
 }

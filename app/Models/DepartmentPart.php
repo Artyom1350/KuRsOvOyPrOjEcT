@@ -10,6 +10,7 @@ class DepartmentPart extends Model
     use HasFactory;
 
     protected $fillable=['name'];
+    
 
     public function department(){
         return $this->belongsTo(Departments::class);

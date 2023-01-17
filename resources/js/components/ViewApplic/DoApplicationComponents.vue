@@ -229,7 +229,6 @@
                 form.append('groupSelect',this.groupSelect);
                 form.append('file',this.file);
                 form.append('fileName',this.file.name);
-                form.append('dateAppl',this.dateAppl);
                 axios.post('/addApplication',form,config)
                 .then(response=>console.log(response));
             },  

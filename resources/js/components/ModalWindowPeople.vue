@@ -18,10 +18,14 @@
                 
             </div>
             <h2 class='text-center mt-5'>Выбор пользователей</h2>
-            <div class="people d-flex flex-wrap" v-for="user in users">
-                <div class="form-check mr-3">
-                    <input class="form-check-input" type="checkbox" :value="user" id="selectGroup3" @change="checkArray" v-model='peopleSelect'>
-                    <label class="form-check-label" for="selectGroup3">
+            <div class="form-group">
+                <label for="searchPeople">Поиск</label>
+                <input type="text" class="form-control searchString" name="searchPeople" id="searchPeople" @keyup="getSearchPeople" v-model="textSearch">
+            </div>
+            <div class="people d-flex flex-wrap" >
+                <div class="people-unit form-check mr-3" v-for="(user, index) in users">
+                    <input class="form-check-input" type="checkbox" :value="user" :id="'selectPeople'+index" @change="checkArray" v-model='peopleSelect'>
+                    <label class="form-check-label" :for="'selectPeople'+index">
                         {{ user.name }}
                     </label>
                 </div>
@@ -42,6 +46,7 @@
                 peopleSelect:this.peopleSelectParrent,
                 disabledButton:false,
                 users:{},
+                textSearch:'',
             };
             
         },
@@ -53,33 +58,46 @@
             'peopleSelectParrent',
         ],
         methods:{
-            closeModal(){
-                this.$emit('close');
-            },
-            checkArray(){
-                if(this.groupSelect[0]!=null || this.peopleSelect[0]!=null){
-                    this.disabledButton=true;
+                closeModal(){
+                    this.$emit('close');
+                },
+                checkArray(){
+                    if(this.groupSelect[0]!=null || this.peopleSelect[0]!=null){
+                        this.disabledButton=true;
+                    }
+                    else{
+                        this.disabledButton=false;
+                    }
+                    this.udpadeParrentArray();
+                },
+                udpadeParrentArray(){
+                    this.$emit('udpadeParrentArray', {
+                        groupSelectChild: this.groupSelect,
+                        peopleSelectChild: this.peopleSelect,
+                    })
+                },
+                getUsers(){
+                    axios.get('/getUsers').then((response)=>{
+                        this.users=response.data.users;
+                    })
+                },
+                getSearchPeople(){
+                    
+                    for( var i=0;i< $('.people-unit').length;i++){
+                        var el=$('.people-unit')[i];
+                        
+                        if(el.outerText.includes(this.textSearch)){
+                            el.style.display="block"
+                        }else{
+                            el.style.display="none"
+                            
+                        }
+                    }
                 }
-                else{
-                    this.disabledButton=false;
-                }
-                this.udpadeParrentArray();
             },
-            udpadeParrentArray(){
-                this.$emit('udpadeParrentArray', {
-                    groupSelectChild: this.groupSelect,
-                    peopleSelectChild: this.peopleSelect,
-                })
-            },
-            getUsers(){
-                axios.get('/getUsers').then((response)=>{
-                    this.users=response.data.users;
-                })
+            created(){
+                this.getUsers();
             }
-            },
-        created(){
-            this.getUsers();
-        }
     }
 </script>
 
@@ -98,4 +116,7 @@
         background: #fff;
     }
 
+    .displayNoneImportant{
+        display: none !important;
+    }
 </style>

@@ -2,17 +2,17 @@
     <div class="modalWindow">
         <div class="textArea">
             <h2 class='text-center'>Выбор групп пользователей</h2>
+            <div class="form-group">
+                <label for="searchGroup">Поиск</label>
+                <!-- @keyup="getsearchGroup"  добавлю после вывода групп -->
+                <input type="text" class="form-control searchString" name="searchGroup" id="searchGroup" 
+                v-model="textSearchGroup">
+            </div>
             <div class="grupPeople d-flex flex-wrap">
-                <div class="form-check mr-3">
+                <div class="group-unit form-check mr-3">
                     <input class="form-check-input" type="checkbox" value="Приёмная коммисия" id="selectGroup1" @change="checkArray" v-model='groupSelect'>
                     <label class="form-check-label" for="selectGroup1">
                         Приёмная коммисия
-                    </label>
-                </div>
-                <div class="form-check mr-3">
-                    <input class="form-check-input" type="checkbox" value="Учебная часть" id="selectGroup2" @change="checkArray" v-model='groupSelect'>
-                    <label class="form-check-label" for="selectGroup2">
-                        Учебная часть
                     </label>
                 </div>
                 
@@ -47,6 +47,7 @@
                 disabledButton:false,
                 users:{},
                 textSearch:'',
+                textSearchGroup:'',
             };
             
         },
@@ -93,6 +94,18 @@
                             
                         }
                     }
+                },
+                getsearchGroup(){
+                    // for( var i=0;i< $('.people-unit').length;i++){
+                    //     var el=$('.people-unit')[i];
+                        
+                    //     if(el.outerText.includes(this.textSearch)){
+                    //         el.style.display="block"
+                    //     }else{
+                    //         el.style.display="none"
+                            
+                    //     }
+                    // }
                 }
             },
             created(){

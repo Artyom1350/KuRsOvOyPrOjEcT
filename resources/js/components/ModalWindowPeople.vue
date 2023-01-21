@@ -5,6 +5,7 @@
             <div class="form-group">
                 <label for="searchGroup">Поиск</label>
                 <!-- @keyup="getsearchGroup"  добавлю после вывода групп -->
+                
                 <input type="text" class="form-control searchString" name="searchGroup" id="searchGroup" 
                 v-model="textSearchGroup">
             </div>

@@ -34,3 +34,4 @@ Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allAppl
 Route::post('/getDocument',[HomeController::class,'getDocument'])->middleware('auth');
 Route::post('/changeApplSend',[HomeController::class,'changeApplSend'])->middleware('auth');
 Route::get('/getUsers',[HomeController::class,'getUsers'])->middleware('auth');
+Route::get('/getDepartment',[Homecontroller::class,'getDepartment'])->middleware('auth');

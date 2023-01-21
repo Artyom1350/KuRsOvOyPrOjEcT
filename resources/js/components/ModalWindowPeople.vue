@@ -9,13 +9,12 @@
                 v-model="textSearchGroup">
             </div>
             <div class="grupPeople d-flex flex-wrap">
-                <div class="group-unit form-check mr-3">
-                    <input class="form-check-input" type="checkbox" value="Приёмная коммисия" id="selectGroup1" @change="checkArray" v-model='groupSelect'>
-                    <label class="form-check-label" for="selectGroup1">
-                        Приёмная коммисия
+                <div class="group-unit form-check mr-3" v-for="(group,index) in groups">
+                    <input class="form-check-input" type="checkbox" :value="group" :id="'selectGroup'+index" @change="checkArray" v-model='groupSelect'>
+                    <label class="form-check-label" :for="'selectGroup'+index">
+                        {{ group.name }}
                     </label>
                 </div>
-                
             </div>
             <h2 class='text-center mt-5'>Выбор пользователей</h2>
             <div class="form-group">
@@ -46,6 +45,7 @@
                 peopleSelect:this.peopleSelectParrent,
                 disabledButton:false,
                 users:{},
+                groups:{},
                 textSearch:'',
                 textSearchGroup:'',
             };
@@ -82,6 +82,12 @@
                         this.users=response.data.users;
                     })
                 },
+                getGroups(){
+                    axios.get('/getDepartment').then((response)=>{
+                        this.groups=response.data.department;
+                        console.log(response);
+                    })
+                },
                 getSearchPeople(){
                     
                     for( var i=0;i< $('.people-unit').length;i++){
@@ -110,6 +116,7 @@
             },
             created(){
                 this.getUsers();
+                this.getGroups();
             }
     }
 </script>

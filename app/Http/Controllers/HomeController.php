@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Calendar;
 use App\Models\User;
 use App\Models\Document;
+use App\Models\Department;
 use App\Models\AccessUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -155,7 +156,16 @@ class HomeController extends Controller
     }
 
     public function addApplication(Request $request){
-        $users=explode(',',$request->post('peopleSelect'));
+        $users=array();
+        $group=array();
+       
+        if($request->post('peopleSelect')!=null){
+            $users=explode(',',$request->post('peopleSelect'));
+        }
+        if($request->post('groupSelect')!=null){
+            $groups=explode(',',$request->post('groupSelect'));
+        }
+
         $file=$request->file('file');
 
         $path='documents';
@@ -163,8 +173,30 @@ class HomeController extends Controller
         $fileName=basename($storePath);
         $filePath = $path . '/' . $fileName;
 
+        $arrProv=array();
+        $arrProv1=array();
+        if($request->post('groupSelect')!=null){
+            foreach($groups as $index){
+                //$group=Department::find($index)->departmentsParts()->first()->users()->get();
+                $group=Department::find($index)->departmentsParts()->get();
+                foreach($group as $parts){
+                    $userPart=$parts->users()->get();
+                    array_push($arrProv,$userPart);
+                }
+            }
+            foreach($arrProv as $item){
+                if(isset($item->first()['id'])){
+                    if($item->first()['id']!=auth()->id()){
+                        array_push($arrProv1,$item->first()['id']);
+                    }
+                }
+            }
+            $users = array_unique (array_merge ($users, $arrProv1));
+        }
+        //dd($users);
+
         $doc=Document::create([
-            'user_id'=>auth()->id(),
+            'user_id'=>/*auth()->id()*/1,
             'file'=>$request->post('fileName'),
             'title'=>$request->post('nameAppl'),
             'path'=>$filePath,
@@ -172,12 +204,16 @@ class HomeController extends Controller
             'description'=>$request->post('descriptionAppl'),
         ]);
 
+        $us=array();
         foreach($users as $user){
+            array_push($us,$user);
+            //dd($user);
             $acc=AccessUser::create([
                 'user_id'=>$user,
                 'document_id'=>$doc['id'],
             ]); 
         }
+        
 
         
         return response(auth()->id());
@@ -270,5 +306,9 @@ class HomeController extends Controller
 
         
         return response()->json($request);
+    }
+    public function getDepartment(){
+        $department=Department::all();
+        return response()->json(['department'=>$department]);
     }
 }

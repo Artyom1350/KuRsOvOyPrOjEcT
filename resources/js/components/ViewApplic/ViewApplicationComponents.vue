@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
 
-    <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
+    <form class="d-block w-50 m-auto" enctype="multipart/form-data">
         <!--     -->
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
@@ -18,8 +18,17 @@
             <label for="dateApplicate" class="form-label">Срок выполнения до:</label>
             <input type="date" class="form-control" id="dateApplicate" readonly name="dateAppl" placeholder="Дата" v-model="dateAppl">
         </div>
-        <a :href="'/myAppl/Download/'+this.$props.applic.doc_id"><input type="button" class="btn btn-primary" value="Скачать файл"/></a>
+        <div class="mb-3 d-flex">
+            <a :href="'/myAppl/Download/'+this.$props.applic.doc_id" class="mr-3"><input type="button" class="btn btn-primary" value="Скачать файл"/></a>
+            
+            <label class="mr-1 mt-auto mb-auto" for="statusApplSelect">Статус: </label>
+            <select  id="statusApplSelect" class="form-select" v-model="statusApplSelect">
+                <option v-for="(stat, index) in statusAppl" :value="index">{{stat}}</option>
+            </select>
+        </div>
         <!-- при условии, что пользователь является создателем(передача тригера через laravel) -->
+
+        <!-- а это (сверху ^) зачем?   -->
     </form>
 </div>
     
@@ -38,8 +47,20 @@
                 peopleSelect:[],
                 groupSelect:[],
                 file:this.$props.applic.fileName,
+                statusAppl:[
+                    'Не прочитано',
+                    'Прочитано', 
+                    'В работе', 
+                    'Готово',
+                ],
+                statusApplSelect:this.$props.applic.status,
             }
-        }, 
+        },
+        watch:{
+            statusApplSelect:function(){
+                // Сюда обработчик пихать
+            }
+        }
     }
 </script>
 
@@ -119,5 +140,11 @@
     }
     .field__file-button-remove{
         border-radius: 0 15px 15px 0 !important;
+    }
+    select{
+        border-radius: 15px;
+        border: 1px solid #4950574a;
+        background-color: #e9ecef;
+        padding: 0.375rem 0.75rem;
     }
 </style>

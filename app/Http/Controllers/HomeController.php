@@ -114,7 +114,15 @@ class HomeController extends Controller
         $description=$document->first()['description'];
         $dateAppl=$document->first()['dateAppl'];
 
-        $application=array('userName'=>$user,'fileName'=>$document->first()->file,'description'=>$description,'dateAppl'=>$dateAppl,'title'=>$title, 'doc_id'=>$id);
+        /*
+            вывод из документа его статус в числовом эквиваленте
+            покм п оумолчанию сделаю 0
+            проверил с другими значениями
+            всё работает
+            */
+
+        $status=0;
+        $application=array('userName'=>$user,'fileName'=>$document->first()->file,'description'=>$description,'dateAppl'=>$dateAppl,'title'=>$title, 'doc_id'=>$id, 'status'=>$status);
         return view('application/OneAppl',[ 'applic'=> $application]);
     }
 

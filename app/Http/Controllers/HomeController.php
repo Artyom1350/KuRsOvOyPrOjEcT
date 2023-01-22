@@ -137,7 +137,7 @@ class HomeController extends Controller
         return view('applicationsDo/changeApplication',['doc'=>$document, 'users'=>$users]);
     }
 
-    //Совершение операций
+    //Совершение операций (переписать на api)
     public function addApplication(Request $request){
         //переменные для работы
         $users=array();
@@ -298,7 +298,6 @@ class HomeController extends Controller
 
     //ненужная дичь(наверное)
     public function getDocument(Request $request){
-        
         $path=$request->post('path');
         $data=file_get_contents(Storage::get($path));
         return response($data);

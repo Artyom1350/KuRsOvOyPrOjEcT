@@ -4,8 +4,7 @@
             <h2 class='text-center'>Выбор групп пользователей</h2>
             <div class="form-group">
                 <label for="searchGroup">Поиск</label>
-                <!-- @keyup="getsearchGroup"  добавлю после вывода групп -->
-                <input type="text" class="form-control searchString" name="searchGroup" id="searchGroup" 
+                <input type="text" class="form-control searchString" name="searchGroup" id="searchGroup" @keyup="getsearchGroup"
                 v-model="textSearchGroup">
             </div>
             <div class="grupPeople d-flex flex-wrap">
@@ -85,7 +84,6 @@
                 getGroups(){
                     axios.get('/getDepartment').then((response)=>{
                         this.groups=response.data.department;
-                        console.log(response);
                     })
                 },
                 getSearchPeople(){
@@ -102,16 +100,14 @@
                     }
                 },
                 getsearchGroup(){
-                    // for( var i=0;i< $('.people-unit').length;i++){
-                    //     var el=$('.people-unit')[i];
-                        
-                    //     if(el.outerText.includes(this.textSearch)){
-                    //         el.style.display="block"
-                    //     }else{
-                    //         el.style.display="none"
-                            
-                    //     }
-                    // }
+                    for( var i=0;i< $('.group-unit').length;i++){
+                        var el=$('.group-unit')[i];
+                        if(el.outerText.includes(this.textSearchGroup)){
+                            el.style.display="block"
+                        }else{
+                            el.style.display="none"
+                        }
+                    }
                 }
             },
             created(){

@@ -38,6 +38,8 @@ class HomeController extends Controller
         return view('home',['calendar'=>$calendar]);
     }
 
+
+    //Просмотр заявок
     public function myApplication(){
         //исходящие
         //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
@@ -45,44 +47,29 @@ class HomeController extends Controller
 
         $application=array();
         $documents=auth()->user()->documents()->get();
-        
-        //$array;
         foreach($documents as $item){
             array_push($application,array('id' => $item['id'], 'name' => $item['title']));
         }
-
         return view('application/myAppl',['myApplData'=>$application]);
     }
 
     public function incApplication(){
         //входящие
-
-        // ['userName','userId','fileName','title','description','dateCreate']
         //переменные(вдруг ошибки будут тип они за областью видимости)
-        $documentName="";
         $user="";
-        $description="";
-        $dateCreate="";
-        $file="";
-
+        $application=array(); //создал массив для хранения переменных
         $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
-        $application=array(); //создал массив для хранения дичи
         //просто да(перебор)
-
         foreach($access as $item){
             $documents=$item->document()->get(); //выборка доступных доков
             foreach($documents as $document){
-                $documentName=$document['title']; //Название документа
                 $user=$document->user()->get(); //Кто создал?
 
                 $id=$document['id'];
-                $file=$document['file'];
                 $title=$document['title'];
-                $description=$document['description']; //описание документа
-                $dateCreate=$document['created_at']; //Когда создали
             }
             //ниже массив для пуша
-            $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'fileName'=>$file,'description'=>$description,'dateCreate'=>$dateCreate,'title'=>$title, 'idDocument'=>$id);
+            $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'title'=>$title, 'idDocument'=>$id);
             array_push($application,$itemToArray);
         }
 
@@ -90,51 +77,31 @@ class HomeController extends Controller
     }
 
     public function allApplication(){
-        //комбо myApplication() и incApplication()
-        //передача в 2 переменные
-        // ['userName','userId','fileName','title','description','dateCreate']
-        // $documentName="";
-        // $user="";
-        // $description="";
-        // $dateCreate="";
-        // $file="";
-
+        //исходящие
+        $application=array();
+        $documents=auth()->user()->documents()->get();
+        foreach($documents as $item){
+            array_push($application,array('id' => $item['id'], 'name' => $item['title']));
+        }
+        //входящие
+        $user="";
+        $application1=array(); //создал массив для хранения переменных
         $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
-        $application2=array(); //создал массив для хранения дичи
         //просто да(перебор)
-
         foreach($access as $item){
             $documents=$item->document()->get(); //выборка доступных доков
             foreach($documents as $document){
-                $documentName=$document['title']; //Название документа
                 $user=$document->user()->get(); //Кто создал?
 
                 $id=$document['id'];
-                $file=$document['file'];
                 $title=$document['title'];
-                $description=$document['description']; //описание документа
-                $dateCreate=$document['created_at']; //Когда создали
             }
             //ниже массив для пуша
-            $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'fileName'=>$file,'description'=>$description,'dateCreate'=>$dateCreate,'title'=>$title, 'idDocument'=>$id);
-            array_push($application2,$itemToArray);
+            $itemToArray=array('userName'=>$user->first()["name"],'userId'=>$user->first()["id"],'title'=>$title, 'idDocument'=>$id);
+            array_push($application1,$itemToArray);
         }
 
-         //исходящие
-        //вытягивание из БД тех заявок, на которые должны дать ответ другие пользователи
-        //applacationsAnswer отвечает за ответы на заявку
-
-        $application1=array();
-        $documents=auth()->user()->documents()->get();
-        
-        //$array;
-        foreach($documents as $item){
-            //$access=$item->access_users()->get(); позже
-
-            array_push($application1,array('id' => $item['id'], 'name' => $item['title']));
-        }
-
-        return view('application/allAppl',['myApplData'=>$application1,'incAplData'=>$application2]);
+        return view('application/allAppl',['myApplData'=>$application,'incAplData'=>$application1]);
     }
 
     public function viewOne($id){
@@ -151,14 +118,35 @@ class HomeController extends Controller
         return view('application/OneAppl',[ 'applic'=> $application]);
     }
 
+    //Открытие страниц операций
+
     public function doApplication(){
         return view('applicationsDo/createApplication');
     }
 
+    public function changeAppl($id){
+        $document=Document::where('id',$id)->get();
+        $access=AccessUSer::where('document_id',$id)->get();
+        $users=array();
+        foreach($access as $acc){
+            $ac=$acc->user()->get();
+            foreach($ac as $a){
+                array_push($users,$a);
+            }
+        }
+        return view('applicationsDo/changeApplication',['doc'=>$document, 'users'=>$users]);
+    }
+
+    //Совершение операций
     public function addApplication(Request $request){
+        //переменные для работы
         $users=array();
         $group=array();
-       
+        $arrProv=array();
+        $arrProv1=array();
+        $path='documents';
+
+       //получение юзеров из запроса
         if($request->post('peopleSelect')!=null){
             $users=explode(',',$request->post('peopleSelect'));
         }
@@ -166,18 +154,25 @@ class HomeController extends Controller
             $groups=explode(',',$request->post('groupSelect'));
         }
 
+        //работа с файлом
         $file=$request->file('file');
-
-        $path='documents';
         $storePath=Storage::disk('local')->put('documents', $file);
         $fileName=basename($storePath);
         $filePath = $path . '/' . $fileName;
 
-        $arrProv=array();
-        $arrProv1=array();
+        //создание документа
+        $doc=Document::create([
+            'user_id'=>auth()->id(),
+            'file'=>$request->post('fileName'),
+            'title'=>$request->post('nameAppl'),
+            'path'=>$filePath,
+            'dateAppl'=>$request->post('dateAppl'),
+            'description'=>$request->post('descriptionAppl'),
+        ]);
+
+        //перебор юзеров, проверка на совпадение полученных id_user и занесение в массив
         if($request->post('groupSelect')!=null){
             foreach($groups as $index){
-                //$group=Department::find($index)->departmentsParts()->first()->users()->get();
                 $group=Department::find($index)->departmentsParts()->get();
                 foreach($group as $parts){
                     $userPart=$parts->users()->get();
@@ -193,122 +188,119 @@ class HomeController extends Controller
             }
             $users = array_unique (array_merge ($users, $arrProv1));
         }
-        //dd($users);
 
-        $doc=Document::create([
-            'user_id'=>/*auth()->id()*/1,
-            'file'=>$request->post('fileName'),
-            'title'=>$request->post('nameAppl'),
-            'path'=>$filePath,
-            'dateAppl'=>$request->post('dateAppl'),
-            'description'=>$request->post('descriptionAppl'),
-        ]);
-
-        $us=array();
+        //запись в AccessUser
         foreach($users as $user){
-            array_push($us,$user);
-            //dd($user);
             $acc=AccessUser::create([
                 'user_id'=>$user,
                 'document_id'=>$doc['id'],
             ]); 
         }
-        
 
-        
+        //ответ
         return response(auth()->id());
     }
+    public function changeApplSend(Request $request){
 
+        //переменные для работы
+        $users=array();
+        $group=array();
+        $arrProv=array();
+        $arrProv1=array();
+        $path='documents';
+       
+        //получение групп и юзеров
+        if($request->post('peopleSelect')!=null){
+            $users=explode(',',$request->post('peopleSelect'));
+        }
+
+        if($request->post('groupSelect')!=null){
+            $groups=explode(',',$request->post('groupSelect'));
+        }
+    
+        //работа с документом
+        $docEdit=Document::find($request->post('doc_id'));
+        
+        $docEdit->title=$request->post('nameAppl');
+        $docEdit->dateAppl=$request->post('dateAppl');
+        $docEdit->description=$request->post('descriptionAppl');
+
+        //если есть файл удаляем старый и записываем новый
+        if($request->post('file')!=null){
+            $file=$request->file('file');
+            Storage::delete($docEdit->path);
+            $storePath=Storage::disk('local')->put('documents', $file);
+            $fileName=basename($storePath);
+            $filePath = $path . '/' . $fileName;
+            $docEdit->path=$filePath;
+            $docEdit->file=$request->post('fileName');
+        }
+        $docEdit->save();
+
+        //удаляем старые данные из AccessUser, чтобы записать новые
+        $accForDelete=AccessUser::where('document_id',$request->post('doc_id'))->get();
+        foreach($accForDelete as $acc){
+            $acc->delete();
+        }
+
+        //Совмещаем user и user из групп + создаем их массив
+        if($request->post('groupSelect')!=null){
+            foreach($groups as $index){
+                $group=Department::find($index)->departmentsParts()->get();
+                foreach($group as $parts){
+                    $userPart=$parts->users()->get();
+                    array_push($arrProv,$userPart);
+                }
+            }
+            foreach($arrProv as $item){
+                if(isset($item->first()['id'])){
+                    if($item->first()['id']!=auth()->id()){
+                        array_push($arrProv1,$item->first()['id']);
+                    }
+                }
+            }
+            $users = array_unique (array_merge ($users, $arrProv1));
+        }
+
+        //записываем новый набор юзеров в AccessUser
+        foreach($users as $user){
+            $acc=AccessUser::create([
+                'user_id'=>$user,
+                'document_id'=>$docEdit['id'],
+            ]); 
+        }
+        //Ответ
+        return response()->json($request);
+    }
+
+    //то что тоже должно быть в api
     public function getUsers(){
+        //простая логика получения всех юзеров кроме нашего
         $users=User::whereKeyNot(auth()->id())->get();
         return response()->json(['users'=>$users]);
     }
 
     public function downloadAppl($id){
+        //загрузка документа из хранлища по id из get
         $doc=Document::where('id',$id)->get();
         foreach($doc as $docs){
             return Storage::download($docs["path"],$docs['file']);
         } 
     }
 
-    public function changeAppl($id){
-
-        $doc=Document::where('id',$id)->get();
-        $access=AccessUSer::where('document_id',$id)->get();
-        $users=array();
-        foreach($access as $acc){
-            $ac=$acc->user()->get();
-            foreach($ac as $a){
-                array_push($users,$a);
-            }
-
-        }
-        //есть лишние переменные!!! т.к. не заработал адекватно блоб, нужно будет чистить если сойдет и то решение
-        $path='';
-        $docName='';
-        foreach($doc as $do){
-           // dd($do);
-            $path=$do['path'];
-            $docName=$do['file'];
-        }
-       // $path1=file();
-       $file=Storage::get($path);
-       //dd($file);
-       
-        //dd($users);
-        return view('applicationsDo/changeApplication',['doc'=>$doc, 'users'=>$users, 'file'=>$path,'fileName'=>[$docName]]);
-    }
-    public function getDocument(Request $request){
-        $path=$request->post('path');
-        //$path=$path."da";
-        //dd(Storage::get($path));
-        $data=file_get_contents(Storage::get($path));
-        return response($data);
-    }
-
-
-    public function changeApplSend(Request $request){
-        
-        $path='documents';
-
-        $docEdit=Document::find($request->post('doc_id'));
-
-        $docEdit->title=$request->post('nameAppl');
-        $docEdit->dateAppl=$request->post('dateAppl');
-        $docEdit->description=$request->post('descriptionAppl');
-
-        if(empty($request->post('file'))){
-            $file=$request->file('file');
-            Storage::delete($docEdit->path);
-            $storePath=Storage::disk('local')->put('documents', $file);
-            $fileName=basename($storePath);
-            $filePath = $path . '/' . $fileName;
-
-            $docEdit->path=$filePath;
-            $docEdit->file=$request->post('fileName');
-        }
-        $docEdit->save();
-
-        
-
-        $accForDelete=AccessUser::where('document_id',$request->post('doc_id'))->get();
-        foreach($accForDelete as $acc){
-            $acc->delete();
-        }
-
-        $users=explode(',',$request->post('peopleSelect'));
-        foreach($users as $user){
-            $acc=AccessUser::create([
-                'user_id'=>$user,
-                'document_id'=>$request->post('doc_id'),
-            ]); 
-        }
-
-        
-        return response()->json($request);
-    }
     public function getDepartment(){
+        //Все департаменты юзеров
         $department=Department::all();
         return response()->json(['department'=>$department]);
+    }
+
+
+
+    //ненужная дичь(наверное)
+    public function getDocument(Request $request){
+        
+        $path=$request->post('path');
+        $data=file_get_contents(Storage::get($path));
+        return response($data);
     }
 }

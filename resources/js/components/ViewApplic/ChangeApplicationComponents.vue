@@ -33,7 +33,7 @@
                     <div v-if="groupSelect[0]" class="wrap-grpeo">
                         <p class="text-center"><b>Группы пользователей</b></p>
                         <div class="mb-3 d-flex justify-content-between" v-for="(group,index) in groupSelect">
-                            <p>{{group}}</p>
+                            <p>{{group.name}}</p>
                             <input type="button" class="btn btn-danger" value="-" @click="delElemGroup(index)"/>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
         components:{
             ModalWindow
         },
-        props:['doc','users','path','fileName'],
+        props:['doc','users'],
         data(){
             return{
                 trigersField:{
@@ -252,18 +252,22 @@
                     alert('Ошибка')
                 }*/
 
-                var mas=new Array();
+                var peopleMas=new Array();
                 this.peopleSelect.forEach(item => {
-                    mas.push(item['id']);
+                    peopleMas.push(item['id']);
                 });
+                var groupMas=new Array();
+                this.groupSelect.forEach(item=>{
+                    groupMas.push(item['id']);
+                })
 
                 const config = { 'content-type': 'multipart/file.type' }
                 var form=new FormData();
                 form.append('nameAppl',this.nameAppl);
                 form.append('descriptionAppl',this.descriptionAppl);
                 form.append('dateAppl',this.dateAppl);
-                form.append('peopleSelect', mas);
-                form.append('groupSelect',this.groupSelect);
+                form.append('peopleSelect', peopleMas);
+                form.append('groupSelect',groupMas);
                 form.append('file',this.file);
                 form.append('fileName',this.file.name);
                 form.append('dateAppl',this.dateAppl);

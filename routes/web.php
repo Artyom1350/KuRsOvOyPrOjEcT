@@ -19,7 +19,7 @@ Route::redirect('/', 'login');
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-
+//Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument'])->middleware('auth');
 Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation')->middleware('auth');
 Route::get('/incAppl/{id}',[HomeController::class,'viewOne'])->name('viewOne')->middleware('auth');
 
@@ -34,4 +34,6 @@ Route::get('/allAppl', [HomeController::class, 'allApplication'])->name('allAppl
 Route::post('/getDocument',[HomeController::class,'getDocument'])->middleware('auth');
 Route::post('/changeApplSend',[HomeController::class,'changeApplSend'])->middleware('auth');
 Route::get('/getUsers',[HomeController::class,'getUsers'])->middleware('auth');
-Route::get('/getDepartment',[Homecontroller::class,'getDepartment'])->middleware('auth');
+Route::get('/getDepartment',[HomeController::class,'getDepartment'])->middleware('auth');
+
+Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument'])->middleware('auth');

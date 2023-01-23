@@ -301,6 +301,14 @@ class HomeController extends Controller
         $department=Department::all();
         return response()->json(['department'=>$department]);
     }
+    //Обновление статуса документа пользователя
+    public function updateStatusDocument(Request $request){
+        $doc=AccessUser::where('document_id',$request->post('doc_id'))->where('user_id',auth()->id())->first();
+        //dd($doc);
+        $doc->status=$request->post('status');
+        $doc->save();
+        return response()->json(['reg'=>$request->post('doc_id')]);
+    }
 
 
 

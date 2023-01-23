@@ -4,7 +4,6 @@
             <h3>{{applicat.userName}}</h3>
             <h3>{{applicat.title}}</h3>
             <a :href="'incAppl/'+applicat.idDocument"><button class="btn btn-primary">Просмотреть заявку</button></a>
-            <a href="#"><button class="btn btn-primary">Дать ответ на заявку</button></a>
         </div>
     </div>
     

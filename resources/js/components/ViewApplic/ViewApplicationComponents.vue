@@ -20,7 +20,6 @@
         </div>
         <div class="mb-3 d-flex">
             <a :href="'/myAppl/Download/'+this.$props.applic.doc_id" class="mr-3"><input type="button" class="btn btn-primary" value="Скачать файл"/></a>
-            
             <label class="mr-1 mt-auto mb-auto" for="statusApplSelect">Статус: </label>
             <select  id="statusApplSelect" class="form-select" v-model="statusApplSelect">
                 <option v-for="(stat, index) in statusAppl" :value="index">{{stat}}</option>
@@ -35,6 +34,8 @@
 </template>
 
 <script>
+import { assertExpressionStatement } from '@babel/types';
+
     export default {
         props:[
             "applic"
@@ -59,6 +60,14 @@
         watch:{
             statusApplSelect:function(){
                 // Сюда обработчик пихать
+                var val=this.statusApplSelect;
+
+                var form=new FormData();
+                form.append('doc_id',this.$props.applic.doc_id);
+                form.append('status',val);
+
+                axios.post('/updateStatusDocument',form)
+                .then(response=>console.log(response));
             }
         }
     }

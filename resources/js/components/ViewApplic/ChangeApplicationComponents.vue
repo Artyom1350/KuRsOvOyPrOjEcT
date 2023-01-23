@@ -53,6 +53,8 @@
         </div>
         <!-- файл -->
         <p>Ранее выбранный файл: <a :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
+        <p><a :href="'/myAppl/Download/'+this.$props.doc[0].id"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
+        
         <div class="mb-3 d-flex" > 
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
@@ -111,39 +113,6 @@
                 incorrectDate:false,
                 incorrectFile:false
             }
-        },
-        created(){
-            //не рабочая дичь (файл получается битый)
-           /* var reader=new FileReader();
-            data=fetch(this.$props.path);
-            console.log(this.$props.path);
-            console.log(data)
-            var file1=new File(this.$props.path,this.$props.docName);
-            console.log(file1);
-            this.file=file1;
-            var form=new FormData();
-            form.append('path',this.$props.path)
-            axios.post('/getDocument',form).then((response)=>{
-
-                const blob = new Blob([response],{type: "application/json"});
-                var file1=new File([blob], this.$props.doc[0].file);
-
-                проверка
-                var url=URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.setAttribute('href', url);
-                link.setAttribute('download', this.$props.doc[0].file);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                console.log(file1);
-                console.log(blob);
-                this.file=file;
-                console.log(response)
-                
-            })*/
         },
         watch:{
             peopleSelect(){

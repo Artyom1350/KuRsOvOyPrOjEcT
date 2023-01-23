@@ -67,7 +67,7 @@ import { assertExpressionStatement } from '@babel/types';
                 form.append('status',val);
 
                 axios.post('/updateStatusDocument',form)
-                .then(response=>console.log(response));
+                .then(response=>alert('Статус изменен!'));
             }
         }
     }

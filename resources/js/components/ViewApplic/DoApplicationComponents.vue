@@ -238,7 +238,8 @@
                 //console.log(groupMas);
 
                 axios.post('/myAppl/addApplication',form,config)
-                .then(response=>console.log(response));
+                .then(response=>alert('Заявка успешно создана!'));
+                window.location.href='/myAppl';
             },  
         },
         validations (){

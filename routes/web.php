@@ -37,3 +37,4 @@ Route::get('/getUsers',[HomeController::class,'getUsers'])->middleware('auth');
 Route::get('/getDepartment',[HomeController::class,'getDepartment'])->middleware('auth');
 
 Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument'])->middleware('auth');
+Route::post('/myAppl/deleteDoc',[HomeController::class,'deleteDocument'])->middleware('auth');

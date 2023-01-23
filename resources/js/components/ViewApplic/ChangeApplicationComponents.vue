@@ -53,7 +53,7 @@
         </div>
         <!-- файл -->
         <p>Ранее выбранный файл: <a :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
-        <p><a :href="'/myAppl/Delete/'+this.$props.doc[0].id"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
+        <p><a href="#" @click.prevent="deleteDoc()"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
         
         <div class="mb-3 d-flex" > 
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
@@ -214,6 +214,13 @@
             delElemPeople(index){
                 this.peopleSelect.splice(index,1);
             },
+            deleteDoc(){
+                var bool=confirm("Точно хотите удалить заявку?");
+                if(bool==true){
+                    axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id}).then(response=>alert("Заявка успешно удалена!"));
+                    window.location.href='/myAppl';
+                }
+            },
             getAnswerApplic(){
                 /*if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     alert('Запрос на сервер')
@@ -242,7 +249,8 @@
                 form.append('dateAppl',this.dateAppl);
                 form.append('doc_id',this.$props.doc[0].id);
                 axios.post('/changeApplSend',form,config)
-                .then(response=>console.log(response));
+                .then(response=>alert('Заявка успешно изменена!'));
+                window.location.href='/myAppl';
             },  
         },
         validations (){

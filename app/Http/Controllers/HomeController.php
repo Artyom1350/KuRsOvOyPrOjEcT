@@ -113,15 +113,17 @@ class HomeController extends Controller
         $user=$document->first()->user()->first()['name'];
         $description=$document->first()['description'];
         $dateAppl=$document->first()['dateAppl'];
+        $status=auth()->user()->access_users()->where('document_id',$id)->first()['status'];
 
         /*
             вывод из документа его статус в числовом эквиваленте
             покм п оумолчанию сделаю 0
             проверил с другими значениями
             всё работает
+            ok
             */
 
-        $status=0;
+        //$status=0;
         $application=array('userName'=>$user,'fileName'=>$document->first()->file,'description'=>$description,'dateAppl'=>$dateAppl,'title'=>$title, 'doc_id'=>$id, 'status'=>$status);
         return view('application/OneAppl',[ 'applic'=> $application]);
     }
@@ -308,6 +310,12 @@ class HomeController extends Controller
         $doc->status=$request->post('status');
         $doc->save();
         return response()->json(['reg'=>$request->post('doc_id')]);
+    }
+
+    //Удаление заявки
+    public function deleteDocument(Request $request){
+        Document::find($request->post('id'))->delete();
+        return response('da');
     }
 
 

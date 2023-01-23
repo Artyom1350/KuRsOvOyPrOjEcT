@@ -53,7 +53,7 @@
         </div>
         <!-- файл -->
         <p>Ранее выбранный файл: <a :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
-        <p><a :href="'/myAppl/Download/'+this.$props.doc[0].id"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
+        <p><a :href="'/myAppl/Delete/'+this.$props.doc[0].id"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
         
         <div class="mb-3 d-flex" > 
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">

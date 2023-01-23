@@ -52,8 +52,7 @@
             </div>
         </div>
         <!-- файл -->
-        <p>Ранее выбранный файл: <a :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
-        <p><a href="#" @click.prevent="deleteDoc()"><span style="color:red">Удалить заявку:</span> {{ this.$props.doc[0].title }}</a></p>
+        <p>Ранее выбранный файл: <a class="link_document" :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
         
         <div class="mb-3 d-flex" > 
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
@@ -65,6 +64,7 @@
         </div>  
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
+        <button type="submit" class="btn btn-danger" @click.prevent="deleteDoc()">Удалить {{ this.$props.doc[0].title }}</button>
         <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Сохранить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
@@ -77,7 +77,7 @@
     import { assertExistsTypeAnnotation } from '@babel/types';
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
-    import ModalWindow from '../ModalWindowPeople.vue';
+    import ModalWindow from '../modalWindows/ModalWindowPeople.vue';
 
 
     export default {
@@ -375,5 +375,8 @@
     }
     .field__file-button-remove{
         border-radius: 0 15px 15px 0 !important;
+    }
+    .link_document{
+        color: #28679b;
     }
 </style>

@@ -2,9 +2,10 @@ import Vue from 'vue';
 import MyApplic from './components/outputApplic/MyApplicationComponents.vue';
 import IncApplic from './components/outputApplic/IncApplicationComponents.vue';
 import DoApplic from './components/ViewApplic/DoApplicationComponents.vue';
-import ModalWindow from './components/ModalWindowPeople.vue';
+import ModalWindow from './components/modalWindows/ModalWindowPeople.vue';
 import ViewAppl from './components/ViewApplic/ViewApplicationComponents.vue';
 import ChangeAppl from './components/ViewApplic/ChangeApplicationComponents.vue';
+import ModalWindowAnsw from './components/modalWindows/ModalWindowAnswer.vue';
 
 require('./bootstrap');
 
@@ -17,5 +18,6 @@ const container= new Vue({
         ModalWindow,
         ViewAppl,
         ChangeAppl,
+        ModalWindowAnsw
     }
 });

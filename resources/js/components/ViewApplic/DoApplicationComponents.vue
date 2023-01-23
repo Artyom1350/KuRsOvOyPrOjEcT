@@ -64,7 +64,7 @@
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
         <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
-    </form>
+    </form> 
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 </div>
     
@@ -73,7 +73,7 @@
 <script>
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
-    import ModalWindow from '../ModalWindowPeople.vue';
+    import ModalWindow from '../modalWindows/ModalWindowPeople.vue';
 
     export default {
         setup(){

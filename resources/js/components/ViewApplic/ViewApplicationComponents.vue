@@ -59,7 +59,6 @@ import { assertExpressionStatement } from '@babel/types';
         },
         watch:{
             statusApplSelect:function(){
-                // Сюда обработчик пихать
                 var val=this.statusApplSelect;
 
                 var form=new FormData();

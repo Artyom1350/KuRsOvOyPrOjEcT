@@ -9,7 +9,7 @@ class AccessUser extends Model
 {
     use HasFactory;
 
-    protected $fillable=['document_id','user_id'];
+    protected $fillable=['document_id','user_id','status'];
 
     public function user(){
         return $this->belongsTo(User::class);

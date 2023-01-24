@@ -204,6 +204,7 @@ class HomeController extends Controller
             $acc=AccessUser::create([
                 'user_id'=>$user,
                 'document_id'=>$doc['id'],
+                'status'=>0
             ]); 
         }
 
@@ -277,6 +278,7 @@ class HomeController extends Controller
             $acc=AccessUser::create([
                 'user_id'=>$user,
                 'document_id'=>$docEdit['id'],
+                'status'=>0
             ]); 
         }
         //Ответ
@@ -310,6 +312,19 @@ class HomeController extends Controller
         $doc->status=$request->post('status');
         $doc->save();
         return response()->json(['reg'=>$request->post('doc_id')]);
+    }
+    //Получение ответов от юзеров
+    public function getUnswersUsers(Request $request){
+        $access=AccessUser::where('document_id',$request->post('id_doc'))->get();
+        $appl=array();
+        foreach($access as $acc){
+            $user=$acc->user()->get();
+            //dd($);
+            array_push($appl,['name'=>$user->first()['name'],'status'=>$acc['status']]);
+            
+        }
+        //dd($appl);
+        return response()->json(['users'=>$appl]);
     }
 
     //Удаление заявки

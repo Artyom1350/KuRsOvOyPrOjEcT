@@ -26,8 +26,7 @@
     export default{
         data(){
             return{
-                users:{
-                },
+                users:[],
                 textSearch:'',
             };
             
@@ -44,9 +43,12 @@
                     this.$emit('close');
                 },
                 getUsers(){
-                    // axios.get('/getUsers').then((response)=>{
-                    //     this.users=response.data.users;
-                    // })
+                    axios.post('/getAnswersUsers',{'id_doc':this.$props.idDocuments}).then((response)=>{
+                        console.log(this.$props.idDocuments);
+                        console.log(response);
+                         this.users=response.data.users;
+                         console.log(this.users.data);
+                    })
                 },
                 getSearchPeople(){
                     for( var i=0;i< $('.people-unit').length;i++){

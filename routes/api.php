@@ -25,4 +25,5 @@ Route::post('/addApplication',[HomeController::class,'addApplication']);
 Route::post('/getDocument',[HomeController::class,'getDocument']);
 Route::post('/changeApplSend',[HomeController::class,'changeApplSend']);
 Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument']);
+Route::post('/getUnswersUsers',[HomeController::class,'getUnswersUsers']);
 

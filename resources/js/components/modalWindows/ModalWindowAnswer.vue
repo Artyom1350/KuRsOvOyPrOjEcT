@@ -9,7 +9,11 @@
                     <div class="people-unit w-100 h-10" v-for="(user, index) in users">
                         <div class="form-check mr-3 d-flex justify-content-around w-100" >
                             <p class="m-1"><b>Пользователь:</b> {{ user.name }}</p>
-                            <p class="m-1"><b>Статус:</b> {{ user.status }}</p>
+                            <p class="m-1"><b>Статус:</b> 
+                                
+                                {{ statusAppl[user.status] }}
+                            
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -28,11 +32,17 @@
             return{
                 users:[],
                 textSearch:'',
+                statusAppl:[
+                    'Не прочитано',
+                    'Прочитано', 
+                    'В работе', 
+                    'Готово',
+                ],
             };
             
         },
         mounted(){
-            
+            this.getUsers();
         },
         props:[
             'idDocuments'
@@ -43,10 +53,7 @@
                 },
                 getUsers(){
                     axios.post('/getAnswersUsers',{'id_doc':this.$props.idDocuments}).then((response)=>{
-                        console.log(this.$props.idDocuments);
-                        console.log(response);
-                         this.users=response.data.users;
-                         console.log(this.users.data);
+                        this.users=response.data.users;
                     })
                 },
                 getSearchPeople(){
@@ -54,7 +61,6 @@
                         var el=$('.people-unit')[i];
                         
                         if(el.outerText.includes(this.textSearch)){
-                            console.log(el.outerText);
                             el.style.display="block"
                         }else{
                             el.style.display="none"
@@ -63,9 +69,7 @@
                     }
                 },
             },
-            created(){
-                this.getUsers();
-            }
+            
     }
 </script>
 

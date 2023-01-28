@@ -222,13 +222,9 @@
                 }
             },
             getAnswerApplic(){
-                /*if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     alert('Запрос на сервер')
-                }else{
-                    alert('Ошибка')
-                }*/
-
-                var peopleMas=new Array();
+                    var peopleMas=new Array();
                 this.peopleSelect.forEach(item => {
                     peopleMas.push(item['id']);
                 });
@@ -251,6 +247,9 @@
                 axios.post('/changeApplSend',form,config)
                 .then(response=>alert('Заявка успешно изменена!'));
                 window.location.href='/myAppl';
+                }else{
+                    alert('Ошибка')
+                }
             },  
         },
         validations (){

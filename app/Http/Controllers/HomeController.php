@@ -217,7 +217,7 @@ class HomeController extends Controller
         }
 
         //ответ
-        return response(auth()->id());
+        return response("Заявка успешно создана");
     }
     public function changeApplSend(Request $request){
 

@@ -210,7 +210,7 @@
                 this.peopleIdSelect.splice(index,1);
             },
             getAnswerApplic(){
-                if(!this.incorrectDate && this.issetGroupPeopl && this.v$.$invalid){
+                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
                         peopleMas.push(item['id']);
@@ -234,6 +234,7 @@
                     .then(response=>alert('Заявка успешно создана!'));
                     window.location.href='/myAppl';
                 }else{
+                    console.log(this.v$);
                     alert('Ошибка');
                 }
                 /*var peopleMas=new Array();

@@ -114,11 +114,9 @@
 
     .textArea{
         height: 90%;
-        margin-top: -45px;
     }
 
     .people{
         overflow-y: scroll;
-        height: 80%;
     }
 </style>

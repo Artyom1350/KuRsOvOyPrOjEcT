@@ -154,7 +154,7 @@
             },
             file(){
                 if(this.$refs.file.files[0]){
-                    if(this.$refs.file.files[0].name.split('.')[2] != 'pdf'){
+                    if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
                         this.incorrectFile=true
                     }
                     else{
@@ -211,12 +211,29 @@
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && this.v$.$invalid){
-                    alert(!this.incorrectDate+" "+this.issetGroupPeopl +" "+ this.v$.$invalid);
-                    alert(this.issetGroupPeopl);
-                    alert('Запрос на сервер')
+                    var peopleMas=new Array();
+                    this.peopleSelect.forEach(item => {
+                        peopleMas.push(item['id']);
+                    });
+
+                    var groupMas=new Array();
+                    this.groupSelect.forEach(item=>{
+                        groupMas.push(item['id']);
+                    })
+
+                    const config = { 'content-type': 'multipart/file.type' }
+                    var form=new FormData();
+                    form.append('nameAppl',this.nameAppl);
+                    form.append('descriptionAppl',this.descriptionAppl);
+                    form.append('dateAppl',this.dateAppl);
+                    form.append('peopleSelect', peopleMas);
+                    form.append('groupSelect',groupMas);
+                    form.append('file',this.file);
+                    form.append('fileName',this.file.name);
+                    axios.post('/myAppl/addApplication',form,config)
+                    .then(response=>alert('Заявка успешно создана!'));
+                    window.location.href='/myAppl';
                 }else{
-                    alert(!this.incorrectDate+" "+this.issetGroupPeopl +" "+ this.v$.$invalid);
-                    alert(this.issetGroupPeopl);
                     alert('Ошибка');
                 }
                 /*var peopleMas=new Array();

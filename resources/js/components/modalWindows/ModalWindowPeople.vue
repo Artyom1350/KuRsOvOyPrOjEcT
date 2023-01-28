@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="buttonWrap d-flex align-items-center mt-5">
+        <div class="buttonWrap d-flex align-items-center mt-1">
             <button class="btn btn-primary w-25 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
             <button class="btn btn-danger w-25 " @click="closeModal">Отмена</button>
         </div>

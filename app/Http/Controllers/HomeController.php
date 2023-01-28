@@ -35,7 +35,15 @@ class HomeController extends Controller
         $calendar=new Calendar;
         //ВАЖНО!!!!!!!!!!!!!!!!
         //получение событий из БД
-        return view('home',['calendar'=>$calendar]);
+        //для примера можно добавить всякие праздники и т.д.
+        $events=array('31.1.2023'=>'Последний день января...');
+        $da=auth()->user()->access_users()->get();
+        foreach($da as $accessDoc){
+            $doc=$accessDoc->document()->first();
+            $arr=array(date("d.m.Y",strtotime($doc['dateAppl']))=>$doc['title']);
+            $events+=$arr;
+        }
+        return view('home',['calendar'=>$calendar,'events'=>$events]);
     }
 
 

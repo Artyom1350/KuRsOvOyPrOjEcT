@@ -154,7 +154,7 @@
             },
             file(){
                 if(this.$refs.file.files[0]){
-                    if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
+                    if(this.$refs.file.files[0].name.split('.')[2] != 'pdf'){
                         this.incorrectFile=true
                     }
                     else{
@@ -210,12 +210,16 @@
                 this.peopleIdSelect.splice(index,1);
             },
             getAnswerApplic(){
-                /*if(this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                if(!this.incorrectDate && this.issetGroupPeopl && this.v$.$invalid){
+                    alert(!this.incorrectDate+" "+this.issetGroupPeopl +" "+ this.v$.$invalid);
+                    alert(this.issetGroupPeopl);
                     alert('Запрос на сервер')
                 }else{
-                    alert('Ошибка')
-                }*/
-                var peopleMas=new Array();
+                    alert(!this.incorrectDate+" "+this.issetGroupPeopl +" "+ this.v$.$invalid);
+                    alert(this.issetGroupPeopl);
+                    alert('Ошибка');
+                }
+                /*var peopleMas=new Array();
                 this.peopleSelect.forEach(item => {
                     peopleMas.push(item['id']);
                 });
@@ -234,12 +238,9 @@
                 form.append('groupSelect',groupMas);
                 form.append('file',this.file);
                 form.append('fileName',this.file.name);
-                //console.log(peopleMas);
-                //console.log(groupMas);
-
                 axios.post('/myAppl/addApplication',form,config)
                 .then(response=>alert('Заявка успешно создана!'));
-                window.location.href='/myAppl';
+                window.location.href='/myAppl';*/
             },  
         },
         validations (){
@@ -250,6 +251,7 @@
                     maxLength: maxLength(100)
                 },
                 descriptionAppl:{
+                    required,
                     maxLength: maxLength(255)
                 },
                 dateAppl:{

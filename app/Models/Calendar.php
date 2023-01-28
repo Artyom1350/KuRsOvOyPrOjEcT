@@ -87,7 +87,6 @@ class Calendar extends Model
 					}				
 				}
 			}
-			
 			if ($event_show) {
 				$out.= '<td class="calendar-day ' . $class . ' event">' . $day;
 				if (!empty($event_text)) {

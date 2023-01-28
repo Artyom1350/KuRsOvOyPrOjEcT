@@ -268,7 +268,6 @@
                     maxLength: maxLength(100)
                 },
                 descriptionAppl:{
-                    required,
                     maxLength: maxLength(255)
                 },
                 dateAppl:{

@@ -13,6 +13,16 @@ $('.applicInProc').hover(function(){
 },function(){
     $('.applicInProc').removeClass('active');
 });
+$('.groups').hover(function(){
+    $('.groups').addClass('active');
+},function(){
+    $('.groups').removeClass('active');
+});
+$('.users').hover(function(){
+    $('.users').addClass('active');
+},function(){
+    $('.users').removeClass('active');
+});
 $('.personArea').hover(function(){
     $('.personArea').addClass('active');
 },function(){

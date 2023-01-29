@@ -48,12 +48,12 @@
             </a>
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item ">
-                    <a href="{{ route('user_admin') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="{{ route('user_admin') }}" class="nav-link users py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Пользователи
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a href="{{ route('group_admin') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <a href="{{ route('group_admin') }}" class="nav-link groups py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                         Группы
                     </a>
                 </li>

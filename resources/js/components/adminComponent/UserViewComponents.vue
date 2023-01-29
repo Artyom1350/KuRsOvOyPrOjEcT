@@ -8,8 +8,8 @@
                 <div class="globalUserWrap">
                     <div class="wrapUser"><!-- Этот элемент в цикл -->
                         <div class="user d-flex align-items-start justify-content-between">
-                            <p>Пример пользователя</p>
-                            <div class="crud_button h-100">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
                                 <input type="hidden" value="idUser">
                                 <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
                                 <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="form_users w-50 ml-2">
-                <h3 class="text-center">Форма добавление/изменения</h3>
+                <h3 class="text-center">Форма добавления/изменения</h3>
                 <form>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Фамилия</label>
@@ -43,8 +43,8 @@
                             <option value="3">Three</option>
                         </select>                   
                     </div>
-                    <button v-if=!trigerChange @click.prevent="" type="submit" class="btn btn-primary">Добавить</button>
-                    <button v-if=trigerChange @click.prevent="changeUser()" type="submit" class="btn btn-primary">Изменить</button>
+                    <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
+                    <button v-if=trigerChange @click.prevent="changeUser(idUserChange)" type="submit" class="btn btn-primary">Изменить</button>
                 </form>
             </div>
         </div>
@@ -65,16 +65,20 @@
                     surname:'',
                     name:'',
                     department:'',
-                }
+                },
+                idUserChange:''
             }
             
         },
         methods:{
             changeUserinForm(idUser){
+                this.trigerChange=true;
                 // axios на доставку одного пользователя(тип name, department_part_id)
                 // name.split(' ') и по очерёдно присваиваем к formUser
             },
             changeUser(idUser){
+                this.trigerChange=false;
+
                 // axios на изменение
             },
             removeUser(idUser){
@@ -93,7 +97,7 @@
             },
             addUser(){
                 let FIO=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                
+
                 // axios на добавлени
             }
         },

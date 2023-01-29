@@ -23,21 +23,12 @@
                 <h3 class="text-center">Форма добавления/изменения</h3>
                 <form>
                     <div class="mb-3">
-                        <label for="surname" class="form-label">Фамилия</label>
-                        <input v-model="formUser.surname" type="text" class="form-control" id="surname">
+                        <label for="department" class="form-label">Название отделения</label>
+                        <br>
+                        <textarea v-model="formGroup.name" class="form-control" id="department"></textarea>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label for="department" class="form-label">Отделение</label> <br>
-                        <select v-model="formUser.department" class="form-select form-control" id="department">
-                            <!-- цикл для вывода всех отделений -->
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>                   
-                    </div>
-                    <button v-if=!trigerChange @click.prevent="" type="submit" class="btn btn-primary">Добавить</button>
-                    <button v-if=trigerChange @click.prevent="changeUser()" type="submit" class="btn btn-primary">Изменить</button>
+                    <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
+                    <button v-if=trigerChange @click.prevent="changeUser(idGroup)" type="submit" class="btn btn-primary">Изменить</button>
                 </form>
             </div>
         </div>
@@ -46,34 +37,33 @@
 <script>
     export default{
         props:[
-            'userInfo',
+            'groupInfo',
         ],
         data(){
             return{
                 //name, id. Использовать в цикле на wrapUser
-                usersData:this.$props.userInfo,
+                usersData:this.$props.groupInfo,
                 trigerChange:false,
-                formUser:{
-                    patronymic:'',
-                    surname:'',
+                formGroup:{
                     name:'',
-                    department:'',
-                }
+                },
+                idGroup:"",
             }
             
         },
         methods:{
             changeUserinForm(idUser){
                 this.trigerChange=true;
+                this.idGroup=idUser
                 // axios на доставку одного подразделения(тип name, department_part_id)
-                // name.split(' ') и по очерёдно присваиваем к formUser
+                // name.split(' ') и по очерёдно присваиваем к formGroup
             },
             changeUser(idUser){
                 // axios на изменение
                 this.trigerChange=false;
             },
             removeUser(idUser){
-                let answer=confirm('Точно хотите удалить пользователя'
+                let answer=confirm('Точно хотите удалить отделение'
                 +
                 // ФИО пользователя по id
                 '');
@@ -87,8 +77,6 @@
                 }
             },
             addUser(){
-                let FIO=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                
                 // axios на добавлени
             }
         },

@@ -39,8 +39,6 @@
                         <select v-model="formUser.department" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех отделений -->
                             <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
                         </select>                   
                     </div>
                     <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
@@ -73,12 +71,13 @@
         methods:{
             changeUserinForm(idUser){
                 this.trigerChange=true;
+                idUserChange=idUser;
+
                 // axios на доставку одного пользователя(тип name, department_part_id)
                 // name.split(' ') и по очерёдно присваиваем к formUser
             },
             changeUser(idUser){
                 this.trigerChange=false;
-
                 // axios на изменение
             },
             removeUser(idUser){

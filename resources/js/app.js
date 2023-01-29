@@ -6,6 +6,8 @@ import ModalWindow from './components/modalWindows/ModalWindowPeople.vue';
 import ViewAppl from './components/ViewApplic/ViewApplicationComponents.vue';
 import ChangeAppl from './components/ViewApplic/ChangeApplicationComponents.vue';
 import ModalWindowAnsw from './components/modalWindows/ModalWindowAnswer.vue';
+import GroupViewAdmin from './components/adminComponent/GroupViewComponents.vue';
+import UserViewAdmin from './components/adminComponent/UserViewComponents.vue';
 
 require('./bootstrap');
 
@@ -18,6 +20,8 @@ const container= new Vue({
         ModalWindow,
         ViewAppl,
         ChangeAppl,
-        ModalWindowAnsw
+        ModalWindowAnsw,
+        GroupViewAdmin,
+        UserViewAdmin
     }
 });

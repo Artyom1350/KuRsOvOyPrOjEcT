@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'login');
 
 Auth::routes();
+
+// Route::middleware(['delineations_users'])->group(function(){
+//     //должна быть настройка на админа
+// });
+
+Route::get('/admin_panel/home_admin',[AdminController::class, 'index'])->name('home_admin');
+Route::get('/admin_panel/user_admin',[AdminController::class, 'userPage'])->name('user_admin');
+Route::get('/admin_panel/group_admin',[AdminController::class, 'groupPage'])->name('group_admin');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 //Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument'])->middleware('auth');

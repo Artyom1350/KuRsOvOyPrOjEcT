@@ -23,7 +23,7 @@
     @auth
     <header class="paddingBlock">
         <div class="logoWrap">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('home_admin') }}">
                 <img src="{{asset('image/logo/logo.png')}}" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
             </a>
         </div>
@@ -43,13 +43,18 @@
     </header>
     <main class="main d-flex">
         <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
-            <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
+            <a href="{{ route('home_admin') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
                 <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
             </a>
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item ">
-                    <a href="{{ route('home_admin') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Главная
+                    <a href="{{ route('user_admin') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        Пользователи
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{ route('group_admin') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        Группы
                     </a>
                 </li>
             </ul>

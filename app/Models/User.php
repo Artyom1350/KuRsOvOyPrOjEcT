@@ -53,4 +53,5 @@ class User extends Authenticatable
     public function access_users(){
         return $this->hasMany(AccessUser::class);
     }
+
 }

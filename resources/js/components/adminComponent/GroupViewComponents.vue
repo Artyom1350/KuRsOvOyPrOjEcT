@@ -84,6 +84,14 @@
                         <hr class="mt-0">
                     </div>
                 </div>
+                <div class="buttonImportExp d-flex align-items-end justify-content-between  ">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Выберите файл для импорта</label>
+                        <input class="form-control field addition" name="file" ref="file" type="file" id="formFile" @change="changeMessage()">
+                    </div>
+                    <button type="submit" @click.prevent="importFile()" class="btn btn-primary mb-3">Импорт</button>
+                    <button type="submit" @click.prevent="exportFile()" class="btn btn-primary mb-3">Экспорт</button>
+                </div>
             </div>
             <div class="form_users w-50 ml-5">
                 <h3 class="text-center">Форма добавления/изменения</h3>
@@ -97,6 +105,7 @@
                     <button v-if=trigerChange @click.prevent="changeUser(idGroup)" type="submit" class="btn btn-primary">Изменить</button>
                 </form>
             </div>
+            
         </div>
     </div>
 </template>
@@ -144,7 +153,35 @@
             },
             addUser(){
                 // axios на добавлени
-            }
+            },
+            importFile(){
+                if(this.$refs.file!=null){
+                    // запрос на сервер
+                }
+                else{
+                    alert("Файл не выбран.");
+                }
+            },
+            exportFile(){
+                
+            },
+            changeMessage(){    
+                if(this.$refs.file!=null){
+                    this.file=this.$refs.file.files[0];
+                    let countFiles = '';
+                    if (this.file)
+                        countFiles = this.file.name;
+                    if (countFiles)
+                        alert("Файл загружен, нажмите 'Импорт', для импорта пользователей.");
+                    else
+                        alert("Файл не выбран.");
+                }
+                else{
+                    this.$refs.file=$('.field')[0];
+                    this.$refs.file.files=null;
+                    this.changeMessage();
+                }                 
+            },
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select
@@ -155,5 +192,9 @@
 .globalUserWrap{
     overflow-y: scroll auto;
 	height: 315px;
+}
+.addition{
+    padding: 0;
+    height: 32px;
 }
 </style>

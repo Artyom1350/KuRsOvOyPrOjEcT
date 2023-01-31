@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,23 @@ Auth::routes();
 // Route::middleware(['delineations_users'])->group(function(){
 //     //должна быть настройка на админа
 // });
+
+Route::get('admin', function () {
+    if(Auth::check() && auth()->user()->role === 1){
+        return auth()
+            ->user()
+            ->createToken('auth_token', ['admin'])
+            ->plainTextToken;
+    }
+    return redirect("/admin_panel/home_admin");
+})->middleware('auth');
+
+Route::get('clear/token', function () {
+    if(Auth::check() && Auth::user()->role === 1) {
+        Auth::user()->tokens()->delete();
+    }
+    return 'Token Cleared';
+})->middleware('auth');
 
 Route::get('/admin_panel/home_admin',[AdminController::class, 'index'])->name('home_admin');
 Route::get('/admin_panel/user_admin',[AdminController::class, 'userPage'])->name('user_admin');

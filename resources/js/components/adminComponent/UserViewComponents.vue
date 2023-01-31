@@ -17,107 +17,11 @@
                         </div>
                         <hr class="mt-0">
                     </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
                 </div>
-
+                <div class="buttonImportExp d-flex align-items-center justify-content-end">
+                    <button type="submit" @click.prevent="importFile()" class="btn btn-primary mb-3">Импорт</button>
+                    <button type="submit" @click.prevent="exportFile()" class="btn btn-primary mb-3">Экспорт</button>
+                </div>
             </div>
             <div class="form_users w-50 ml-5">
                 <h3 class="mt-3 text-center">Форма добавления/изменения</h3>
@@ -198,7 +102,14 @@
                 let FIO=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
 
                 // axios на добавлени
+            },
+            importFile(){
+
+            },
+            exportFile(){
+                
             }
+
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select

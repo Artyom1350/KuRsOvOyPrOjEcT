@@ -42,33 +42,35 @@
         </div>
     </header>
     <main class="main d-flex">
-        <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
-            <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
-                <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
-            </a>
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li class="nav-item ">
-                    <a href="{{ route('home') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Календарь
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('myApplacation')}}" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Исходящие заявки
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('incApplacation')}}" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Входящие заявки
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('allApplacation')}}" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Все заявки
-                    </a>
-                </li>
-            </ul>
-        </div>    
+        <div class="posRel">
+            <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
+                <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
+                </a>
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                    <li class="nav-item ">
+                        <a href="{{ route('home') }}" class="nav-link calendar py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Календарь
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('myApplacation')}}" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Исходящие заявки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('incApplacation')}}" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Входящие заявки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('allApplacation')}}" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Все заявки
+                        </a>
+                    </li>
+                </ul>
+            </div>  
+        </div>  
         @yield('content')
     </main>
     @endauth

@@ -34,7 +34,7 @@ header{
     height: 100%;
 }
 .exit{
-    height: 50%;
+    height: 38%;
 }
 .exit a{
     display: block;
@@ -59,4 +59,16 @@ footer{
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     font-size: x-large;
+}
+a {
+    color:#fff !important;
+}
+p{
+    margin: auto !important;
+}
+footer{
+    font-size: large;
+}
+.posRel{
+    width: 5%;
 }

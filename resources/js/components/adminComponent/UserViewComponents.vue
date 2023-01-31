@@ -1,8 +1,8 @@
 <template>
     <div class="wrap">
         <div class="d-flex align-items-start justify-content-between">
-            <div class="usersView w-50 mr-2">
-                <h3 class="text-center">Пользователи</h3>
+            <div class="usersView w-50 mr-4">
+                <h3 class="mt-3 text-center">Пользователи</h3>
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей">
                 <div class="globalUserWrap">
@@ -17,10 +17,110 @@
                         </div>
                         <hr class="mt-0">
                     </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
+                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                        <div class="user d-flex align-items-start justify-content-between">
+                            <p class="w-75">Пример пользователя</p>
+                            <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
+                                <input type="hidden" value="idUser">
+                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                    </div>
                 </div>
+
             </div>
-            <div class="form_users w-50 ml-2">
-                <h3 class="text-center">Форма добавления/изменения</h3>
+            <div class="form_users w-50 ml-5">
+                <h3 class="mt-3 text-center">Форма добавления/изменения</h3>
                 <form>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Фамилия</label>
@@ -110,7 +210,7 @@
     height: 38px;
 }
 .globalUserWrap{
-    overflow-y: scroll auto;
+    overflow-y: scroll ;
 	height: 315px;
 }
 </style>

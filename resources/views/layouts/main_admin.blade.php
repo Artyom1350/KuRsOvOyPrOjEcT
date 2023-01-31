@@ -42,23 +42,25 @@
         </div>
     </header>
     <main class="main d-flex">
-        <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
-            <a href="{{ route('home_admin') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
-                <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
-            </a>
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li class="nav-item ">
-                    <a href="{{ route('user_admin') }}" class="nav-link users py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Пользователи
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a href="{{ route('group_admin') }}" class="nav-link groups py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                        Группы
-                    </a>
-                </li>
-            </ul>
-        </div>    
+        <div class="posRel">
+            <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
+                <a href="{{ route('home_admin') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">
+                    <img src="{{asset('image/icons/home.svg')}}" class="" alt="Главная">
+                </a>
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                    <li class="nav-item ">
+                        <a href="{{ route('user_admin') }}" class="nav-link users py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Пользователи
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{ route('group_admin') }}" class="nav-link groups py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Группы
+                        </a>
+                    </li>
+                </ul>
+            </div>  
+        </div>  
         @yield('content')
     </main>
     @endauth

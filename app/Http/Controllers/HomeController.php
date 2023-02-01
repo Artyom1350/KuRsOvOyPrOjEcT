@@ -296,7 +296,7 @@ class HomeController extends Controller
     //то что тоже должно быть в api
     public function getUsers(){
         //простая логика получения всех юзеров кроме нашего
-        $users=User::whereKeyNot(auth()->id())->get();
+        $users=User::whereKeyNot(auth()->id())->get()->where('role',0);
         return response()->json(['users'=>$users]);
     }
 

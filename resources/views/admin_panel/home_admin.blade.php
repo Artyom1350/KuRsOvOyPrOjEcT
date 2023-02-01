@@ -1,5 +1,6 @@
 @extends('layouts.main_admin')
 
+
 @section('title',"Административная панель")
 
 @section('content')

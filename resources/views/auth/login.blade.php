@@ -56,12 +56,7 @@
                                 <div class="form-group row mb-0 submit_link">
                                     <button type="submit" class="btn btn-primary" form="logIn">
                                         {{ __('Вход') }}
-                                    </button>
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Забыли пароль?') }}
-                                        </a>
-                                    @endif                                    
+                                    </button>                                   
                                 </div>
                             </div>
                         </div>

@@ -43,9 +43,24 @@
                         <input v-model="formUser.patronymic" type="text" class="form-control" id="patronymic">
                     </div>
                     <div class="mb-3">
+                        <label for="patronymic" class="form-label">Пароль</label>
+                        <input v-model="formUser.password" type="text" class="form-control" id="patronymic">
+                    </div>
+                    <div class="mb-3">
+                        <label for="patronymic" class="form-label">Почта</label>
+                        <input v-model="formUser.email" type="text" class="form-control" id="patronymic">
+                    </div>
+                    <div class="mb-3">
                         <label for="department" class="form-label">Отделение</label> <br>
                         <select v-model="formUser.department" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех отделений -->
+                            <option value="1">One</option>
+                        </select>                   
+                    </div>
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Должность</label> <br>
+                        <select v-model="formUser.post" class="form-select form-control" id="department">
+                            <!-- цикл для вывода всех Должностей -->
                             <option value="1">One</option>
                         </select>                   
                     </div>
@@ -71,9 +86,14 @@
                     surname:'',
                     name:'',
                     department:'',
+                    email:'',
+                    password:'',
+                    post:'',
                 },
                 idUserChange:'',
-                file:''
+                file:'',
+                groupUser:'',
+                postsUsers:''
             }
             
         },

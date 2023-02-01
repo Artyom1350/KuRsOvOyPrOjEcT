@@ -16,6 +16,7 @@
             <label for="descripApplicate" class="form-label">Описание:</label>
             <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && v$.descriptionAppl.maxLength.$invalid ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
+            <span v-if="v$.descriptionAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
             
         </div>
         <!-- дата -->
@@ -200,14 +201,12 @@
             updateArrays(data){
                 this.groupSelect=data.groupSelectChild;
                 this.peopleSelect=data.peopleSelectChild;
-                this.peopleIdSelect=data.peopleIdSelectChild;
             },
             delElemGroup(index){
                 this.groupSelect.splice(index,1);
             },
             delElemPeople(index){
                 this.peopleSelect.splice(index,1);
-                this.peopleIdSelect.splice(index,1);
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
@@ -232,7 +231,7 @@
                     form.append('fileName',this.file.name);
                     axios.post('/myAppl/addApplication',form,config)
                     .then(response=>alert('Заявка успешно создана!'));
-                    window.location.href='/myAppl';
+                    // window.location.href='/myAppl';
                 }else{
                     console.log(this.v$);
                     alert('Ошибка');
@@ -269,7 +268,8 @@
                     maxLength: maxLength(100)
                 },
                 descriptionAppl:{
-                    maxLength: maxLength(255)
+                    maxLength: maxLength(255),
+                    required
                 },
                 dateAppl:{
                     required

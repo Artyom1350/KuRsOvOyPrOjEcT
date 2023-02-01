@@ -4,74 +4,8 @@
             <div class="usersView w-50 mr-4">
                 <h3 class="text-center">Отделения</h3>
                 <hr>
-                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей">
+                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений">
                 <div class="globalUserWrap">
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
-                        <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
-                            <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
-                            </div>
-                        </div>
-                        <hr class="mt-0">
-                    </div>
                     <div class="wrapUser"><!-- Этот элемент в цикл -->
                         <div class="user h-auto d-flex align-items-start justify-content-between">
                             <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>

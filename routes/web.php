@@ -37,18 +37,6 @@ Auth::routes();
 // });
 
 
-Route::get('admin', function () {
-    if(Auth::check() && auth()->user()->role === 1){
-        return auth()
-            ->user()
-            ->createToken('auth_token', ['admin'])
-            ->plainTextToken;
-    }
-    return redirect("/admin_panel/home_admin");
-})->middleware('auth');
-
-
-
 Route::get('clear/token', function () {
     if(Auth::check() && Auth::user()->role === 1) {
         Auth::user()->tokens()->delete();
@@ -87,7 +75,7 @@ Route::middleware('auth')->group(function(){
     
     Route::middleware('isAdmin')->group(function(){
         
-        oute::get('admin', function () {
+        Route::get('admin', function () {
                 return auth()
                     ->user()
                     ->createToken('auth_token', ['admin'])

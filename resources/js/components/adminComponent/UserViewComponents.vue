@@ -48,7 +48,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="patronymic" class="form-label">Почта</label>
-                        <input v-model="formUser.email" type="text" class="form-control" id="patronymic">
+                        <input v-model="formUser.email" type="email" class="form-control" id="patronymic">
                     </div>
                     <div class="mb-3">
                         <label for="department" class="form-label">Отделение</label> <br>

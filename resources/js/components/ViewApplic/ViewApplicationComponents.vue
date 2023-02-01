@@ -25,9 +25,6 @@
                 <option v-for="(stat, index) in statusAppl" :value="index">{{stat}}</option>
             </select>
         </div>
-        <!-- при условии, что пользователь является создателем(передача тригера через laravel) -->
-
-        <!-- а это (сверху ^) зачем?   -->
     </form>
 </div>
     

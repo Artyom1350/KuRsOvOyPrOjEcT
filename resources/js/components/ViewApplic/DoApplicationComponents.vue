@@ -14,7 +14,7 @@
         <!-- описание -->
         <div class="mb-3">
             <label for="descripApplicate" class="form-label">Описание:</label>
-            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && v$.descriptionAppl.maxLength.$invalid ? 'is-invalid' : '')"></textarea>
+            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && (v$.descriptionAppl.maxLength.$invalid || v$.descriptionAppl.required.$invalid) ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
             <span v-if="v$.descriptionAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
             
@@ -230,35 +230,18 @@
                     form.append('file',this.file);
                     form.append('fileName',this.file.name);
                     axios.post('/myAppl/addApplication',form,config)
-                    .then(response=>alert('Заявка успешно создана!'));
-                    // window.location.href='/myAppl';
+                    .then(response=>
+                            this.getAnswer()
+                    );
                 }else{
-                    console.log(this.v$);
                     alert('Ошибка');
+                    alert('Возможно вы не указали получателей.');
                 }
-                /*var peopleMas=new Array();
-                this.peopleSelect.forEach(item => {
-                    peopleMas.push(item['id']);
-                });
-
-                var groupMas=new Array();
-                this.groupSelect.forEach(item=>{
-                    groupMas.push(item['id']);
-                })
-
-                const config = { 'content-type': 'multipart/file.type' }
-                var form=new FormData();
-                form.append('nameAppl',this.nameAppl);
-                form.append('descriptionAppl',this.descriptionAppl);
-                form.append('dateAppl',this.dateAppl);
-                form.append('peopleSelect', peopleMas);
-                form.append('groupSelect',groupMas);
-                form.append('file',this.file);
-                form.append('fileName',this.file.name);
-                axios.post('/myAppl/addApplication',form,config)
-                .then(response=>alert('Заявка успешно создана!'));
-                window.location.href='/myAppl';*/
             },  
+            getAnswer(){
+                alert('Заявка успешно создана!');
+                window.location.href='/myAppl'
+            }
         },
         validations (){
             return{

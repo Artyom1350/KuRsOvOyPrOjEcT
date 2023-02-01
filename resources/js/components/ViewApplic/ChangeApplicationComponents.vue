@@ -14,8 +14,9 @@
         <!-- описание -->
         <div class="mb-3">
             <label for="descripApplicate" class="form-label">Описание:</label>
-            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && v$.descriptionAppl.maxLength.$invalid ? 'is-invalid' : '')"></textarea>
+            <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && (v$.descriptionAppl.maxLength.$invalid || v$.descriptionAppl.required.$invalid) ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
+            <span v-if="v$.descriptionAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
             
         </div>
         <!-- дата -->
@@ -64,7 +65,7 @@
         </div>  
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <button type="submit" class="btn btn-danger" @click.prevent="deleteDoc()">Удалить {{ this.$props.doc[0].title }}</button>
+        <button type="submit" class="btn btn-danger" @click.prevent="deleteDoc()">Удалить заявку?</button>
         <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Сохранить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
@@ -109,7 +110,7 @@
                 file:'',
                 message:'Файл заявки не выбран',
                 isModalOpen:false,
-                issetGroupPeopl:false,
+                issetGroupPeopl:true,
                 incorrectDate:false,
                 incorrectFile:false
             }
@@ -159,7 +160,6 @@
 
             },
             file(){
-                console.log(this.file);
                 if(this.$refs.file.files[0]){
                     if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
                         this.incorrectFile=true
@@ -217,40 +217,53 @@
             deleteDoc(){
                 var bool=confirm("Точно хотите удалить заявку?");
                 if(bool==true){
-                    axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id}).then(response=>alert("Заявка успешно удалена!"));
-                    window.location.href='/myAppl';
+                    axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id})
+                    .then(response=>
+                        this.getAnswerRemove()
+                    );
                 }
             },
             getAnswerApplic(){
-                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
-                    alert('Запрос на сервер')
+                if(!this.incorrectDate && this.issetGroupPeopl && 
+                !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid || this.v$.file.$invalid){
                     var peopleMas=new Array();
-                this.peopleSelect.forEach(item => {
-                    peopleMas.push(item['id']);
-                });
-                var groupMas=new Array();
-                this.groupSelect.forEach(item=>{
-                    groupMas.push(item['id']);
-                })
+                    this.peopleSelect.forEach(item => {
+                        peopleMas.push(item['id']);
+                    });
+                    var groupMas=new Array();
+                    this.groupSelect.forEach(item=>{
+                        groupMas.push(item['id']);
+                    })
 
-                const config = { 'content-type': 'multipart/file.type' }
-                var form=new FormData();
-                form.append('nameAppl',this.nameAppl);
-                form.append('descriptionAppl',this.descriptionAppl);
-                form.append('dateAppl',this.dateAppl);
-                form.append('peopleSelect', peopleMas);
-                form.append('groupSelect',groupMas);
-                form.append('file',this.file);
-                form.append('fileName',this.file.name);
-                form.append('dateAppl',this.dateAppl);
-                form.append('doc_id',this.$props.doc[0].id);
-                axios.post('/changeApplSend',form,config)
-                .then(response=>alert('Заявка успешно изменена!'));
-                window.location.href='/myAppl';
+                    const config = { 'content-type': 'multipart/file.type' }
+                    var form=new FormData();
+                    form.append('nameAppl',this.nameAppl);
+                    form.append('descriptionAppl',this.descriptionAppl);
+                    form.append('dateAppl',this.dateAppl);
+                    form.append('peopleSelect', peopleMas);
+                    form.append('groupSelect',groupMas);
+                    form.append('file',this.file);
+                    form.append('fileName',this.file.name);
+                    form.append('dateAppl',this.dateAppl);
+                    form.append('doc_id',this.$props.doc[0].id);
+                    axios.post('/changeApplSend',form,config)
+                    .then(response=>
+                        this.getAnswerChange()
+
+                    );
                 }else{
-                    alert('Ошибка')
+                    alert('Ошибка');
+                    alert('Возможно вы не указали получателей.');
                 }
             },  
+            getAnswerChange(){
+                alert('Заявка успешно изменена!');
+                window.location.href='/myAppl'
+            },
+            getAnswerRemove(){
+                alert('Заявка удалена!');
+                window.location.href='/myAppl'
+            }
         },
         validations (){
             return{
@@ -260,6 +273,7 @@
                     maxLength: maxLength(100)
                 },
                 descriptionAppl:{
+                    required,
                     maxLength: maxLength(255)
                 },
                 dateAppl:{
@@ -376,6 +390,6 @@
         border-radius: 0 15px 15px 0 !important;
     }
     .link_document{
-        color: #28679b;
+        color: #28679b !important;
     }
 </style>

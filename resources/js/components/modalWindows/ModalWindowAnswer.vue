@@ -1,7 +1,7 @@
 <template>
     <div class="modalWindow">
         <div class="textArea h-90">
-            <h2 class='text-center mt-5'>Статусы пользователей</h2>
+            <h2 class='text-center mt-3'>Статусы пользователей</h2>
             <div class="form-group" style="height: 85%;">
                 <label for="searchPeople">Поиск</label>
                 <input type="text" class="form-control searchString" name="searchPeople" id="searchPeople" @keyup="getSearchPeople" v-model="textSearch">
@@ -61,10 +61,10 @@
                 },
                 getColor(id){
                     if(id==0){
-                        return "text-muted";
+                        return "text-danger";
                     }
                     if(id==1){
-                        return "text-info";
+                        return "text-muted";
                     }
                     if(id==2){
                         return "text-primary";

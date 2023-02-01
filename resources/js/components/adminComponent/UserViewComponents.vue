@@ -4,7 +4,7 @@
             <div class="usersView w-50 mr-4">
                 <h3 class="mt-3 text-center">Пользователи</h3>
                 <hr>
-                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей">
+                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей" @keyup="getSearchPeople()" v-model="textSearch">
                 <div class="globalUserWrap">
                     <div class="wrapUser"><!-- Этот элемент в цикл -->
                         <div class="user d-flex align-items-start justify-content-between">
@@ -93,7 +93,8 @@
                 idUserChange:'',
                 file:'',
                 groupUser:'',
-                postsUsers:''
+                postsUsers:'',
+                textSearch:''
             }
             
         },
@@ -156,6 +157,16 @@
                     this.changeMessage();
                 }                 
             },
+            getSearchPeople(){
+                    for( var i=0;i< $('.user').length;i++){
+                        var el=$('.user')[i];
+                        if(el.outerText.includes(this.textSearch)){
+                            el.parentElement.style.display="block"
+                        }else{
+                            el.parentElement.style.display="none"
+                        }
+                    }
+                },
 
         },
         mounted(){

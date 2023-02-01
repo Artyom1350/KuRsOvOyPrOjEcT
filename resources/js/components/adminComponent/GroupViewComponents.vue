@@ -4,7 +4,7 @@
             <div class="usersView w-50 mr-4">
                 <h3 class="text-center">Отделения</h3>
                 <hr>
-                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений">
+                <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений" @keyup="getSearchGroup" v-model="textSearch">
                 <div class="globalUserWrap">
                     <div class="wrapUser"><!-- Этот элемент в цикл -->
                         <div class="user h-auto d-flex align-items-start justify-content-between">
@@ -57,6 +57,7 @@
                     name:'',
                 },
                 idGroup:"",
+                textSearch:'',
             }
             
         },
@@ -116,6 +117,16 @@
                     this.changeMessage();
                 }                 
             },
+            getSearchGroup(){
+                    for( var i=0;i< $('.user').length;i++){
+                        var el=$('.user')[i];
+                        if(el.outerText.includes(this.textSearch)){
+                            el.parentElement.style.display="block"
+                        }else{
+                            el.parentElement.style.display="none"
+                        }
+                    }
+                },
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select

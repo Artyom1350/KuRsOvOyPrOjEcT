@@ -6,9 +6,9 @@
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений" @keyup="getSearchGroup" v-model="textSearch">
                 <div class="globalUserWrap">
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                    <div class="wrapUser" v-for="(group,index) in groupsData" :value="group.id" ><!-- Этот элемент в цикл -->
                         <div class="user h-auto d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения Пример большого большого очень большого названия отделения</p>
+                            <p class="w-75">{{ group.name }}</p>
                             <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
                                 <input type="hidden" value="idUser">
                                 <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
@@ -35,7 +35,7 @@
                         <br>
                         <textarea v-model="formGroup.name" class="form-control" id="department"></textarea>
                     </div>
-                    <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
+                    <button v-if=!trigerChange @click.prevent="addGroup" type="submit" class="btn btn-primary">Добавить</button>
                     <button v-if=trigerChange @click.prevent="changeUser(idGroup)" type="submit" class="btn btn-primary">Изменить</button>
                 </form>
             </div>
@@ -46,12 +46,12 @@
 <script>
     export default{
         props:[
-            'groupInfo',
+            'groupinfo',
         ],
         data(){
             return{
                 //name, id. Использовать в цикле на wrapUser
-                usersData:this.$props.groupInfo,
+                groupsData:this.$props.groupinfo,
                 trigerChange:false,
                 formGroup:{
                     name:'',
@@ -86,8 +86,9 @@
                     }
                 }
             },
-            addUser(){
+            addGroup(){
                 // axios на добавлени
+                
             },
             importFile(){
                 if(this.$refs.file!=null){
@@ -127,6 +128,9 @@
                         }
                     }
                 },
+        },
+        created(){
+           // this.groupsData=
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select

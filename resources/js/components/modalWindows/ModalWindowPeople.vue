@@ -76,12 +76,14 @@
                         peopleSelectChild: this.peopleSelect,
                     })
                 },
-                getUsers(){
-                    axios.get('/getUsers').then((response)=>{
-                        this.users=response.data.users;
-                    })
+                getUsers(token){
+                    console.log(token);
+                    axios.post('/api/getUsers',{'token':token}).then((response)=>{
+                        console.log(response);
+                    this.users=response.data.users;
+                    });
                 },
-                getGroups(){
+                getGroups(token){
                     axios.get('/getDepartment').then((response)=>{
                         this.groups=response.data.department;
                     })
@@ -111,8 +113,10 @@
                 }
             },
             created(){
-                this.getUsers();
-                this.getGroups();
+                axios.post('/user/token').then((response)=>{
+                    this.getUsers(response.data.token);
+                    this.getGroups(response.data.token);
+                })
             }
     }
 </script>

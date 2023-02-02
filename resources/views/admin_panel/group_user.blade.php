@@ -4,6 +4,6 @@
 
 @section('content')
 <div class="container">
-    <group-view-admin :groupInfo='@json($groupInfo)'></group-view-admin>
+    <group-view-admin :groupInfo='@json($groups)'></group-view-admin>
 </div>
 @endsection

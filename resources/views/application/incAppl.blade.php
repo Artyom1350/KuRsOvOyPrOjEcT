@@ -6,7 +6,6 @@
 <link href="{{ asset('css/application.css') }}" rel="stylesheet">
 
     <div class="container">
-        
         @if ($incAplData)
             <h2 class="text-center">Входящие заявки</h2>
             <inc-applic :incdata='@json($incAplData)'></inc-applic>

@@ -37,15 +37,24 @@ Auth::routes();
 // });
 
 
-Route::get('clear/token', function () {
-    if(Auth::check() && Auth::user()->role === 1) {
-        Auth::user()->tokens()->delete();
-    }
-    return 'Token Cleared';
-})->middleware('auth');
+// Route::get('clear/token', function () {
+//     if(Auth::check() && Auth::user()->role === 1) {
+//         Auth::user()->tokens()->delete();
+//     }
+//     return 'Token Cleared';
+// })->middleware('auth');
 
 Route::middleware('auth')->group(function(){
     Route::middleware('isUser')->group(function(){
+        //выдача токена юзера после авторизации 
+        Route::get('/login/login_token', function() {
+            auth()->user()->createToken('user');
+            return redirect(route('home'));
+        })->name('login_user');
+
+        //Получение токена из бд для апи
+        Route::post('/user/token',[HomeController::class,'getUserToken'])->name('takeUserToken');
+
         //представления
         Route::get('/home', [HomeController::class, 'index'])->name('home'); //календарь + главная
         Route::get('/incAppl', [HomeController::class, 'incApplication'])->name('incApplacation');//все входящие заявки
@@ -64,7 +73,7 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/getDocument',[HomeController::class,'getDocument']);
 
-        Route::get('/getUsers',[HomeController::class,'getUsers']);
+        //Route::post('/getUsers',[HomeController::class,'getUsers']);
         Route::get('/getDepartment',[HomeController::class,'getDepartment']);
         
         Route::post('/updateStatusDocument',[HomeController::class,'updateStatusDocument']);
@@ -74,20 +83,30 @@ Route::middleware('auth')->group(function(){
     });
     
     Route::middleware('isAdmin')->group(function(){
-        
-        Route::get('admin', function () {
-                return auth()
-                    ->user()
-                    ->createToken('auth_token', ['admin'])
-                    ->plainTextToken;
-            return redirect(route("home_admin"));
-        });
-        
+        //выдача токена админа после авторизации 
+        Route::get('/login/admin_token', function() {
+            auth()->user()->createToken('admin');
+            return redirect(route('home_admin'));
+        })->name('login_admin');
+
+        //Получение токена из бд для апи
+        Route::post('/admin/token',[AdminController::class,'getAdminToken'])->name('takeAdminToken');
+
 
 
         Route::get('/admin_panel/home_admin',[AdminController::class, 'index'])->name('home_admin');//главная админа
         Route::get('/admin_panel/user_admin',[AdminController::class, 'userPage'])->name('user_admin');//юзеры
         Route::get('/admin_panel/group_admin',[AdminController::class, 'groupPage'])->name('group_admin');//группы
+    });
+
+
+    //кастомный выход с удалением токена
+    Route::post('/userLogout',function(){
+        if(Auth::check()) {
+            Auth::user()->tokens()->delete();
+            Auth::logout();
+            return redirect('/');
+        }
     });
 });
 

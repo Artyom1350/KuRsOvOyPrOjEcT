@@ -9,6 +9,7 @@ use App\Models\AccessUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    
+    //главная(календарь)
     public function index()
     {
         $calendar=new Calendar;
@@ -114,8 +115,8 @@ class HomeController extends Controller
 
     public function viewOne($id){
          //входящая 1 заявка
-
         $document=auth()->user()->access_users()->where('document_id',$id)->first()->document()->get();
+        
 
         $title=$document->first()['title'];
         $user=$document->first()->user()->first()['name'];
@@ -293,10 +294,24 @@ class HomeController extends Controller
         return response()->json($request);
     }
 
+    //Получение токена из БД
+    public function getUserToken(){
+        $userToken;
+        foreach(auth()->user()->tokens as $item){
+            $userToken=$item['token'];
+        }
+        return response()->json(['token'=>$userToken]);
+    }
+
     //то что тоже должно быть в api
-    public function getUsers(){
+    public function getUsers(Request $request){
         //простая логика получения всех юзеров кроме нашего
-        $users=User::whereKeyNot(auth()->id())->get()->where('role',0);
+        $token=$token = PersonalAccessToken::where('token', $request->post('token'))->first();
+        $user;
+        foreach($token as $item){
+            $user=$token->tokenable;
+        }
+        $users=User::whereKeyNot($user->id)->get()->where('role',0);
         return response()->json(['users'=>$users]);
     }
 

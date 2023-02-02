@@ -6,13 +6,13 @@
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей" @keyup="getSearchPeople()" v-model="textSearch">
                 <div class="globalUserWrap">
-                    <div class="wrapUser"><!-- Этот элемент в цикл -->
+                    <div class="wrapUser" v-for="(user,index) in usersData" ><!-- Этот элемент в цикл -->
                         <div class="user d-flex align-items-start justify-content-between">
-                            <p class="w-75">Пример пользователя</p>
+                            <p class="w-75">{{user.name}}</p>
                             <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
                                 <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                                <button type="submit" @click.prevent="changeUserinForm(user.id)" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeUser(index)" class="btn btn-danger mb-3">Удалить</button>
                             </div>
                         </div>
                         <hr class="mt-0">
@@ -50,18 +50,19 @@
                         <label for="patronymic" class="form-label">Почта</label>
                         <input v-model="formUser.email" type="email" class="form-control" id="patronymic">
                     </div>
+
                     <div class="mb-3">
                         <label for="department" class="form-label">Отделение</label> <br>
-                        <select v-model="formUser.department" class="form-select form-control" id="department">
+                        <select  v-model="formUser.department" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех отделений -->
-                            <option value="1">One</option>
+                            <option v-for="(department,index) in departmentData" :value="department.id">{{ department.name }}</option>
                         </select>                   
                     </div>
                     <div class="mb-3">
                         <label for="department" class="form-label">Должность</label> <br>
                         <select v-model="formUser.post" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех Должностей -->
-                            <option value="1">One</option>
+                            <option v-for="(departmentPart,index) in departmentPartsData" :value="departmentPart.id" >{{ departmentPart.name }}</option>
                         </select>                   
                     </div>
                     <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
@@ -72,14 +73,16 @@
     </div>
 </template>
 <script>
+import { assertExpressionStatement } from '@babel/types';
+
     export default{
         props:[
-            'userInfo',
+            'users',
         ],
         data(){
             return{
                 //name, id. Использовать в цикле на wrapUser
-                usersData:this.$props.userInfo,
+                usersData: this.$props.users,
                 trigerChange:false,
                 formUser:{
                     patronymic:'',
@@ -89,44 +92,116 @@
                     email:'',
                     password:'',
                     post:'',
+                    id:'',
                 },
                 idUserChange:'',
                 file:'',
                 groupUser:'',
                 postsUsers:'',
-                textSearch:''
+                textSearch:'',
+                token:'',
+                departmentData:[],
+                departmentPartsData:[],
             }
             
         },
+        watch:{
+            'formUser.department'(){
+                this.getDepartmentParts();
+            }
+        },  
         methods:{
             changeUserinForm(idUser){
                 this.trigerChange=true;
-                idUserChange=idUser;
+                this.idUserChange=idUser;
+                console.log(this.idUserChange);
+
+                var form=new FormData();
+                form.append('id',this.idUserChange);
+                form.append('token',this.token);
+
+                axios.post('/api/admin/getOneUser',form).then((response)=>{
+                    this.formUser.surname=response.data.user.name.split(' ')[0];
+                    this.formUser.name=response.data.user.name.split(' ')[1];
+                    this.formUser.patronymic=response.data.user.name.split(' ')[2];
+                    this.formUser.id=response.data.user.id;
+                    this.formUser.email=response.data.user.email;
+                    //this.formUser.password=response.data.user.password; пароль нельзя дехешировать так что да
+                    this.formUser.post=response.data.user.department_part_id;
+                    this.formUser.department=response.data.department;
+                    this.getDepartmentParts();
+                    console.log(response);
+                });
 
                 // axios на доставку одного пользователя(тип name, department_part_id)
                 // name.split(' ') и по очерёдно присваиваем к formUser
             },
+            //Получение токена
+            getToken(){
+                axios.post('/admin/token').then((response)=>{
+                    //console.log(response.data.token);
+                    this.token=response.data.token;
+                    this.getDepartment();
+
+                });
+            },
+            //все департменты
+            getDepartment(){
+                axios.post('/api/admin/getAllDepartments',{'token':this.token}).then((response)=>{
+                this.departmentData=response.data.departments;
+             });
+            },
+            //должности
+            getDepartmentParts(){
+                axios.post('/api/admin/getDepartmentParts',{'token':this.token,'id':this.formUser.department}).then((response)=>{
+                    this.departmentPartsData=response.data.departmentParts;
+                    console.log(response);
+                });
+            },
             changeUser(idUser){
                 this.trigerChange=false;
                 // axios на изменение
+                var form=new FormData();
+                let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
+                form.append('name',name);
+                form.append('email',this.formUser.email);
+                form.append('password',this.formUser.password);
+                form.append('department_part',this.formUser.post);
+                form.append('id',this.formUser.id);
+                form.append('token',this.token);
+                
+                axios.post('/api/admin/changeUser',form).then((response)=>{
+                    alert(response);
+                    window.location.reload();
+                });
             },
             removeUser(idUser){
-                let answer=confirm('Точно хотите удалить пользователя'
-                +
-                // ФИО пользователя по id
-                '');
+                let answer=confirm('Точно хотите удалить пользователя '
+                + this.usersData[idUser].name);
                 if(answer){
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
                         alert('Хорошо, удаляем.');
                         // axios на удаление
-                        window.location.reload();
+                        axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
+                            alert(response);
+                            window.location.reload();
+                        })
                     }
                 }
             },
             addUser(){
-                let FIO=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-
+                let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
+                var form=new FormData();
+                form.append('name',name);
+                form.append('email',this.formUser.email);
+                form.append('password',this.formUser.password);
+                form.append('department_part',this.formUser.post);
+                form.append('token',this.token);
+                axios.post('/api/admin/addUser',form).then((response)=>{
+                    alert(response);
+                    location.reload();
+                });
                 // axios на добавлени
             },
             importFile(){
@@ -169,8 +244,14 @@
                 },
 
         },
+        created(){
+            this.getToken();
+
+        },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select
+
+
         }
     }
 </script>

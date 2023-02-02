@@ -31,12 +31,12 @@
             СДО КГАПОУ Пермский Авиационный техникум
         </h1>
         <div class="exit">
-            <a href="{{ url('/logout') }}"
+            <a href="{{ url('/userLogout') }}"
             onclick="event.preventDefault();
                document.getElementById('logout-form').submit();">
                 <img src="{{asset('image/icons/logout_icon.svg')}}" alt="Выход">
             </a>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ url('/userLogout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
         </div>

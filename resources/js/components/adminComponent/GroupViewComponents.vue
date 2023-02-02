@@ -6,7 +6,7 @@
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений" @keyup="getSearchGroup" v-model="textSearch">
                 <div class="globalUserWrap">
-                    <div class="wrapUser" v-for="(group,index) in groupsData" :value="group.id" ><!-- Этот элемент в цикл -->
+                    <div class="wrapUser" v-for="(group,index) in groupsData" :value="group.id" >
                         <div class="user h-auto d-flex align-items-start justify-content-between">
                             <p class="w-75">{{ group.name }}</p>
                             <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">

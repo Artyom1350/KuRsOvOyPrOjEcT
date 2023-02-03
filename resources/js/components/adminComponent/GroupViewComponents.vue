@@ -55,6 +55,7 @@
                     </div>
                 </div>
                 <button @click.prevent="addPost()" type="submit" class="btn btn-primary">Добавить должность</button>
+                <button @click.prevent="clearForm()" type="submit" class="btn btn-danger">Очистить форму</button>
             </div>
             
         </div>
@@ -88,6 +89,7 @@
                 trigerChangeNameForm:false,
                 trigerPostFill:false,
                 token:'',
+                globalIndex:'',
             }
             
         },
@@ -114,6 +116,7 @@
                 this.formGroup.id=this.groupsData[index].id;
                 this.formGroup.name=this.groupsData[index].name;
                 this.trigerPostFill=true;
+                this.globalIndex=index;
                 // axios на доставку одного подразделения(тип name, department_part_id)
                 // name.split(' ') и по очерёдно присваиваем к formGroup
             },
@@ -132,10 +135,23 @@
                     alert('нет');
                     axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.token,'name':this.formGroup.name}).then((response)=>{
                         alert('Группа успешно изменена');
-                        window.location.reload();
+                        this.groupsData[this.globalIndex]=response.data;
+                        this.clearForm();
+                        //window.location.reload();
                     });
                 }
                 this.trigerChange=false;
+            },
+            clearForm(){
+                this.formGroup={
+                    id:'',
+                    name:'',
+                };
+                this.postData=[];
+                this.textSearch='';
+                this.trigerChange=false;
+                this.trigerChangeNameForm=false;
+                this.trigerPostFill=false;
             },
             removeGroup(index){
                 let answer=confirm('Точно хотите удалить отделение '+this.groupsData[index].name);
@@ -145,8 +161,8 @@
                         alert('Хорошо, удаляем.');
                         axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.token}).then((response)=>{
                             alert('Запись успешно удалена');
+                            this.groupsData.splice(index,1);
                         });
-                        window.location.reload();
                     }
                 }
             },
@@ -159,7 +175,8 @@
                     alert('нет, но как бы да');
                     axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
                         alert('Группа успешно добавлена');
-                        window.location.reload();
+                        this.groupsData.push(response.data);
+                        this.clearForm();
                     });
                 }
             },

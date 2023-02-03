@@ -127,7 +127,7 @@ class AdminController extends Controller
             $group=new Department();
             $group->name=$request->post('name');
             $group->save();
-            return response()->json('da');
+            return response()->json($group);
         }
         else return response('Неа, доступ запрещен!');
     }
@@ -136,7 +136,7 @@ class AdminController extends Controller
         if($token!=null){
             $group=Department::find($request->post('id'));
             $group->delete();
-            return response()->json('da');
+            return response()->json('Запись удалена!');
         }
         else return response('Неа, доступ запрещен!');
     }
@@ -146,7 +146,7 @@ class AdminController extends Controller
             $group=Department::find($request->post('id'));
             $group->name=$request->post('name');
             $group->save();
-            return response()->json('da');
+            return response()->json($group);
         }
         else return response('Неа, доступ запрещен!');
     }

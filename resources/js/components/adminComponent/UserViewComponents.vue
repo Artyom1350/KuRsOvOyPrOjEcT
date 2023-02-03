@@ -11,7 +11,7 @@
                             <p class="w-75">{{user.name}}</p>
                             <div class="crud_button h-100 w-50 d-flex align-items-start justify-content-around">
                                 <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm(user.id)" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="changeUserinForm(user.id, index)" class="btn btn-primary mb-3">Изменить</button>
                                 <button type="submit" @click.prevent="removeUser(index)" class="btn btn-danger mb-3">Удалить</button>
                             </div>
                         </div>
@@ -81,6 +81,7 @@
                     </div>
                     <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary">Добавить</button>
                     <button v-if=trigerChange @click.prevent="changeUser(idUserChange)" type="submit" class="btn btn-primary">Изменить</button>
+                    <button @click.prevent="clearForm()" type="submit" class="btn btn-danger">Очистить форму</button>
                 </form>
             </div>
         </div>
@@ -130,7 +131,8 @@ import { assertExpressionStatement } from '@babel/types';
                 trigerChangesurname:false,
                 trigerChangesurname:false,
                 trigerChangepatronymic:false,
-                trigerValidPassword:false
+                trigerValidPassword:false,
+                index:'',
             }
             
         },
@@ -152,7 +154,7 @@ import { assertExpressionStatement } from '@babel/types';
                     }
                     if(data.password){
                         this.trigerChangepassword=true;
-                        
+
                         this.trigerValidPassword=this.passwordCheck(data.password);
                     }
                     if(data.post){
@@ -166,11 +168,11 @@ import { assertExpressionStatement } from '@babel/types';
             },
         },  
         methods:{
-            changeUserinForm(idUser){
+            changeUserinForm(idUser,index){
                 alert('Если вы заполните пароль, то он измениться в БД!');
                 this.trigerChange=true;
                 this.idUserChange=idUser;
-
+                this.index=index;
                 var form=new FormData();
                 form.append('id',this.idUserChange);
                 form.append('token',this.token);
@@ -207,9 +209,37 @@ import { assertExpressionStatement } from '@babel/types';
                     this.departmentPartsData=response.data.departmentParts;
                 });
             },
+            clearForm(){
+                this.trigerChange=false,
+                this.formUser={
+                    patronymic:'',
+                    surname:'',
+                    name:'',
+                    department:'',
+                    email:'',
+                    password:'',
+                    post:'',
+                    id:'',
+                },
+                this.idUserChange='';
+                this.file='';
+                this.groupUser='';
+                this.postsUsers='';
+                this.textSearch='';
+                this.departmentPartsData=[];
+                this.trigerChangedepartment=false;
+                this.trigerChangepost=false;
+                this.trigerChangepassword=false;
+                this.trigerChangeemail=false;
+                this.trigerChangename=false;
+                this.trigerChangesurname=false;
+                this.trigerChangesurname=false;
+                this.trigerChangepatronymic=false;
+                this.trigerValidPassword=false;
+            },
             changeUser(idUser){
-                this.trigerChange=false;
                 if(this.formCheck()){
+
                     // axios на изменение
                     var form=new FormData();
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
@@ -222,7 +252,10 @@ import { assertExpressionStatement } from '@babel/types';
                     
                     axios.post('/api/admin/changeUser',form).then((response)=>{
                         alert('Изменение прошли успешно');
-                        window.location.reload();
+                        this.trigerChange=false;
+
+                        this.usersData[this.index]=response.data;
+                        this.clearForm();
                     });
                 }
                 else{
@@ -247,21 +280,38 @@ import { assertExpressionStatement } from '@babel/types';
                         // axios на удаление
                         axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
                             alert('Удаление прошло успешно!');
-                            window.location.reload();
+                            this.usersData.splice(idUser,1)
                         })
                     }
                 }
             },
             passwordCheck(value){
-                let value1=String(value);
-                var reg=/(?=.*[0-9])(?=.*[!#$%&])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!#$%&]{10,}/g;
-                if(reg.test(value1)){
-                    return(true);
-                }else{
-                    return(false)
+                if(this.trigerChange && this.formUser.password==''){
+                    return true;
+                }
+                else{
+                    let value1=String(value);
+                    var reg=/(?=.*[0-9])(?=.*[!#$%&])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!#$%&]{10,}/g;
+                    if(reg.test(value1)){
+                        return(true);
+                    }else{
+                        return(false)
+                    }
                 }
             },
             formCheck(){
+                if(this.trigerValidPassword & !this.v$.formUser.$invalid){
+                    return true
+                }
+                else{
+                    console.log(this.formUser.password);
+                    if(this.formUser.password=='' && this.trigerChange){
+                        return true;
+                    }
+                    return false    
+                }
+            },  
+            formCheckAdd(){
                 if(this.trigerValidPassword & !this.v$.formUser.$invalid){
                     return true
                 }
@@ -270,7 +320,8 @@ import { assertExpressionStatement } from '@babel/types';
                 }
             },  
             addUser(){
-                if(this.formCheck()){
+                this.trigerValidPassword=true;
+                if(this.formCheckAdd()){
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
                     var form=new FormData();
                     form.append('name',name);
@@ -280,7 +331,8 @@ import { assertExpressionStatement } from '@babel/types';
                     form.append('token',this.token);
                     axios.post('/api/admin/addUser',form).then((response)=>{
                         alert('Добавление прошло успешно!');
-                        location.reload();
+                        this.usersData.push(response.data);
+                        this.clearForm();
                     });
                 }
                 else{

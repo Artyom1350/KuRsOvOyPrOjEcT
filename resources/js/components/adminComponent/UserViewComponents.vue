@@ -88,7 +88,7 @@
     </div>
 </template>
 <script>
-import { assertExpressionStatement } from '@babel/types';
+    import { assertExpressionStatement } from '@babel/types';
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength, email,}  from '@vuelidate/validators'
 
@@ -355,7 +355,19 @@ import { assertExpressionStatement } from '@babel/types';
                 }
             },
             exportFile(){
-                
+                axios.post('/api/admin/downloadUser', {
+                }, {
+                    responseType: 'blob'
+                }).then((response) => {
+                    const url = URL.createObjectURL(new Blob([response.data], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    }))
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.setAttribute('download', 'users')
+                    document.body.appendChild(link)
+                    link.click()
+                });
             },
             changeMessage(){    
                 if(this.$refs.file!=null){

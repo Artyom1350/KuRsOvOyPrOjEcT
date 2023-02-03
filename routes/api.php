@@ -38,3 +38,11 @@ Route::post('/admin/getDepartmentParts',[AdminController::class,'getDepartmentPa
 Route::post('/admin/addUser',[AdminController::class,'addUser']);
 Route::post('/admin/changeUser',[AdminController::class,'changeUser']);
 Route::post('/admin/destroyUser',[AdminController::class,'destroyUser']);
+
+Route::post('/admin/getPostGroup',[AdminController::class,'getPostGroup']);
+Route::post('/admin/addGroup',[AdminController::class,'addGroup']);
+Route::post('/admin/destroyGroup',[AdminController::class,'destroyGroup']);
+Route::post('/admin/changeGroup',[AdminController::class,'changeGroup']);
+Route::post('/admin/addPost',[AdminController::class,'addPost']);
+Route::post('/admin/destroyPost',[AdminController::class,'destroyPost']);
+Route::post('/admin/changePost',[AdminController::class,'changePost']);

@@ -113,6 +113,21 @@
                     this.postData[index].name=name;
                 });
             },
+            exportFile(){
+                axios.post('/api/admin/downloadGroupsAndParts', {
+                }, {
+                    responseType: 'blob'
+                }).then((response) => {
+                    const url = URL.createObjectURL(new Blob([response.data], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    }))
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.setAttribute('download', 'GroupsAndParts')
+                    document.body.appendChild(link)
+                    link.click()
+                });
+            },
             changeGroupInForm(index){
                 this.trigerChange=true;
                 this.trigerIdForm=true;
@@ -184,14 +199,17 @@
             },
             importFile(){
                 if(this.$refs.file!=null){
-                    // запрос на сервер
+                    let data=new FormData();
+                    data.append('file',this.$refs.file.files[0])
+                    console.log(this.$refs.file.files[0]);
+                    axios.post('/api/admin/importGroupsAndPosts',data/*,config*/).then((response)=>{
+                        alert('Добавление прошло успешно!');
+                        window.location.reload();
+                    });
                 }
                 else{
                     alert("Файл не выбран.");
                 }
-            },
-            exportFile(){
-                
             },
             changeMessage(){    
                 if(this.$refs.file!=null){

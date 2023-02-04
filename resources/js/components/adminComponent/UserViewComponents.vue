@@ -361,8 +361,15 @@
                 }
             },
             importFile(){
+                //const config = { 'content-type': 'multipart/file.type' } нз, может нужен, может нет
                 if(this.$refs.file!=null){
-                    // запрос на сервер
+                    let data=new FormData();
+                    data.append('file',this.$refs.file.files[0])
+                    console.log(this.$refs.file.files[0]);
+                    axios.post('/api/admin/importUsers',data/*,config*/).then((response)=>{
+                        alert('Добавление прошло успешно!');
+                        window.location.reload();
+                    });
                 }
                 else{
                     alert("Файл не выбран.");

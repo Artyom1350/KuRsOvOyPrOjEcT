@@ -66,7 +66,7 @@
 
                     <div class="mb-3">
                         <label for="department" class="form-label">Отделение</label> <br>
-                        <select :class="(( trigerChangedepartment & v$.formUser.department.$invalid)) ? 'is-invalid' : '' "  v-model="formUser.department" class="form-select form-control" id="department">
+                        <select :class="(( trigerChangedepartment & v$.formUser.department.$invalid)) ? 'is-invalid' : '' "  v-model="formUser.department" @change="changeDep()" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех отделений -->
                             <option v-for="(department,index) in departmentData" :value="department.id">{{ department.name }}</option>
                         </select>  
@@ -138,14 +138,6 @@
             
         },
         watch:{
-            // 'formUser.patronymic'(){
-            //     console.log('Отчество');
-            //     this.trigerChangepatronymic=true
-            // },
-            // 'formUser.surname'(){
-            //     console.log('Фамилия');
-            //     this.trigerChangepatronymic=true
-            // }
             formUser:{
                 deep:true,
                 handler(data){
@@ -173,17 +165,23 @@
                     }
                     if(data.post && !this.trigerChangepost){
                         console.log('пост');
-                        this.trigerChangepost=true
+                        this.trigerChangepost=true;
+
                     }
                     if(data.department && !this.trigerChangedepartment){
                         console.log('отделение');
-                        this.getDepartmentParts(); 
                         this.trigerChangedepartment=true;
+                        this.getDepartmentParts(); 
+
                     }
                 }
             },
         },  
         methods:{
+            changeDep(){
+                this.trigerChangedepartment=false;
+                this.trigerChangepost=false;
+            },  
             changeUserinForm(idUser,index){
                 alert('Если вы заполните пароль, то он измениться в БД!');
                 this.trigerChange=true;

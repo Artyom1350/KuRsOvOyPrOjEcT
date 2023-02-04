@@ -10,9 +10,8 @@
                         <div class="user h-auto d-flex align-items-start justify-content-between">
                             <p class="w-75">{{ group.name }}</p>
                             <div class="crud_button h-100 w-50 d-flex align-items-center justify-content-around">
-                                <input type="hidden" value="idUser">
-                                <button type="submit" @click.prevent="changeUserinForm()" class="btn btn-primary mb-3">Изменить</button>
-                                <button type="submit" @click.prevent="removeUser()" class="btn btn-danger mb-3">Удалить</button>
+                                <button type="submit" @click.prevent="changeGroupInForm(index)" class="btn btn-primary mb-3">Изменить</button>
+                                <button type="submit" @click.prevent="removeGroup(index)" class="btn btn-danger mb-3">Удалить</button>
                             </div>
                         </div>
                         <hr class="mt-0">
@@ -39,8 +38,8 @@
                         <span v-if="(trigerChangeNameForm & v$.formGroup.name.required.$invalid)" class="text-danger">Поле должно быть заполнено</span>
                         <span v-if="(trigerChangeNameForm & v$.formGroup.name.minLength.$invalid)" class="text-danger">Минимальная длина 5 символов</span>
                     </div>
-                    <button v-if=!trigerChange @click.prevent="addGroup" type="submit" class="btn btn-primary">Добавить отделение</button>
-                    <button v-if=trigerChange @click.prevent="changeUser(idGroup)" type="submit" class="btn btn-primary">Изменить отделение</button>
+                    <button v-if=!trigerChange @click.prevent="addGroup()" type="submit" class="btn btn-primary">Добавить отделение</button>
+                    <button v-if=trigerChange @click.prevent="changeGroup(formGroup.id)" type="submit" class="btn btn-primary">Изменить отделение</button>
                 </form>
                 <h4 class="text-centr mt-2">Должности</h4>
                 <div class="globalPostWrap">
@@ -56,6 +55,7 @@
                     </div>
                 </div>
                 <button @click.prevent="addPost()" type="submit" class="btn btn-primary">Добавить должность</button>
+                <button @click.prevent="clearForm()" type="submit" class="btn btn-danger">Очистить форму</button>
             </div>
             
         </div>
@@ -80,25 +80,16 @@
                 groupsData:this.$props.groupinfo,
                 trigerChange:false,
                 formGroup:{
+                    id:'',
                     name:'',
                 },
-                idGroup:"",
                 textSearch:'',
-                postData:[
-                    {
-                        name:'такое-то 1'
-                    },
-                    {
-                        name:'такое-то 2'
-                    },{
-                        name:'такое-то 3'
-                    },{
-                        name:'такое-то 4'
-                    },
-                ],
+                postData:[],
                 // потом почистить и заполнять при изменении групп
                 trigerChangeNameForm:false,
-                trigerPostFill:false
+                trigerPostFill:false,
+                token:'',
+                globalIndex:'',
             }
             
         },
@@ -106,52 +97,87 @@
             removePost(index){
                 if(confirm('Точно хотите удалить должность?')){
                     if(confirm('Уверены?')){
-                        this.postData.splice(index,1);
+                        axios.post('/api/admin/destroyPost',{'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                            alert('Должность успешно удалена!');
+                            this.postData.splice(index,1);
+                        })
                     }
                 }
             },
             changePost(index){
                 let name=prompt('Введите новое название для должности');
-                this.postData[index].name=name;
+                axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                    alert('Должность успешно изменена!');
+                    this.postData[index].name=name;
+                });
             },
-            changeUserinForm(idUser){
+            changeGroupInForm(index){
                 this.trigerChange=true;
-                this.idGroup=idUser;
+                this.formGroup.id=this.groupsData[index].id;
+                this.formGroup.name=this.groupsData[index].name;
                 this.trigerPostFill=true;
+                this.globalIndex=index;
                 // axios на доставку одного подразделения(тип name, department_part_id)
                 // name.split(' ') и по очерёдно присваиваем к formGroup
             },
-            changeUser(idUser){
+            getPostGroup(id){
+                axios.post('/api/admin/getPostGroup',{'id':id,'token':this.token}).then((response)=>{
+                    this.postData=response.data;
+                    console.log(response);
+                });
+            },
+            changeGroup(idGroup){
                 // axios на изменение
                 if(!this.v$.formGroup.$invalid & this.trigerPostFill){
                     alert('да');
                 }
                 else{
                     alert('нет');
+                    axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.token,'name':this.formGroup.name}).then((response)=>{
+                        alert('Группа успешно изменена');
+                        this.groupsData[this.globalIndex]=response.data;
+                        this.clearForm();
+                        //window.location.reload();
+                    });
                 }
                 this.trigerChange=false;
             },
-            removeUser(idUser){
-                let answer=confirm('Точно хотите удалить отделение'
-                +
-                // ФИО пользователя по id
-                '');
+            clearForm(){
+                this.formGroup={
+                    id:'',
+                    name:'',
+                };
+                this.postData=[];
+                this.textSearch='';
+                this.trigerChange=false;
+                this.trigerChangeNameForm=false;
+                this.trigerPostFill=false;
+            },
+            removeGroup(index){
+                let answer=confirm('Точно хотите удалить отделение '+this.groupsData[index].name);
                 if(answer){
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
                         alert('Хорошо, удаляем.');
-                        // axios на удаление
-                        window.location.reload();
+                        axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.token}).then((response)=>{
+                            alert('Запись успешно удалена');
+                            this.groupsData.splice(index,1);
+                        });
                     }
                 }
             },
             addGroup(){
                 // axios на добавлени
                 if(!this.v$.formGroup.$invalid & this.trigerPostFill){
-                    alert('да');
+                    alert('да, но как бы нет');
                 }
                 else{
-                    alert('нет');
+                    alert('нет, но как бы да');
+                    axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
+                        alert('Группа успешно добавлена');
+                        this.groupsData.push(response.data);
+                        this.clearForm();
+                    });
                 }
             },
             importFile(){
@@ -182,6 +208,12 @@
                     this.changeMessage();
                 }                 
             },
+            getToken(){
+                axios.post('/admin/token').then((response)=>{
+                    this.token=response.data.token;
+                    console.log(response.data.token);
+                });
+            },
             getSearchGroup(){
                     for( var i=0;i< $('.user').length;i++){
                         var el=$('.user')[i];
@@ -193,11 +225,20 @@
                     }
                 },
                 addPost(){
-                    prompt('чтото');
+                    if(this.formGroup.name!='' && this.formGroup.id!=''){
+                        var postName=prompt('Введите название должности');
+                        axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
+                            alert('Должность успешно добавлена!');
+                            this.postData.push(response.data);
+                        });
+                    }
+                    else{
+                        alert('Нужно выбрать группу!');
+                    }
                 }
         },
         created(){
-           // this.groupsData=
+           this.getToken();
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select
@@ -208,6 +249,9 @@
                 handler(data){
                     if(data.name){
                         this.trigerChangeNameForm=true;
+                    }
+                    if(data.id){
+                        this.getPostGroup(this.formGroup.id);
                     }
                 },
             },

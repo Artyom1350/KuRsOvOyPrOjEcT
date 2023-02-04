@@ -28,25 +28,26 @@
                 </div>
             </div>
             <div class="form_users w-50 ml-5">
-                <h3 class="mt-3 text-center">Форма добавления/изменения</h3>
+                <h3 v-if="!trigerChange" class="mt-3 text-center">Форма добавления</h3>
+                <h3 v-if="trigerChange" class="mt-3 text-center">Форма изменения</h3>
                 <form>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Фамилия</label>
                         <input v-model="formUser.surname" type="text" class="form-control" :class="(( trigerChangesurname & v$.formUser.surname.$invalid)) ? 'is-invalid' : '' "  id="surname">
                         <span class="invalid-feedback" v-if="(trigerChangesurname &  v$.formUser.surname.required.$invalid)">Поле должно быть заполнено</span>                        
-                        <span class="invalid-feedback" v-if="(trigerChangesurname & v$.formUser.surname.maxLength.$invalid)">Максимальное количество символов 255</span>
+                        <span class="invalid-feedback" v-if="(trigerChangesurname & v$.formUser.surname.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Имя</label>
                         <input v-model="formUser.name" type="text" class="form-control" :class="(( trigerChangename & v$.formUser.name.$invalid)) ? 'is-invalid' : '' "  id="name">
                         <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.required.$invalid)">Поле должно быть заполнено</span>                        
-                        <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.maxLength.$invalid)">Максимальное количество символов 255</span>
+                        <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
                         <label for="patronymic" class="form-label">Отчество</label>
                         <input v-model="formUser.patronymic" type="text" class="form-control" :class="(( trigerChangepatronymic & v$.formUser.patronymic.$invalid)) ? 'is-invalid' : '' "  id="patronymic">
                         <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.required.$invalid)">Поле должно быть заполнено</span>                        
-                        <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.maxLength.$invalid)">Максимальное количество символов 255</span>
+                        <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
                         <label for="patronymic" :class="(( trigerChangepassword & v$.formUser.password.$invalid)|| ( trigerChangepassword & !trigerValidPassword)) ? 'is-invalid' : '' " class="form-label">Пароль</label>
@@ -137,30 +138,45 @@
             
         },
         watch:{
+            // 'formUser.patronymic'(){
+            //     console.log('Отчество');
+            //     this.trigerChangepatronymic=true
+            // },
+            // 'formUser.surname'(){
+            //     console.log('Фамилия');
+            //     this.trigerChangepatronymic=true
+            // }
             formUser:{
                 deep:true,
                 handler(data){
-                    if(data.patronymic){
+                    if(data.patronymic && !this.trigerChangepatronymic){
+                        console.log('Отчество');
                         this.trigerChangepatronymic=true
                     }
-                    if(data.surname){
+                    if(data.surname && !this.trigerChangesurname){
+                        console.log('Фамилия');
                         this.trigerChangesurname=true
                     }
-                    if(data.name){
+                    if(data.name && !this.trigerChangename){
+                        console.log('Имя');
                         this.trigerChangename=true
                     }
-                    if(data.email){
+                    if(data.email && !this.trigerChangeemail){
+                        console.log('почта');
                         this.trigerChangeemail=true
                     }
                     if(data.password){
+                        console.log('пароль');
                         this.trigerChangepassword=true;
 
                         this.trigerValidPassword=this.passwordCheck(data.password);
                     }
-                    if(data.post){
+                    if(data.post && !this.trigerChangepost){
+                        console.log('пост');
                         this.trigerChangepost=true
                     }
-                    if(data.department){
+                    if(data.department && !this.trigerChangedepartment){
+                        console.log('отделение');
                         this.getDepartmentParts(); 
                         this.trigerChangedepartment=true;
                     }
@@ -407,15 +423,15 @@
                 formUser:{
                     patronymic:{
                         required,
-                        maxLength: maxLength(255)
+                        maxLength: maxLength(82)
                     },
                     surname:{
                         required,
-                        maxLength:maxLength(255)
+                        maxLength:maxLength(82)
                     },
                     name:{
                         required,
-                        maxLength:maxLength(255)
+                        maxLength:maxLength(82)
                     },
                     department:{
                         required

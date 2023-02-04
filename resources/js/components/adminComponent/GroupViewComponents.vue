@@ -90,6 +90,7 @@
                 trigerPostFill:false,
                 token:'',
                 globalIndex:'',
+                trigerIdForm:false
             }
             
         },
@@ -105,6 +106,7 @@
                 }
             },
             changePost(index){
+
                 let name=prompt('Введите новое название для должности');
                 axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
                     alert('Должность успешно изменена!');
@@ -113,6 +115,7 @@
             },
             changeGroupInForm(index){
                 this.trigerChange=true;
+                this.trigerIdForm=true;
                 this.formGroup.id=this.groupsData[index].id;
                 this.formGroup.name=this.groupsData[index].name;
                 this.trigerPostFill=true;
@@ -123,7 +126,6 @@
             getPostGroup(id){
                 axios.post('/api/admin/getPostGroup',{'id':id,'token':this.token}).then((response)=>{
                     this.postData=response.data;
-                    console.log(response);
                 });
             },
             changeGroup(idGroup){
@@ -169,10 +171,10 @@
             addGroup(){
                 // axios на добавлени
                 if(!this.v$.formGroup.$invalid & this.trigerPostFill){
-                    alert('да, но как бы нет');
+                    // alert('да, но как бы нет');
                 }
                 else{
-                    alert('нет, но как бы да');
+                    // alert('нет, но как бы да');
                     axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
                         alert('Группа успешно добавлена');
                         this.groupsData.push(response.data);
@@ -211,7 +213,6 @@
             getToken(){
                 axios.post('/admin/token').then((response)=>{
                     this.token=response.data.token;
-                    console.log(response.data.token);
                 });
             },
             getSearchGroup(){
@@ -238,7 +239,7 @@
                 }
         },
         created(){
-           this.getToken();
+            this.getToken();
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select
@@ -247,11 +248,13 @@
             formGroup:{
                 deep: true,
                 handler(data){
-                    if(data.name){
+                    if(data.name && !this.trigerChange){
                         this.trigerChangeNameForm=true;
                     }
-                    if(data.id){
+                    if(data.id && this.trigerIdForm){
+                        console.log('post');
                         this.getPostGroup(this.formGroup.id);
+                        this.trigerIdForm=false;
                     }
                 },
             },

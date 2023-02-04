@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\User;
+use App\Models\Department;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Facades\DB;
@@ -11,30 +11,28 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEvents,WithTitle
+class GroupsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEvents,WithTitle
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return DB::table('users')->select('name','email','password','department_part_id','role')->get();
+        public function collection()
+    {
+        return DB::table('departments')->select('name')->get();
     }
     
     public function headings(): array{
         return[
-            'ФИО',
-            'Email',
-            'Пароль',
-            'Должность',
-            'Роль',
+            'Название',
         ];
     }
     public function registerEvents(): array
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                $cellRange = 'A1:W1'; // All headers
+                $cellRange = 'A1'; // All headers
 
                 $styleArray = [
                     'borders' => [
@@ -46,15 +44,15 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 ];
 
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
-                $event->sheet->getDelegate()->getStyle('A1:E1')->getAlignment()->setWrapText(true);
-                $event->sheet->getDelegate()->getStyle('A1:E1')->applyFromArray($styleArray);
+                $event->sheet->getDelegate()->getStyle('A1')->getAlignment()->setWrapText(true);
+                $event->sheet->getDelegate()->getStyle('A1')->applyFromArray($styleArray);
             },
 
         ];
     }
     public function title(): string
     {
-        return 'Users';
+        return 'Departments';
     }
-    
+    }
 }

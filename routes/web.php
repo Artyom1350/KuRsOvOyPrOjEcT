@@ -20,30 +20,6 @@ Route::redirect('/', 'login');
 
 Auth::routes();
 
-
-/*Route::middleware('auth')->group(function(){
-    Route::middleware('is_admin')->prefix('admin')->group(function(){
-        Route::get('/admin_panel/home_admin',[AdminController::class, 'index'])->name('home_admin');
-
-    });
-    Route::middleware('is_user')->prefix('admin')->group(function(){
-        Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-        
-    });
-});*/
-
-// Route::middleware(['delineations_users'])->group(function(){
-//     //должна быть настройка на админа
-// });
-
-
-// Route::get('clear/token', function () {
-//     if(Auth::check() && Auth::user()->role === 1) {
-//         Auth::user()->tokens()->delete();
-//     }
-//     return 'Token Cleared';
-// })->middleware('auth');
-
 Route::middleware('auth')->group(function(){
     Route::middleware('isUser')->group(function(){
         //выдача токена юзера после авторизации 

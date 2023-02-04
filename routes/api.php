@@ -49,6 +49,7 @@ Route::post('/admin/addPost',[AdminController::class,'addPost']);
 Route::post('/admin/destroyPost',[AdminController::class,'destroyPost']);
 Route::post('/admin/changePost',[AdminController::class,'changePost']);
 
-Route::post('/admin/downloadUser',function(){
+/*Route::post('/admin/downloadUser',function(){
     return Excel::download(new UsersExport, 'users.xlsx');
-});
+});*/
+Route::post('/admin/downloadUser',[ExcelController::class, 'getArray']);

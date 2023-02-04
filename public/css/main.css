@@ -9,6 +9,7 @@
     border-radius: 0.6rem;
     border:1px solid #495057
 }
+
 .card-body{
     display: flex;
     flex-direction: column;

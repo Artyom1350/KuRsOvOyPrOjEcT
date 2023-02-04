@@ -4,6 +4,7 @@ use App\Http\Controllers\DBApiController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
@@ -52,4 +53,4 @@ Route::post('/admin/changePost',[AdminController::class,'changePost']);
 /*Route::post('/admin/downloadUser',function(){
     return Excel::download(new UsersExport, 'users.xlsx');
 });*/
-Route::post('/admin/downloadUser',[ExcelController::class, 'getArray']);
+Route::post('/admin/downloadUser',[ExcelController::class, 'getUsers']);

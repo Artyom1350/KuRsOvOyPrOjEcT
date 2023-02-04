@@ -9,6 +9,6 @@ use Excel;
 class ExcelController extends Controller
 {
     public function getUsers(Request $request){
-        return Excel::download(new ArrayExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 }

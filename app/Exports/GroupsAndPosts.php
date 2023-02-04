@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Exports;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
-
-class GroupsAndPosts implements FromCollection
+class GroupsAndPosts implements WithMultipleSheets
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function sheets(): array
     {
-        //
+       return [
+            new Sheets\UsersSheet(),
+            new Sheets\AdminsSheet(),
+       ];
     }
 }

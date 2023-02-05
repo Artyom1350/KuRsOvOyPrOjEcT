@@ -24,7 +24,7 @@
             <label for="dateApplicate" class="form-label">Срок выполнения до:</label>
             <input type="date" class="form-control" id="dateApplicate" name="dateAppl" placeholder="Дата" v-model="dateAppl" :class="(((trigersField.date && v$.dateAppl.required.$invalid) || incorrectDate) ? 'is-invalid' : '')">
             <span v-if="v$.dateAppl.required.$invalid" class="invalid-feedback ">Дата должна быть выставлена</span>
-            <span v-if="incorrectDate" class="invalid-feedback ">Дата должна быть выставлена корректно <br> (минимум 2 дня на выполнение и воскресенье не рабочий день)</span>
+            <span v-if="incorrectDate" class="invalid-feedback ">Дата должна быть выставлена корректно <br> (минимум 2-3 дня на выполнение и воскресенье не рабочий день)</span>
         </div>
         <!-- получатели -->
         <div class="mb-3">
@@ -141,7 +141,7 @@
                         this.incorrectDate=true
                     }else{
                         let daysMin=date1-date2;
-                        if(daysMin<300000000){
+                        if(daysMin<210000000){
                             this.incorrectDate=true
                         }else{
                             this.incorrectDate=false

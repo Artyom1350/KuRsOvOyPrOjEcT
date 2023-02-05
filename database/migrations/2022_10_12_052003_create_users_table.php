@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('department_part_id')->constrained()->onDelete('cascade');
+            $table->foreignId('department_part_id')->nullable()->constrained()->onDelete('cascade');
             $table->tinyInteger('role')->default(0);
             $table->rememberToken();
             $table->timestamps();

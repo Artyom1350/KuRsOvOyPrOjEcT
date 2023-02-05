@@ -5,22 +5,24 @@
             <div class="form-group" style="height: 85%;">
                 <label for="searchPeople">Поиск</label>
                 <input type="text" class="form-control searchString" name="searchPeople" id="searchPeople" @keyup="getSearchPeople" v-model="textSearch">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Пользователь</th>
-                            <th scope="col">Статус</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(user, index) in users" class="people-unit">
-                            <td>{{ index+1 }}</td>
-                            <td>{{ user.name }}</td>
-                            <td :class="getColor(user.status)">{{ statusAppl[user.status] }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Пользователь</th>
+                                <th scope="col">Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(user, index) in users" class="people-unit">
+                                <td>{{ index+1 }}</td>
+                                <td>{{ user.name }}</td>
+                                <td :class="getColor(user.status)">{{ statusAppl[user.status] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="buttonWrap d-flex align-items-center">
@@ -115,7 +117,10 @@
     .textArea{
         height: 90%;
     }
-
+    .table-wrap{
+        height: 300px;
+        overflow-y: scroll ;
+    }
     .people{
         overflow-y: scroll;
     }

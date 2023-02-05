@@ -15,7 +15,7 @@
                     </label>
                 </div>
             </div>
-            <h2 class='text-center mt-5'>Выбор пользователей</h2>
+            <h2 class='text-center mt-2'>Выбор пользователей</h2>
             <div class="form-group">
                 <label for="searchPeople">Поиск</label>
                 <input type="text" class="form-control searchString" name="searchPeople" id="searchPeople" @keyup="getSearchPeople" v-model="textSearch">
@@ -77,9 +77,7 @@
                     })
                 },
                 getUsers(token){
-                    console.log(token);
                     axios.post('/api/getUsers',{'token':token}).then((response)=>{
-                        console.log(response);
                     this.users=response.data.users;
                     });
                 },
@@ -122,7 +120,14 @@
 </script>
 
 <style>
-
+    .grupPeople{
+        height: 75px;
+        overflow-y: scroll;
+    }
+    .people{
+        height: 75px;
+        overflow-y: scroll;
+    }
     .modalWindow{
         width: calc(100% - 500px);
         height: 500px;

@@ -11,7 +11,7 @@
         <my-applic :mydata='@json($myApplData)'></my-applic>
     @endif
     @if($incAplData)
-        <h2 class="text-center">Входящие заявки</h2>
+        <h2 class="mt-3 text-center">Входящие заявки</h2>
         <inc-applic :incdata='@json($incAplData)'></inc-applic>
     @endif
         

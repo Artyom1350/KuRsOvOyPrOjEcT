@@ -142,34 +142,27 @@
                 deep:true,
                 handler(data){
                     if(data.patronymic && !this.trigerChangepatronymic){
-                        console.log('Отчество');
                         this.trigerChangepatronymic=true
                     }
                     if(data.surname && !this.trigerChangesurname){
-                        console.log('Фамилия');
                         this.trigerChangesurname=true
                     }
                     if(data.name && !this.trigerChangename){
-                        console.log('Имя');
                         this.trigerChangename=true
                     }
                     if(data.email && !this.trigerChangeemail){
-                        console.log('почта');
                         this.trigerChangeemail=true
                     }
                     if(data.password){
-                        console.log('пароль');
                         this.trigerChangepassword=true;
 
                         this.trigerValidPassword=this.passwordCheck(data.password);
                     }
                     if(data.post && !this.trigerChangepost){
-                        console.log('пост');
                         this.trigerChangepost=true;
 
                     }
                     if(data.department && !this.trigerChangedepartment){
-                        console.log('отделение');
                         this.trigerChangedepartment=true;
                         this.getDepartmentParts(); 
 

@@ -35,6 +35,7 @@ Route::post('/getUnswersUsers',[HomeController::class,'getUnswersUsers']);
 
 //апи админа
 
+//работа с юзерами
 Route::post('/admin/getOneUser',[AdminController::class, 'getOneUser']);
 Route::post('/admin/getAllDepartments',[AdminController::class,'getAllDepartments']);
 Route::post('/admin/getDepartmentParts',[AdminController::class,'getDepartmentParts']);
@@ -42,6 +43,7 @@ Route::post('/admin/addUser',[AdminController::class,'addUser']);
 Route::post('/admin/changeUser',[AdminController::class,'changeUser']);
 Route::post('/admin/destroyUser',[AdminController::class,'destroyUser']);
 
+//работа с группами
 Route::post('/admin/getPostGroup',[AdminController::class,'getPostGroup']);
 Route::post('/admin/addGroup',[AdminController::class,'addGroup']);
 Route::post('/admin/destroyGroup',[AdminController::class,'destroyGroup']);
@@ -50,7 +52,8 @@ Route::post('/admin/addPost',[AdminController::class,'addPost']);
 Route::post('/admin/destroyPost',[AdminController::class,'destroyPost']);
 Route::post('/admin/changePost',[AdminController::class,'changePost']);
 
-/*Route::post('/admin/downloadUser',function(){
-    return Excel::download(new UsersExport, 'users.xlsx');
-});*/
+//импорт/экспорт
 Route::post('/admin/downloadUser',[ExcelController::class, 'getUsers']);
+Route::post('/admin/downloadGroupsAndParts',[ExcelController::class,'getGroupsAndParts']);
+Route::post('/admin/importUsers',[ExcelController::class,'importUsers']);
+Route::post('/admin/importGroupsAndPosts',[ExcelController::class,'importGroupsAndPosts']);

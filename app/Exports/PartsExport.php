@@ -20,6 +20,7 @@ class PartsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     {
         return DB::table('department_parts')->select('name','department_id')->get();
     }
+    private $fileName = 'da1';
     
     public function headings(): array{
         return[

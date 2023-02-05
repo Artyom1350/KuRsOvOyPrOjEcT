@@ -8,8 +8,8 @@ class GroupsAndPosts implements WithMultipleSheets
     public function sheets(): array
     {
        return [
-            new Sheets\UsersSheet(),
-            new Sheets\AdminsSheet(),
+            new GroupsExport(),
+            new PartsExport(),
        ];
     }
 }

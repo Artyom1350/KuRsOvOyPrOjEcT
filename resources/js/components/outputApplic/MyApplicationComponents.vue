@@ -7,9 +7,12 @@
         <div  class="wrap-card " v-for="(applicat,index) in mydata">
             <div class="h-auto p-1 application d-flex justify-content-between" :id="'appl'+index" :key="index">
                 <h3 class="w-50">{{applicat.name}}</h3>
-                <a class="w-12" :href="'/myAppl/Download/'+applicat.id"><button class=" btn btn-primary">Скачать документ</button></a>
-                <a class="w-12" :href="'/myAppl/changeApplication/'+applicat.id"><button class=" btn btn-primary">Редактировать заявку</button></a>
-                <a class="w-12" :href="'#appl'+ index "><button @click="openModalWind(applicat.id)" class=" btn btn-primary">Посмотреть статусы пользователей</button></a>
+                <div class="h-auto text-wrap d-flex justify-content-between w-50">
+                    <a  :href="'/myAppl/Download/'+applicat.id"><button class=" btn btn-primary">Скачать документ</button></a>
+                    <a  :href="'/myAppl/changeApplication/'+applicat.id"><button class=" btn btn-primary">Редактировать заявку</button></a>
+                    <a  :href="'#appl'+ index "><button @click="openModalWind(applicat.id)" class=" btn btn-primary">Посмотреть статусы пользователей</button></a>
+                
+                </div>
             </div>
             
         </div>
@@ -53,7 +56,4 @@
 </script>
 
 <style>
-w-12{
-    width: 12% !important;
-}
 </style>

@@ -311,7 +311,6 @@
                     return true
                 }
                 else{
-                    console.log(this.formUser.password);
                     if(this.formUser.password=='' && this.trigerChange){
                         return true;
                     }
@@ -358,7 +357,6 @@
                 if(this.$refs.file!=null){
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
-                    console.log(this.$refs.file.files[0]);
                     axios.post('/api/admin/importUsers',data/*,config*/).then((response)=>{
                         alert('Добавление прошло успешно!');
                         window.location.reload();
@@ -390,7 +388,7 @@
                     if (this.file)
                         countFiles = this.file.name;
                     if (countFiles)
-                        alert("Файл загружен, нажмите 'Импорт', для импорта пользователей.");
+                    {}
                     else
                         alert("Файл не выбран.");
                 }

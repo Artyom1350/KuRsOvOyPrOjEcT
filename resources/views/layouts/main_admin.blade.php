@@ -62,6 +62,7 @@
             </div>  
         </div>  
         @yield('content')
+        
     </main>
     @endauth
     <footer class="d-flex align-items-center paddingBlock">

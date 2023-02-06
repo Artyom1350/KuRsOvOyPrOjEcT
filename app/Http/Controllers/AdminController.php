@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Crypt;
 class AdminController extends Controller
 {
     public function  index(){
-        
-        return view('admin_panel/home_admin');
+        $name=auth()->user()->name;
+        return view('admin_panel/home_admin',['name'=>$name]);
     }
     public function  userPage(){
         $data=array();

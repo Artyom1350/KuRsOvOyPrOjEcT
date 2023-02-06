@@ -44,7 +44,8 @@ class HomeController extends Controller
             $arr=array(date("d.m.Y",strtotime($doc['dateAppl']))=>$doc['title']);
             $events+=$arr;
         }
-        return view('home',['calendar'=>$calendar,'events'=>$events]);
+        $name=auth()->user()->name;
+        return view('home',['calendar'=>$calendar,'events'=>$events,'name'=>$name]);
     }
 
 

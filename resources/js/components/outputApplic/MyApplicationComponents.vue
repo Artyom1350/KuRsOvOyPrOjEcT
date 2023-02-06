@@ -9,7 +9,7 @@
                 <h3 class="w-50">{{applicat.name}}</h3>
                 <div class="h-auto text-wrap d-flex justify-content-between w-50">
                     <a  :href="'/myAppl/Download/'+applicat.id"><button class=" btn btn-primary">Скачать документ</button></a>
-                    <a  :href="'/myAppl/changeApplication/'+applicat.id"><button class=" btn btn-primary">Редактировать заявку</button></a>
+                    <a  :href="'/myAppl/changeApplication/'+applicat.id" v-if="applicat.visible"><button class=" btn btn-primary">Редактировать заявку</button></a>
                     <a  :href="'#appl'+ index "><button @click="openModalWind(applicat.id)" class=" btn btn-primary">Посмотреть статусы пользователей</button></a>
                 
                 </div>
@@ -47,6 +47,9 @@
                         
                     }
                 }
+            },
+            visible(){
+                return false;
             }
         },
         components:{

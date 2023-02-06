@@ -55,9 +55,17 @@ class HomeController extends Controller
         //applacationsAnswer отвечает за ответы на заявку
 
         $application=array();
-        $documents=auth()->user()->documents()->get();
+        $documents=auth()->user()->documents()->orderBy('created_at','DESC')->/*dd()*/get();
         foreach($documents as $item){
-            array_push($application,array('id' => $item['id'], 'name' => $item['title']));
+            $visible=true;
+            $visibleProv=$item->access_users()->get();
+            foreach($visibleProv as $access){
+                if($access['status']>0) {
+                    $visible=false;
+                    break;
+                }
+            }
+            array_push($application,array('id' => $item['id'], 'name' => $item['title'],'visible'=>$visible));
         }
         return view('application/myAppl',['myApplData'=>$application]);
     }
@@ -67,10 +75,10 @@ class HomeController extends Controller
         //переменные(вдруг ошибки будут тип они за областью видимости)
         $user="";
         $application=array(); //создал массив для хранения переменных
-        $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
+        $access=auth()->user()->access_users()->orderBy('created_at','DESC')->get(); //да, получил все доступные доки(их id)
         //просто да(перебор)
         foreach($access as $item){
-            $documents=$item->document()->get(); //выборка доступных доков
+            $documents=$item->document()->orderBy('created_at','DESC')->get(); //выборка доступных доков
             foreach($documents as $document){
                 $user=$document->user()->get(); //Кто создал?
 
@@ -88,17 +96,25 @@ class HomeController extends Controller
     public function allApplication(){
         //исходящие
         $application=array();
-        $documents=auth()->user()->documents()->get();
+        $documents=auth()->user()->documents()->orderBy('created_at','DESC')->get();
         foreach($documents as $item){
-            array_push($application,array('id' => $item['id'], 'name' => $item['title']));
+            $visible=true;
+            $visibleProv=$item->access_users()->get();
+            foreach($visibleProv as $access){
+                if($access['status']>0) {
+                    $visible=false;
+                    break;
+                }
+            }
+            array_push($application,array('id' => $item['id'], 'name' => $item['title'],'visible'=>$visible));
         }
         //входящие
         $user="";
         $application1=array(); //создал массив для хранения переменных
-        $access=auth()->user()->access_users()->get(); //да, получил все доступные доки(их id)
+        $access=auth()->user()->access_users()->orderBy('created_at','DESC')->get(); //да, получил все доступные доки(их id)
         //просто да(перебор)
         foreach($access as $item){
-            $documents=$item->document()->get(); //выборка доступных доков
+            $documents=$item->document()->orderBy('created_at','DESC')->get(); //выборка доступных доков
             foreach($documents as $document){
                 $user=$document->user()->get(); //Кто создал?
 
@@ -123,16 +139,6 @@ class HomeController extends Controller
         $description=$document->first()['description'];
         $dateAppl=$document->first()['dateAppl'];
         $status=auth()->user()->access_users()->where('document_id',$id)->first()['status'];
-
-        /*
-            вывод из документа его статус в числовом эквиваленте
-            покм п оумолчанию сделаю 0
-            проверил с другими значениями
-            всё работает
-            ok
-            */
-
-        //$status=0;
         $application=array('userName'=>$user,'fileName'=>$document->first()->file,'description'=>$description,'dateAppl'=>$dateAppl,'title'=>$title, 'doc_id'=>$id, 'status'=>$status);
         return view('application/OneAppl',[ 'applic'=> $application]);
     }

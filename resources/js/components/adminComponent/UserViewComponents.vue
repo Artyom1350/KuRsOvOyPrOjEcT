@@ -18,7 +18,7 @@
                         <hr class="mt-0">
                     </div>
                 </div>
-                <div class="buttonImportExp d-flex align-items-end justify-content-between ">
+                <div class="mt-3 buttonImportExp d-flex align-items-end justify-content-between ">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Выберите файл для импорта</label>
                         <input class="form-control field addition" name="file" ref="file" type="file" id="formFile" @change="changeMessage()">

@@ -1,8 +1,8 @@
 <template>
     <div class="wrap">
-        <div class="d-flex align-items-start justify-content-between">
+        <div class="mt-2 d-flex align-items-start justify-content-between">
             <div class="usersView w-50 mr-4">
-                <h3 class="text-center">Отделения</h3>
+                <h3 class="text-center">Структурные подразделения</h3>
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений" @keyup="getSearchGroup" v-model="textSearch">
                 <div class="globalUserWrap">
@@ -41,7 +41,7 @@
                     <button v-if=!trigerChange @click.prevent="addGroup()" type="submit" class="btn btn-primary">Добавить отделение</button>
                     <button v-if=trigerChange @click.prevent="changeGroup(formGroup.id)" type="submit" class="btn btn-primary">Изменить отделение</button>
                 </form>
-                <h4 class="text-centr mt-2">Должности</h4>
+                <h4 class="text-centr mt-3">Должности структурного подразделения</h4>
                 <div class="globalPostWrap">
                     <div class="wrapUser" v-for="(post,index) in postData" :value="post.id" >
                         <div class="user h-auto d-flex align-items-start justify-content-between">

@@ -11,8 +11,8 @@ header{
     justify-content: space-between;
 }
 .main{
-    min-height: 500px;
-    height: auto;
+    min-height: 65vh;
+    height: auto !important;
 }
 .logoWrap{
     height: 100%;

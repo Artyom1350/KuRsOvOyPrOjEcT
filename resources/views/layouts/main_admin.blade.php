@@ -55,7 +55,7 @@
                     </li>
                     <li class="nav-item ">
                         <a href="{{ route('group_admin') }}" class="nav-link groups py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
-                            Группы
+                            Структурные подразделения
                         </a>
                     </li>
                 </ul>

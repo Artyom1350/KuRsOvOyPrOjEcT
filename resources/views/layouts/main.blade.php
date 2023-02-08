@@ -33,7 +33,7 @@
         <div class="exit">
             <a href="{{ url('/userLogout') }}"
             onclick="event.preventDefault();
-               document.getElementById('logout-form').submit();">
+                document.getElementById('logout-form').submit();">
                 <img src="{{asset('image/icons/logout_icon.svg')}}" alt="Выход">
             </a>
             <form id="logout-form" action="{{ url('/userLogout') }}" method="POST" style="display: none;">

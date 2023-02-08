@@ -145,11 +145,13 @@
             },
             changeGroup(idGroup){
                 // axios на изменение
-                if(!this.v$.formGroup.$invalid & this.trigerPostFill){
-                    alert('да');
+                if(this.v$.formGroup.$invalid & this.trigerPostFill){
+                    // alert('да');
+                    this.trigerChangeNameForm=true;
                 }
                 else{
-                    alert('нет');
+                    // alert('нет');
+                    this.trigerChange=false;
                     axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.token,'name':this.formGroup.name}).then((response)=>{
                         alert('Группа успешно изменена');
                         this.groupsData[this.globalIndex]=response.data;
@@ -157,7 +159,6 @@
                         //window.location.reload();
                     });
                 }
-                this.trigerChange=false;
             },
             clearForm(){
                 this.formGroup={

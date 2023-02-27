@@ -9,7 +9,7 @@
     width: 300px;
 }
 .application{
-    height: 50px;
+    min-height: 37px;
     background: #D9D9D9;
     text-align: center;
     border-radius: 15px;
@@ -32,7 +32,7 @@
 }
 .application a{
     display: block;
-    margin: auto 15px;
+    margin: auto;
 }
 .application p {
     display: block;

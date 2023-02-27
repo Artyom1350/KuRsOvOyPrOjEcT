@@ -41,7 +41,12 @@
             </form>
         </div>
     </header>
-    <main class="main d-flex">
+
+    <main class="main d-flex ">
+        <div class="burger bg-color w-10 h-8">
+            <img class="svg open" src="{{asset('image/icons/menu.svg')}}" alt="Список">
+            <img class="svg close" src="{{asset('image/icons/x.svg')}}" alt="Крест">
+        </div>
         <div class="posRel">
             <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
                 <a href="{{ route('home') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">

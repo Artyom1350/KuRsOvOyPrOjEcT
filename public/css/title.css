@@ -1,8 +1,18 @@
 .paddingBlock{
     padding: 0 10%;
 }
+.paddingBlock h1{
+    margin: 0 3%;
+    text-align: center;
+}
+.posRel{
+    width: 150px;
+}
+.container h3{
+    margin-top: 15px;
+}
 header{
-    height: 150px;
+    height: 13%;
     background: #fff;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
@@ -10,9 +20,45 @@ header{
     align-items: center;
     justify-content: space-between;
 }
+body{
+    height: 100vh;
+}
 .main{
-    min-height: 80vh;
+    min-height: 77%;
     height: auto !important;
+}
+.burger{
+    display: none;
+}
+@media screen and (max-width:1080px) {
+    .paddingBlock{
+        padding: 0 3%;
+    }
+    
+}
+.close{
+    display: none;
+}
+@media screen and (max-width:720px) {
+    .posRel{
+        position: absolute;
+        left: -200px;
+    }
+    .paddingBlock h1{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .burger{
+        display:block;
+        position: relative;
+        border-radius: 0 15px 15px 0;
+    }
+    .burger .svg{
+        height: 95%;
+        width:  95%;
+        margin: auto;
+    }
+    
 }
 .logoWrap{
     height: 100%;
@@ -34,7 +80,7 @@ header{
     height: 100%;
 }
 .exit{
-    height: 30%;
+    height: 50%;
 }
 .exit a{
     display: block;
@@ -53,12 +99,19 @@ header{
 .bg-color{
     background-color: #949AA5;
 }
+.w-10{
+    width: 5vw !important;
+}
+.h-8{
+    height: 5vh !important;
+}
 footer{
     background: #fff;
     height: 150px;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     font-size: x-large;
+    height: 10%;
 }
 a {
     color:#fff !important;
@@ -68,7 +121,4 @@ p{
 }
 footer{
     font-size: large;
-}
-.posRel{
-    width: 10%;
 }

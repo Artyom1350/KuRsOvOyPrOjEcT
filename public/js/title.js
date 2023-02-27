@@ -35,3 +35,20 @@ $('#watchPassword').change(function(){
         $('#password').prop("type", "password");
     }
 });
+var trigerView=false;
+$('.burger').click(function(){
+    if(!trigerView){
+        trigerView=true;
+        $('.burger').offset({left:150});
+        $('.posRel').offset({left:0});
+        $('.open').hide();
+        $('.close').show();
+    }
+    else{
+        trigerView=false;
+        $('.burger').offset({left:0});
+        $('.posRel').offset({left:-150});
+        $('.open').show();
+        $('.close').hide();
+    }
+});

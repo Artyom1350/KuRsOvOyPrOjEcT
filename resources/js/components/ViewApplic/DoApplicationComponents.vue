@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
 
-    <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
+    <form class=" d-block m-auto" :class="(this.windowWidth>1080) ? 'w-50' : ''" enctype="multipart/form-data">
         <!--Название-->
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
@@ -58,9 +58,15 @@
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
                 <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
-                <div class="field__file-button field__file-button-add">Выбрать</div>
+                <div v-if="(windowWidth<=720)" class="field__file-button field__file-button-add">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <div v-if="(windowWidth>720)" class="field__file-button field__file-button-add">Выбрать</div>
             </label>
-            <input  type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
+            <input v-if="(windowWidth<=720)" type="button" class="btn btn-danger field__file-button-remove" value="X" @click="delFile()"/>
+            <input v-if="(windowWidth>720)" type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
         </div>  
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
@@ -84,6 +90,9 @@
         },  
         mounted() {
             this.control=$('#field__file-2')[0];
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
         },
         components:{
             ModalWindow
@@ -106,7 +115,8 @@
                 isModalOpen:false,
                 issetGroupPeopl:false,
                 incorrectDate:false,
-                incorrectFile:false
+                incorrectFile:false,
+                windowWidth: window.innerWidth
             }
         },
         watch:{
@@ -367,5 +377,22 @@
     }
     .field__file-button-remove{
         border-radius: 0 15px 15px 0 !important;
+    }
+    @media screen and (max-width:720px) {
+        form>button{
+            width: 49%;
+        }
+        .field__file-fake {
+            width: calc(100% - 15%);
+        }
+        .field__file-button{
+            width: 15%;
+        }
+        .field__file-wrapper {
+            width: 85%;
+        } 
+        .field__file-button-remove{
+            width: 15%;
+        }
     }
 </style>

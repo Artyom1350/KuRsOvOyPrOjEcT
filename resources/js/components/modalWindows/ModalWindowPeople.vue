@@ -30,8 +30,8 @@
             </div>
         </div>
         <div class="buttonWrap d-flex align-items-center mt-1">
-            <button class="btn btn-primary w-25 " @click="closeModal" :disabled="!disabledButton">Выбрать</button>
-            <button class="btn btn-danger w-25 " @click="closeModal">Отмена</button>
+            <button class="btn btn-primary" :class="(this.windowWidth>1080) ? 'w-25' : 'w-50 mr-2'"  @click="closeModal" :disabled="!disabledButton">Выбрать</button>
+            <button class="btn btn-danger"  :class="(this.windowWidth>1080) ? 'w-25' : 'w-50 ml-2'" @click="closeModal">Отмена</button>
         </div>
     </div>  
 </template>
@@ -47,11 +47,14 @@
                 groups:{},
                 textSearch:'',
                 textSearchGroup:'',
+                windowWidth: window.innerWidth
             };
             
         },
         mounted(){
-            
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
         },
         props:[
             'groupSelectParrent',
@@ -143,5 +146,13 @@
 
     .displayNoneImportant{
         display: none !important;
+    }
+    @media screen and (max-width:720px) {
+        .people {
+            height: 25%;
+        }
+        .grupPeople {
+            height: 35%;
+        }
     }
 </style>

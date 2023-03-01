@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/title.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -42,6 +43,10 @@
         </div>
     </header>
     <main class="main d-flex">
+        <div class="burger bg-color">
+            <img class="svg open" src="{{asset('image/icons/menu.svg')}}" alt="Список">
+            <img class="svg close" src="{{asset('image/icons/x.svg')}}" alt="Крест">
+        </div>
         <div class="posRel">
             <div class="d-flex flex-column flex-shrink-0 bg-color sideboard">
                 <a href="{{ route('home_admin') }}" class="homeLink p-3 link-dark text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="right">

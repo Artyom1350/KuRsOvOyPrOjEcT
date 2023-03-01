@@ -79,3 +79,11 @@
     width: 100%;
     font-size: larger;
 }
+@media screen and (max-width:720px) {
+	.makeAppl input{
+        width: 100%;
+    }
+    .makeAppl{
+        width: 100%;
+    }
+}

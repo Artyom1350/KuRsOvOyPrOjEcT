@@ -10,6 +10,7 @@
 }
 .container h3{
     margin-top: 15px;
+    text-align: center;
 }
 header{
     height: 13%;
@@ -23,42 +24,17 @@ header{
 body{
     height: 100vh;
 }
-.main{
+main{
     min-height: 77%;
-    height: auto !important;
 }
 .burger{
     display: none;
-}
-@media screen and (max-width:1080px) {
-    .paddingBlock{
-        padding: 0 3%;
-    }
-    
+    width: 47px;
+    height: 47px;
+    position: absolute;
 }
 .close{
     display: none;
-}
-@media screen and (max-width:720px) {
-    .posRel{
-        position: absolute;
-        left: -200px;
-    }
-    .paddingBlock h1{
-        font-size: 1.5rem;
-        text-align: center;
-    }
-    .burger{
-        display:block;
-        position: relative;
-        border-radius: 0 15px 15px 0;
-    }
-    .burger .svg{
-        height: 95%;
-        width:  95%;
-        margin: auto;
-    }
-    
 }
 .logoWrap{
     height: 100%;
@@ -99,12 +75,6 @@ body{
 .bg-color{
     background-color: #949AA5;
 }
-.w-10{
-    width: 5vw !important;
-}
-.h-8{
-    height: 5vh !important;
-}
 footer{
     background: #fff;
     height: 150px;
@@ -119,6 +89,71 @@ a {
 p{
     margin: auto !important;
 }
-footer{
-    font-size: large;
+@media screen and (max-width:720px) {
+    .posRel{
+        position: absolute;
+        left: -200px;
+    }
+    .container h1{
+        margin-top: 50px;
+        font-size: 1.2rem !important;
+        text-align: center;
+    }
+    .container h3{
+        font-size: 1rem !important;
+        text-align: center;
+    }
+    .paddingBlock h1{
+        font-size: 1.2rem !important;
+        text-align: center;
+    }
+    .burger{
+        display:block;
+        border-radius: 0 15px 15px 0;
+    }
+    .burger .svg{
+        height: 65%;
+        width:  65%;
+        position: absolute;
+        top: 16%;
+        left: 16%;
+    }
+    .sideboard{
+        width: 10%;
+        min-width: 200px !important;
+    }
+    .container h2{
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    .homeLink img {
+        width: 25%;
+    }
+    footer{
+        text-align: center;
+        font-size: medium;
+    }
+    .container h3{
+        margin-top: 50px;
+    }
+}
+@media screen and (max-width:1080px) {
+    .paddingBlock{
+        padding: 0 3%;
+    }
+    .paddingBlock h1{
+        font-size: 2rem;
+    }
+    .container h1{
+        font-size: 1.5rem !important;
+        text-align: center;
+    }
+    .container h3{
+        font-size: 1.2rem !important;
+        text-align: center;
+    }
+    .container h2{
+        font-size: 1.4rem;
+        text-align: center;
+    }
 }

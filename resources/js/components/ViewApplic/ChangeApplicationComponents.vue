@@ -1,8 +1,7 @@
 <template>
     <div class="wrap">
         
-    <form class=" d-block w-50 m-auto" enctype="multipart/form-data">
-        <!--     -->
+    <form class=" d-block m-auto" :class="(this.windowWidth>1080) ? 'w-50' : ''" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
             <input :class="((trigersField.name && (v$.nameAppl.required.$invalid||v$.nameAppl.minLength.$invalid||v$.nameAppl.maxLength.$invalid)) ? 'is-invalid' : '')"  type="text" class="form-control" id="nameApplicate" name="nameAppl" placeholder="Название" v-model="nameAppl">
@@ -35,14 +34,23 @@
                         <p class="text-center"><b>Группы пользователей</b></p>
                         <div class="mb-3 d-flex justify-content-between" v-for="(group,index) in groupSelect">
                             <p>{{group.name}}</p>
-                            <input type="button" class="btn btn-danger" value="-" @click="delElemGroup(index)"/>
+                            <div @click="delElemPeople(index)" class="ninja">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                </svg>
+                            </div>
+                                
                         </div>
                     </div>
                     <div v-if="peopleSelect[0]" class="wrap-grpeo">
                         <p class="text-center"><b>Пользователи</b></p>
                         <div class="mb-3 d-flex justify-content-between " v-for="(group,index) in peopleSelect">
                             <p>{{group.name}}</p>
-                            <input type="button" class="btn btn-danger" value="-" @click="delElemPeople(index)"/>
+                                <div @click="delElemPeople(index)" class="ninja">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <div v-if="!issetGroupPeopl">
@@ -59,9 +67,16 @@
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
                 <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
-                <div class="field__file-button field__file-button-add">Выбрать</div>
+
+                <div v-if="(windowWidth<=720)" class="field__file-button field__file-button-add">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <div v-if="(windowWidth>720)" class="field__file-button field__file-button-add">Выбрать</div>
             </label>
-            <input  type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
+            <input v-if="(windowWidth<=720)" type="button" class="btn btn-danger field__file-button-remove" value="X" @click="delFile()"/>
+            <input v-if="(windowWidth>720)" type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
         </div>  
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
@@ -89,6 +104,9 @@
         },  
         mounted() {
             this.control=$('#field__file-2')[0];
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
         },
         components:{
             ModalWindow
@@ -112,7 +130,8 @@
                 isModalOpen:false,
                 issetGroupPeopl:true,
                 incorrectDate:false,
-                incorrectFile:false
+                incorrectFile:false,
+                windowWidth: window.innerWidth
             }
         },
         watch:{
@@ -363,6 +382,7 @@
         border: 2px solid #ced4da;
         border-radius: 15px 0 0 15px;
         border-right: none;
+        height: 100%;
     }
     .field__file-button {
         width: 130px;
@@ -392,4 +412,31 @@
     .link_document{
         color: #28679b !important;
     }
+    .bi-trash3{
+        height: 90%;
+        max-width: 30px;
+        margin-bottom: 4px;
+    }
+    .ninja{
+        border:none !important;
+        width: 10% !important;
+    }
+    @media screen and (max-width:720px) {
+        form>button{
+            width: 49%;
+        }
+        .field__file-fake {
+            width: calc(100% - 15%);
+        }
+        .field__file-button{
+            width: 15%;
+        }
+        .field__file-wrapper {
+            width: 85%;
+        } 
+        .field__file-button-remove{
+            width: 15%;
+        }
+    }
+    
 </style>

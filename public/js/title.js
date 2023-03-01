@@ -39,7 +39,7 @@ var trigerView=false;
 $('.burger').click(function(){
     if(!trigerView){
         trigerView=true;
-        $('.burger').offset({left:150});
+        $('.burger').offset({left:200});
         $('.posRel').offset({left:0});
         $('.open').hide();
         $('.close').show();
@@ -47,7 +47,7 @@ $('.burger').click(function(){
     else{
         trigerView=false;
         $('.burger').offset({left:0});
-        $('.posRel').offset({left:-150});
+        $('.posRel').offset({left:-200});
         $('.open').show();
         $('.close').hide();
     }

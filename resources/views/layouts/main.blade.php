@@ -43,7 +43,7 @@
     </header>
 
     <main class="main d-flex ">
-        <div class="burger bg-color w-10 h-8">
+        <div class="burger bg-color">
             <img class="svg open" src="{{asset('image/icons/menu.svg')}}" alt="Список">
             <img class="svg close" src="{{asset('image/icons/x.svg')}}" alt="Крест">
         </div>

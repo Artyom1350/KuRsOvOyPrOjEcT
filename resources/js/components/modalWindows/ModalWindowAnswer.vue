@@ -124,4 +124,15 @@
     .people{
         overflow-y: scroll;
     }
+
+    @media screen and (max-width:720px) {
+        
+    }
+    @media screen and (max-width:1080px) {
+        .modalWindow{
+            width: 100% !important;
+            top: 0 !important;
+            height: 100% !important;
+        }
+    }
 </style>

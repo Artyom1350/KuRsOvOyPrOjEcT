@@ -6,8 +6,8 @@
         </div>
         <div  class="wrap-card " v-for="(applicat,index) in mydata">
             <div class="h-auto application d-flex justify-content-between" :id="'appl'+index" :key="index">
-                <p class="w-50"><b>{{applicat.name}}</b></p>
-                <div class="h-auto text-wrap d-flex justify-content-between w-25">
+                <p ><b>{{applicat.name}}</b></p>
+                <div class="h-auto text-wrap d-flex justify-content-between">
                     <a  :href="'/myAppl/Download/'+applicat.id">
                         <button class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">

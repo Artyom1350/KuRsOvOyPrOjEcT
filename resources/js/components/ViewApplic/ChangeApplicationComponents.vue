@@ -237,9 +237,19 @@
                 swal ({
                     title: "Удалить заявку?",
                     text: "Если вы удалите заявку, то у вас не будет возможности её восстановить.",
-                    icon: "warning",
+                    icon: "info",
                     dangerMode: true,
-                    buttons: ["Нет",'Да']
+                    buttons: {
+                        success:{
+                            text:'Да',
+                            value:true
+                        },
+                        erro:{
+                            text:'Нет',
+                            value:false,
+                            
+                        }
+                    }
                 })
                 .then(willDelete => {
                     if(willDelete){
@@ -276,7 +286,6 @@
                     axios.post('/changeApplSend',form,config)
                     .then(response=>
                         this.getAnswerChange()
-
                     );
                 }else{
                     swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});

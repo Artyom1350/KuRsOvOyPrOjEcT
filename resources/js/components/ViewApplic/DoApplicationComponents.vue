@@ -246,18 +246,18 @@
                         this.getAnswer()
                     );
                 }else{
-                    swal('Ошибка','', "error");
-                    swal('Возможно вы не указали получателей.','', "error");
+                    swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});
+                    this.trigersField.name=true;
+                    this.trigersField.descr=true,
+                    this.trigersField.date=true,
+                    this.trigersField.file=true
                 }
             },  
             getAnswer(){
                 swal('Заявка успешно создана!','', "success")
-                .then(
-                    setInterval(
-                    function (){
-                        window.location.href='/myAppl'
-                    },3000)
-                );
+                .then((val)=>{
+                    window.location.href='/myAppl'
+                });
             }
         },
         validations (){

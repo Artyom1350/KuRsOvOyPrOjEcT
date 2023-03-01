@@ -146,11 +146,18 @@
             },
             changePost(index){
 
-                let name=prompt('Введите новое название для должности');
-                axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
-                    swal('Должность успешно изменена!');
-                    this.postData[index].name=name;
-                });
+                swal({
+                    title:'Введите название новой должности',
+                    content: "input",
+                }).then(
+                    (name)=>{
+                        axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                            swal('Должность успешно изменена!');
+                            this.postData[index].name=name;
+                        });
+                    }
+                );
+                
             },
             exportFile(){
                 axios.post('/api/admin/downloadGroupsAndParts', {
@@ -226,10 +233,10 @@
             addGroup(){
                 // axios на добавлени
                 if(this.v$.formGroup.$invalid && !this.trigerPostFill){
-                    alert('да, но как бы нет');
+                    // alert('да, но как бы нет');
                 }
                 else{
-                    alert('нет, но как бы да');
+                    // alert('нет, но как бы да');
                     axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
                         swal('Группа успешно добавлена');
                         this.groupsData.push(response.data);
@@ -289,10 +296,14 @@
                 },
                 addPost(){
                     if(this.formGroup.name!='' && this.formGroup.id!=''){
-                        var postName=prompt('Введите название должности');
-                        axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
-                            swal('Должность успешно добавлена!');
-                            this.postData.push(response.data);
+                        swal({
+                            title:'Введите название новой должности.',
+                            content:'input'
+                        }).then((postName)=>{
+                            axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
+                                swal('Должность успешно добавлена!');
+                                this.postData.push(response.data);
+                            });
                         });
                     }
                     else{

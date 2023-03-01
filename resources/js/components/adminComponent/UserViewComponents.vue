@@ -206,8 +206,8 @@
                 this.trigerChangepost=false;
             },  
             changeUserinForm(idUser,index){
-                swal('Если вы заполните пароль, то он измениться в БД!','','warning').then(setInterval(
-                    function(){
+                swal('Если вы заполните пароль, то он измениться в БД!','','warning')
+                    .then((val)=>{
                         this.trigerChange=true;
                         this.idUserChange=idUser;
                         this.index=index;
@@ -226,8 +226,8 @@
                             this.formUser.department=response.data.department;
                             this.getDepartmentParts();
                         });
-                    },50));
-                
+                    }
+                );
             },
             //Получение токена
             getToken(){
@@ -311,24 +311,28 @@
                 
             },
             removeUser(idUser){
-                let answer=confirm('Точно хотите удалить пользователя '
-                + this.usersData[idUser].name);
-                if(answer){
-                    let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
-                    if(answer2){
-                        swal('Хорошо, удаляем.').then(
-                            axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
-                                swal('Удаление прошло успешно!');
-                                this.usersData.splice(idUser,1)
-                            })
-                        );
-                        // axios на удаление
-                        axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
-                            swal('Удаление прошло успешно!');
-                            this.usersData.splice(idUser,1)
-                        })
+                swal('Точно хотите удалить пользователя '+ this.usersData[idUser].name,'Всё равно удалить?','warning', { 
+                    buttons:{
+                        sucsess:{
+                            text:'Да',
+                            value:true
+                        },
+                        def:{
+                            text:'Нет',
+                            value:false
+                        }
+                    } 
+                }).then(
+                    (answer)=>{
+                        if(answer){
+                            swal('Хорошо, удаляем.').then((val)=>{
+                                axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
+                                    swal('Удаление прошло успешно!');
+                                    this.usersData.splice(idUser,1)
+                                })});
+                        }
                     }
-                }
+                );
             },
             passwordCheck(value){
                 if(this.trigerChange && this.formUser.password==''){
@@ -391,20 +395,17 @@
                 }
             },
             importFile(){
-                //const config = { 'content-type': 'multipart/file.type' } нз, может нужен, может нет
                 if(this.$refs.file!=null){
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
-                    axios.post('/api/admin/importUsers',data/*,config*/).then((response)=>{
-                        swal('Добавление прошло успешно!').then(
-                            setInterval(function(){
-                                window.location.reload();                                
-                            }, 2000)
-                        );
+                    axios.post('/api/admin/importUsers',data).then((response)=>{
+                        swal('Добавление прошло успешно!').then((val)=>{
+                            window.location.reload();                 
+                        });
                     });
                 }
                 else{
-                    swal("Файл не выбран.");
+                    swal("Файл не выбран.",'','warning');
                 }
             },
             exportFile(){
@@ -431,7 +432,7 @@
                     if (countFiles)
                     {}
                     else
-                        swal("Файл не выбран.");
+                        swal("Файл не выбран.",'','warning');
                 }
                 else{
                     this.$refs.file=$('.field')[0];

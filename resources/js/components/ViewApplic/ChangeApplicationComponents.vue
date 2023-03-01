@@ -234,25 +234,21 @@
                 this.peopleSelect.splice(index,1);
             },
             deleteDoc(){
-                // var bool=confirm("Точно хотите удалить заявку?");
-                
                 swal ({
                     title: "Удалить заявку?",
                     text: "Если вы удалите заявку, то у вас не будет возможности её восстановить.",
                     icon: "warning",
                     dangerMode: true,
-                    button: "Да"
+                    buttons: ["Нет",'Да']
                 })
                 .then(willDelete => {
-                    axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id})
-                    .then(response=>
-                        this.getAnswerRemove()
-                    );
+                    if(willDelete){
+                        axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id})
+                        .then(response=>
+                            this.getAnswerRemove()
+                        );
+                    }
                 });
-
-                // if(bool==true){
-                //     
-                // }
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && 
@@ -283,26 +279,24 @@
 
                     );
                 }else{
-                    swal('Ошибка').then(
-                        swal('Возможно вы не указали получателей.')
-                    );
+                    swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});
+                    this.trigersField.name=true;
+                    this.trigersField.descr=true;
+                    this.trigersField.date=true;
+                    this.trigersField.file=true;
                 }
             },  
             getAnswerChange(){
-                swal('Заявка успешно изменена!').then(
-                    setInterval(
-                    function (){
-                        window.location.href='/myAppl'
-                    },3000)
-                );
+                swal('Заявка успешно изменена!').then((val)=>{
+                    window.location.href='/myAppl'
+                });
             },
             getAnswerRemove(){
-                swal('Заявка удалена!').then(
-                    setInterval(
-                    function (){
-                        window.location.href='/myAppl'
-                    },3000)
-                );
+                
+                swal({title: 'Заявка удалена!'})
+                .then((value)=>{
+                    window.location.href='/myAppl'
+                });
             }
         },
         validations (){

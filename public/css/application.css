@@ -86,4 +86,9 @@
     .makeAppl{
         width: 100%;
     }
+    .application p{
+        width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

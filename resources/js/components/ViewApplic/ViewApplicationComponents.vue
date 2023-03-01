@@ -34,6 +34,7 @@
 
 <script>
 import { assertExpressionStatement } from '@babel/types';
+import swal from 'sweetalert';
 
     export default {
         props:[
@@ -65,7 +66,7 @@ import { assertExpressionStatement } from '@babel/types';
                 form.append('status',val);
 
                 axios.post('/updateStatusDocument',form)
-                .then(response=>alert('Статус изменен!'));
+                .then(response=>swal('Статус изменен!','','success'));
             }
         }
     }

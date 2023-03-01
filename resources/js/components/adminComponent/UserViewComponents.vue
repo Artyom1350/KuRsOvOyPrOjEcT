@@ -120,6 +120,7 @@
     import { assertExpressionStatement } from '@babel/types';
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength, email,}  from '@vuelidate/validators'
+    import swal from 'sweetalert';
 
     export default{
         setup(){
@@ -205,25 +206,28 @@
                 this.trigerChangepost=false;
             },  
             changeUserinForm(idUser,index){
-                alert('Если вы заполните пароль, то он измениться в БД!');
-                this.trigerChange=true;
-                this.idUserChange=idUser;
-                this.index=index;
-                var form=new FormData();
-                form.append('id',this.idUserChange);
-                form.append('token',this.token);
+                swal('Если вы заполните пароль, то он измениться в БД!','','warning').then(setInterval(
+                    function(){
+                        this.trigerChange=true;
+                        this.idUserChange=idUser;
+                        this.index=index;
+                        var form=new FormData();
+                        form.append('id',this.idUserChange);
+                        form.append('token',this.token);
 
-                axios.post('/api/admin/getOneUser',form).then((response)=>{
-                    this.formUser.surname=response.data.user.name.split(' ')[0];
-                    this.formUser.name=response.data.user.name.split(' ')[1];
-                    this.formUser.patronymic=response.data.user.name.split(' ')[2];
-                    this.formUser.id=response.data.user.id;
-                    this.formUser.email=response.data.user.email;
-                    //this.formUser.password=response.data.user.password; пароль нельзя дехешировать так что да
-                    this.formUser.post=response.data.user.department_part_id;
-                    this.formUser.department=response.data.department;
-                    this.getDepartmentParts();
-                });
+                        axios.post('/api/admin/getOneUser',form).then((response)=>{
+                            this.formUser.surname=response.data.user.name.split(' ')[0];
+                            this.formUser.name=response.data.user.name.split(' ')[1];
+                            this.formUser.patronymic=response.data.user.name.split(' ')[2];
+                            this.formUser.id=response.data.user.id;
+                            this.formUser.email=response.data.user.email;
+                            //this.formUser.password=response.data.user.password; пароль нельзя дехешировать так что да
+                            this.formUser.post=response.data.user.department_part_id;
+                            this.formUser.department=response.data.department;
+                            this.getDepartmentParts();
+                        });
+                    },50));
+                
             },
             //Получение токена
             getToken(){
@@ -287,7 +291,7 @@
                     form.append('token',this.token);
                     
                     axios.post('/api/admin/changeUser',form).then((response)=>{
-                        alert('Изменение прошли успешно');
+                        swal('Изменение прошли успешно');
                         this.trigerChange=false;
 
                         this.usersData[this.index]=response.data;
@@ -312,10 +316,15 @@
                 if(answer){
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
-                        alert('Хорошо, удаляем.');
+                        swal('Хорошо, удаляем.').then(
+                            axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
+                                swal('Удаление прошло успешно!');
+                                this.usersData.splice(idUser,1)
+                            })
+                        );
                         // axios на удаление
                         axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
-                            alert('Удаление прошло успешно!');
+                            swal('Удаление прошло успешно!');
                             this.usersData.splice(idUser,1)
                         })
                     }
@@ -365,7 +374,7 @@
                     form.append('department_part',this.formUser.post);
                     form.append('token',this.token);
                     axios.post('/api/admin/addUser',form).then((response)=>{
-                        alert('Добавление прошло успешно!');
+                        swal('Добавление прошло успешно!');
                         this.usersData.push(response.data);
                         this.clearForm();
                     });
@@ -387,12 +396,15 @@
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
                     axios.post('/api/admin/importUsers',data/*,config*/).then((response)=>{
-                        alert('Добавление прошло успешно!');
-                        window.location.reload();
+                        swal('Добавление прошло успешно!').then(
+                            setInterval(function(){
+                                window.location.reload();                                
+                            }, 2000)
+                        );
                     });
                 }
                 else{
-                    alert("Файл не выбран.");
+                    swal("Файл не выбран.");
                 }
             },
             exportFile(){
@@ -419,7 +431,7 @@
                     if (countFiles)
                     {}
                     else
-                        alert("Файл не выбран.");
+                        swal("Файл не выбран.");
                 }
                 else{
                     this.$refs.file=$('.field')[0];

@@ -94,7 +94,7 @@
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
     import ModalWindow from '../modalWindows/ModalWindowPeople.vue';
-
+    import swal from 'sweetalert';
 
     export default {
         setup(){
@@ -234,13 +234,25 @@
                 this.peopleSelect.splice(index,1);
             },
             deleteDoc(){
-                var bool=confirm("Точно хотите удалить заявку?");
-                if(bool==true){
+                // var bool=confirm("Точно хотите удалить заявку?");
+                
+                swal ({
+                    title: "Удалить заявку?",
+                    text: "Если вы удалите заявку, то у вас не будет возможности её восстановить.",
+                    icon: "warning",
+                    dangerMode: true,
+                    button: "Да"
+                })
+                .then(willDelete => {
                     axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id})
                     .then(response=>
                         this.getAnswerRemove()
                     );
-                }
+                });
+
+                // if(bool==true){
+                //     
+                // }
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && 
@@ -271,17 +283,26 @@
 
                     );
                 }else{
-                    alert('Ошибка');
-                    alert('Возможно вы не указали получателей.');
+                    swal('Ошибка').then(
+                        swal('Возможно вы не указали получателей.')
+                    );
                 }
             },  
             getAnswerChange(){
-                alert('Заявка успешно изменена!');
-                window.location.href='/myAppl'
+                swal('Заявка успешно изменена!').then(
+                    setInterval(
+                    function (){
+                        window.location.href='/myAppl'
+                    },3000)
+                );
             },
             getAnswerRemove(){
-                alert('Заявка удалена!');
-                window.location.href='/myAppl'
+                swal('Заявка удалена!').then(
+                    setInterval(
+                    function (){
+                        window.location.href='/myAppl'
+                    },3000)
+                );
             }
         },
         validations (){

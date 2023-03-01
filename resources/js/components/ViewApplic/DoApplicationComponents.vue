@@ -78,6 +78,7 @@
 </template>
 
 <script>
+    import swal from 'sweetalert';
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
     import ModalWindow from '../modalWindows/ModalWindowPeople.vue';
@@ -242,16 +243,21 @@
                     form.append('fileName',this.file.name);
                     axios.post('/myAppl/addApplication',form,config)
                     .then(response=>
-                            this.getAnswer()
+                        this.getAnswer()
                     );
                 }else{
-                    alert('Ошибка');
-                    alert('Возможно вы не указали получателей.');
+                    swal('Ошибка','', "error");
+                    swal('Возможно вы не указали получателей.','', "error");
                 }
             },  
             getAnswer(){
-                alert('Заявка успешно создана!');
-                window.location.href='/myAppl'
+                swal('Заявка успешно создана!','', "success")
+                .then(
+                    setInterval(
+                    function (){
+                        window.location.href='/myAppl'
+                    },3000)
+                );
             }
         },
         validations (){

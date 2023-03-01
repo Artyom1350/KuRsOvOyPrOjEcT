@@ -101,6 +101,7 @@
 <script>
     import { useVuelidate } from '@vuelidate/core'
     import {required, minLength, maxLength}  from '@vuelidate/validators'
+    import swal from 'sweetalert';
 
     export default{
         setup(){
@@ -137,7 +138,7 @@
                 if(confirm('Точно хотите удалить должность?')){
                     if(confirm('Уверены?')){
                         axios.post('/api/admin/destroyPost',{'id':this.postData[index].id,'token':this.token}).then((response)=>{
-                            alert('Должность успешно удалена!');
+                            swal('Должность успешно удалена!');
                             this.postData.splice(index,1);
                         })
                     }
@@ -147,7 +148,7 @@
 
                 let name=prompt('Введите новое название для должности');
                 axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
-                    alert('Должность успешно изменена!');
+                    swal('Должность успешно изменена!');
                     this.postData[index].name=name;
                 });
             },
@@ -184,14 +185,12 @@
             changeGroup(idGroup){
                 // axios на изменение
                 if(this.v$.formGroup.$invalid && this.trigerPostFill){
-                    alert('да');
                     this.trigerChangeNameForm=true;
                 }
                 else{
-                    alert('нет');
                     this.trigerChange=false;
                     axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.token,'name':this.formGroup.name}).then((response)=>{
-                        alert('Группа успешно изменена');
+                        swal('Группа успешно изменена');
                         this.groupsData[this.globalIndex]=response.data;
                         this.clearForm();
                         //window.location.reload();
@@ -214,11 +213,13 @@
                 if(answer){
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
-                        alert('Хорошо, удаляем.');
-                        axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.token}).then((response)=>{
-                            alert('Запись успешно удалена');
-                            this.groupsData.splice(index,1);
-                        });
+                        swal('Хорошо, удаляем.').then(
+                            setInterval(function(){
+                            axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.token}).then((response)=>{
+                                swal('Запись успешно удалена');
+                                this.groupsData.splice(index,1);
+                            })},1500)
+                        );
                     }
                 }
             },
@@ -230,7 +231,7 @@
                 else{
                     alert('нет, но как бы да');
                     axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
-                        alert('Группа успешно добавлена');
+                        swal('Группа успешно добавлена');
                         this.groupsData.push(response.data);
                         this.clearForm();
                     });
@@ -241,12 +242,17 @@
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
                     axios.post('/api/admin/importGroupsAndPosts',data/*,config*/).then((response)=>{
-                        alert('Добавление прошло успешно!');
-                        window.location.reload();
+                        swal('Добавление прошло успешно!').then(
+                            setInterval(
+                                function(){
+                                    window.location.reload();
+                                }, 2000
+                            )
+                        );
                     });
                 }
                 else{
-                    alert("Файл не выбран.");
+                    swal("Файл не выбран.");
                 }
             },
             changeMessage(){    
@@ -258,7 +264,7 @@
                     if (countFiles)
                     {}
                     else
-                        alert("Файл не выбран.");
+                    swal("Файл не выбран.");
                 }
                 else{
                     this.$refs.file=$('.field')[0];
@@ -285,12 +291,12 @@
                     if(this.formGroup.name!='' && this.formGroup.id!=''){
                         var postName=prompt('Введите название должности');
                         axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
-                            alert('Должность успешно добавлена!');
+                            swal('Должность успешно добавлена!');
                             this.postData.push(response.data);
                         });
                     }
                     else{
-                        alert('Нужно выбрать группу!');
+                        swal('Нужно выбрать группу!');
                     }
                 }
         },

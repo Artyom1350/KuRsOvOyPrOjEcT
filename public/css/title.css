@@ -216,3 +216,9 @@ border-color: #b91d19;
 .swal-button--erro:not(:disabled):not(.disabled):active:focus, .swal-button--erro:not(:disabled):not(.disabled).active:focus, .show > .swal-button--erro.dropdown-toggle:focus {
 box-shadow: 0 0 0 0.2rem rgba(231, 82, 78, 0.5);
 }
+.wrap h2{
+    font-size: 6rem;
+}
+.wrap>p>small> a{
+    color:#227dc7 !important
+}

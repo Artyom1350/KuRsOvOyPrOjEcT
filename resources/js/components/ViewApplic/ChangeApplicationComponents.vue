@@ -247,7 +247,6 @@
                         erro:{
                             text:'Нет',
                             value:false,
-                            
                         }
                     }
                 })

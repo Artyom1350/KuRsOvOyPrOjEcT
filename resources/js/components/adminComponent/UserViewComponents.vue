@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="mt-3 buttonImportExp d-flex align-items-end justify-content-between " :class="(windowWidth<1080 && windowWidth>720) ? 'flex-wrap':''">
-                    <div class="mb-3 ">
+                    <div class="mb-3 fileImport">
                         <label for="formFile" class="form-label">Выберите файл для импорта</label>
                         <input class="form-control field addition" name="file" ref="file" type="file" id="formFile" @change="changeMessage()">
                     </div>
@@ -291,7 +291,7 @@
                     form.append('token',this.token);
                     
                     axios.post('/api/admin/changeUser',form).then((response)=>{
-                        swal('Изменение прошли успешно');
+                        swal('Изменение прошли успешно', '', 'success');
                         this.trigerChange=false;
 
                         this.usersData[this.index]=response.data;
@@ -325,9 +325,9 @@
                 }).then(
                     (answer)=>{
                         if(answer){
-                            swal('Хорошо, удаляем.').then((val)=>{
+                            swal('Хорошо, удаляем.','','success').then((val)=>{
                                 axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
-                                    swal('Удаление прошло успешно!');
+                                    swal('Удаление прошло успешно!','','success');
                                     this.usersData.splice(idUser,1)
                                 })});
                         }
@@ -378,7 +378,7 @@
                     form.append('department_part',this.formUser.post);
                     form.append('token',this.token);
                     axios.post('/api/admin/addUser',form).then((response)=>{
-                        swal('Добавление прошло успешно!');
+                        swal('Добавление прошло успешно!', '','success');
                         this.usersData.push(response.data);
                         this.clearForm();
                     });
@@ -399,7 +399,7 @@
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
                     axios.post('/api/admin/importUsers',data).then((response)=>{
-                        swal('Добавление прошло успешно!').then((val)=>{
+                        swal('Добавление прошло успешно!','', 'success').then((val)=>{
                             window.location.reload();                 
                         });
                     });
@@ -516,6 +516,11 @@
 }
 .form_users{
     width: 100%;    
+}
+@media screen and (min-width:1080px) {
+    .fileImport{
+        width: 60%;
+    }
 }
 @media screen and (max-width:720px) {
     .addition {

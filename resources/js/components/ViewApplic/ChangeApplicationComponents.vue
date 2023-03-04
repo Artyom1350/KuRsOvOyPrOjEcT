@@ -295,13 +295,13 @@
                 }
             },  
             getAnswerChange(){
-                swal('Заявка успешно изменена!').then((val)=>{
+                swal('Заявка успешно изменена!','', 'success').then((val)=>{
                     window.location.href='/myAppl'
                 });
             },
             getAnswerRemove(){
                 
-                swal({title: 'Заявка удалена!'})
+                swal('Заявка удалена!','','success')
                 .then((value)=>{
                     window.location.href='/myAppl'
                 });

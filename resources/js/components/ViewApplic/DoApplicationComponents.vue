@@ -146,7 +146,6 @@
             dateAppl(oldValue, newValue){
                 var date1 = new Date(oldValue.split('-')[0],oldValue.split('-')[1]-1,oldValue.split('-')[2]);
                 var date2 = new Date();
-
                 if(date1.getDay()!=0){
                     if((date1 - date2)<0){
                         this.incorrectDate=true

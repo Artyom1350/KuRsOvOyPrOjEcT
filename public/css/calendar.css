@@ -72,14 +72,14 @@
 	border-width: 9px;
 	margin-left: 0;
 }
-@media screen and (max-width:720px) {
+@media screen and (max-width:1080px) {
 	.calendar-item table {
-		aspect-ratio: 1 !important;
+		aspect-ratio: 1.5 !important;
 		height: auto;
 		margin-bottom: 20px;
 	}
 }
-@media screen and (max-width:1080px) {
+@media screen and (max-width:720px) {
 	.calendar-item table {
 		aspect-ratio: 1 !important;
 		height: auto;

@@ -138,7 +138,7 @@
         box-shadow: 1px 1px 3000px black;
         position: absolute;
         margin: auto;
-        top: 30%;
+        top: 15%;
         left:0;
         right: 0;
         background: #fff;
@@ -149,7 +149,7 @@
     }
     @media screen and (max-width:720px) {
         .people {
-            height: 25%;
+            height: 20%;
         }
         .grupPeople {
             height: 35%;

@@ -17,7 +17,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/title.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -29,7 +28,7 @@
             </a>
         </div>
         <h1>
-            СДО КГАПОУ Пермский Авиационный техникум
+            СДО КГАПОУ "Авиатехникум"
         </h1>
         <div class="exit">
             <a href="{{ url('/userLogou') }}"
@@ -70,8 +69,8 @@
         
     </main>
     @endauth
-    <footer class="d-flex align-items-center paddingBlock">
-        &copy; КГАПОУ Пермский Авиационный техникум
+    <footer class="text-center d-flex align-items-center paddingBlock">
+        &copy; СДО КГАПОУ "Авиатехникум"
     </footer>
 </body>
 </html>

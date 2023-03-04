@@ -1,3 +1,6 @@
+.bg-color {
+    background-color: #62646A !important;
+}
 .paddingBlock{
     padding: 0 10%;
 }
@@ -54,6 +57,7 @@ main{
     width: 10%;
     min-width: 150px;
     height: 100%;
+    background-color: #62646A;
 }
 .exit{
     height: 50%;
@@ -221,4 +225,7 @@ box-shadow: 0 0 0 0.2rem rgba(231, 82, 78, 0.5);
 }
 .wrap>p>small> a{
     color:#227dc7 !important
+}
+.modalWindow h2{
+    font-size: 1.6rem;
 }

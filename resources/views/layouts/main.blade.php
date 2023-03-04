@@ -28,7 +28,7 @@
             </a>
         </div>
         <h1>
-            СДО КГАПОУ Пермский Авиационный техникум
+        СДО КГАПОУ "Авиатехникум"
         </h1>
         <div class="exit">
             <a href="{{ url('/userLogout') }}"
@@ -80,7 +80,7 @@
     </main>
     @endauth
     <footer class="d-flex align-items-center paddingBlock">
-        &copy; КГАПОУ Пермский Авиационный техникум
+        &copy; СДО КГАПОУ "Авиатехникум"
     </footer>
 </body>
 </html>

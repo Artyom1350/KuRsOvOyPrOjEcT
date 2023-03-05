@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="mt-2 d-flex align-items-start justify-content-between" :class="{ 
             'flex-column':windowWidth<=720}">
-            <div class="usersView" :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<1080 && windowWidth>720)}">
+            <div class="usersView" :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 class="text-center"><b>Структурные подразделения</b></h3>
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск отделений" @keyup="getSearchGroup" v-model="textSearch">
@@ -29,7 +29,7 @@
                         <hr class="mt-0">
                     </div>
                 </div>
-                <div class="buttonImportExp d-flex align-items-end justify-content-between" :class="(windowWidth<1080 && windowWidth>720) ? 'flex-wrap':''">
+                <div class="buttonImportExp d-flex align-items-end justify-content-between" :class="(windowWidth<=1080 && windowWidth>720) ? 'flex-wrap':''">
                     <div class="mb-3 fileImport">
                         <label for="formFile" class="form-label">Выберите файл для импорта</label>
                         <input class="form-control field addition" name="file" ref="file" type="file" id="formFile" @change="changeMessage()">
@@ -52,7 +52,7 @@
                     </button>
                 </div>
             </div>
-            <div class="form_users" :class="{'w-50':windowWidth>720, 'ml-5':windowWidth>1080, 'ml-2':(windowWidth<1080 && windowWidth>720)}">
+            <div class="form_users" :class="{'w-50':windowWidth>720, 'ml-5':windowWidth>1080, 'ml-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 v-if="trigerChange" class="text-center"><b>Форма изменения</b></h3>
                 <h3 v-if="!trigerChange" class="text-center"><b>Форма добавления</b></h3>
                 <form>
@@ -135,30 +135,59 @@
         },
         methods:{
             removePost(index){
-                if(confirm('Точно хотите удалить должность?')){
-                    if(confirm('Уверены?')){
+                swal({
+                    title:'Уверены, что хотите удалить должность?',
+                    icon:'warning',
+                    buttons:{
+                        sucsess:{
+                            text:'Да',
+                            value:true
+                        },
+                        def:{
+                            text:'Нет',
+                            value:false
+                        }
+                    }
+                }).then((answer)=>
+                {
+                    if(answer){
                         axios.post('/api/admin/destroyPost',{'id':this.postData[index].id,'token':this.token}).then((response)=>{
                             swal('Должность успешно удалена!', '', 'success');
                             this.postData.splice(index,1);
                         })
                     }
-                }
+                });
             },
             changePost(index){
-
+                var contentInput="";
+                this.postData.forEach((element,indexEl ) => {
+                    if(indexEl===index){
+                        contentInput=element.name;
+                    }
+                });
                 swal({
-                    title:'Введите название новой должности',
-                    content: "input",
-                    icon:'success'
+                    title:'Введите название должности',
+                    content: {
+                        element: "input",
+                        attributes: {
+                            value: contentInput
+                        },
+                    },
                 }).then(
                     (name)=>{
-                        axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
-                            swal('Должность успешно изменена!', '', 'success');
-                            this.postData[index].name=name;
-                        });
+                        if(name){
+                            axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                                swal('Должность успешно изменена!', '', 'success');
+                                this.postData[index].name=name;
+                            });
+                        }else{
+                            swal({
+                                title: 'Поле должно быть изменено',
+                                icon:'warning'
+                            });
+                        }
                     }
-                );
-                
+                );                
             },
             exportFile(){
                 axios.post('/api/admin/downloadGroupsAndParts', {
@@ -304,10 +333,17 @@
                             title:'Введите название новой должности.',
                             content:'input'
                         }).then((postName)=>{
-                            axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
-                                swal('Должность успешно добавлена!','','success');
-                                this.postData.push(response.data);
-                            });
+                            if(postName){
+                                axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
+                                    swal('Должность успешно добавлена!','','success');
+                                    this.postData.push(response.data);
+                                });
+                            }else{
+                                swal({
+                                    title: 'Поле должно быть заполненно',
+                                    icon:'warning'
+                                });
+                            }
                         });
                     }
                     else{

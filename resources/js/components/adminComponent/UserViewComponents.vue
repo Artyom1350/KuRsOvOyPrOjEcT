@@ -3,7 +3,7 @@
         <div class="d-flex align-items-start justify-content-between" :class="{ 
             'flex-column':windowWidth<=720}">
             <div class="usersView" 
-                :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<1080 && windowWidth>720)}">
+                :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 class="mt-3 text-center"><b>Пользователи</b></h3>
                 <hr>
                 <input type="text" name="searchUsers" id="searchUsers" class="form-control mb-2" placeholder="Поиск пользователей" @keyup="getSearchPeople()" v-model="textSearch">
@@ -31,7 +31,7 @@
                         <hr class="mt-0">
                     </div>
                 </div>
-                <div class="mt-3 buttonImportExp d-flex align-items-end justify-content-between " :class="(windowWidth<1080 && windowWidth>720) ? 'flex-wrap':''">
+                <div class="mt-3 buttonImportExp d-flex align-items-end justify-content-between " :class="(windowWidth<=1080 && windowWidth>720) ? 'flex-wrap':''">
                     <div class="mb-3 fileImport">
                         <label for="formFile" class="form-label">Выберите файл для импорта</label>
                         <input class="form-control field addition" name="file" ref="file" type="file" id="formFile" @change="changeMessage()">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="form_users" 
-                :class="{'w-50':windowWidth>720, 'ml-5':windowWidth>1080, 'ml-2':(windowWidth<1080 && windowWidth>720)}">
+                :class="{'w-50':windowWidth>720, 'ml-5':windowWidth>1080, 'ml-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 v-if="!trigerChange" class="mt-3 text-center"><b>Форма добавления</b></h3>
                 <h3 v-if="trigerChange" class="mt-3 text-center"><b>Форма изменения</b></h3>
                 <form>

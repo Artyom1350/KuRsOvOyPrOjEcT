@@ -23,6 +23,10 @@
     margin-left: 0;
     margin-right: 0;
 }
+.row-main{
+    height: 93vh;
+
+}
 form{
     width: 80%;
 }

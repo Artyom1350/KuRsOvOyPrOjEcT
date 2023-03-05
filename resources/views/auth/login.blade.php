@@ -23,15 +23,15 @@
     <div id="app">
         <main class="py-4">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
+                <div class="row justify-content-center row-main">
+                    <div class="col-md-8 d-block m-auto">
                         <div class="card">
                             <div class="card-body">
                                 <img src="image/logo/logo.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
                                 <form method="POST" action="{{ route('login') }}" id="logIn">
                                     @csrf
                                     <div class="form-group row row-form">
-                                            <input placeholder="Логин или адрес электронной почты" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            <input autofocus placeholder="Логин или адрес электронной почты" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

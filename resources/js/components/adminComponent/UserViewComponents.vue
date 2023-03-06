@@ -311,7 +311,7 @@
                 
             },
             removeUser(idUser){
-                swal('Точно хотите удалить пользователя '+ this.usersData[idUser].name,'Всё равно удалить?','warning', { 
+                swal('Точно хотите удалить пользователя '+ this.usersData[idUser].name,'','warning', { 
                     buttons:{
                         sucsess:{
                             text:'Да',

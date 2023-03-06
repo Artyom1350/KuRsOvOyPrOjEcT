@@ -245,7 +245,10 @@
                         this.getAnswer()
                     );
                 }else{
-                    swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});
+                    swal('Ошибка выполнения запроса.',
+                    'Проверьте заполненность всех полей, выбора получателей и выбор файла',
+                    "error",{button:'Хорошо'});
+                    
                     this.trigersField.name=true;
                     this.trigersField.descr=true,
                     this.trigersField.date=true,

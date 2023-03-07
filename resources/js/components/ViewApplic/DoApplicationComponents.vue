@@ -24,7 +24,7 @@
             <label for="dateApplicate" class="form-label">Срок выполнения до:</label>
             <input type="date" class="form-control" id="dateApplicate" name="dateAppl" placeholder="Дата" v-model="dateAppl" :class="(((trigersField.date && v$.dateAppl.required.$invalid) || incorrectDate) ? 'is-invalid' : '')">
             <span v-if="v$.dateAppl.required.$invalid" class="invalid-feedback ">Дата должна быть выставлена</span>
-            <span v-if="incorrectDate" class="invalid-feedback ">Дата должна быть выставлена корректно <br> (минимум 2-3 дня на выполнение и воскресенье не рабочий день)</span>
+            <span v-if="incorrectDate" class="invalid-feedback ">Дата должна быть выставлена корректно <br> (минимум 2-3 дня на выполнение, воскресенье не рабочий день и в праздничные дни нужно отдыхать)</span>
         </div>
         <!-- получатели -->
         <div class="mb-3">
@@ -146,7 +146,7 @@
             dateAppl(oldValue, newValue){
                 var date1 = new Date(oldValue.split('-')[0],oldValue.split('-')[1]-1,oldValue.split('-')[2]);
                 var date2 = new Date();
-                if(date1.getDay()!=0){
+                if(this.checkDate(oldValue.split('-')[2], oldValue.split('-')[1]-1) && date1.getDay()!=0 ){
                     if((date1 - date2)<0){
                         this.incorrectDate=true
                     }else{
@@ -162,7 +162,6 @@
                     this.incorrectDate=true
                 }
                 this.trigersField.date=true
-
             },
             file(){
                 if(this.$refs.file.files[0]){
@@ -219,6 +218,36 @@
             delElemPeople(index){
                 this.peopleSelect.splice(index,1);
             },
+            checkDate(inputDay,mouth){
+                let day=Number(inputDay);
+            
+                if ((day>=1 && day<=8) && mouth==0){
+                    return false;
+                }
+                else if ((day==23) && mouth==1){
+                    return false;
+                }
+                else if (day==8 && mouth==2){
+                    return false;
+                }
+                else if (day==1 && mouth==4){
+                    return false;
+                }
+                else if (day==9 && mouth==4){
+                    return false;
+                }
+                else if (day==12 && mouth==5){
+                    return false;
+                }
+                else if (day==4 && mouth==10){
+                    return false;
+                }
+                else if (day==31 && mouth==11){
+                    return false;
+                }
+                else return true;
+            
+            },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
                     var peopleMas=new Array();
@@ -248,7 +277,7 @@
                     swal('Ошибка выполнения запроса.',
                     'Проверьте заполненность всех полей, выбора получателей и выбор файла',
                     "error",{button:'Хорошо'});
-                    
+
                     this.trigersField.name=true;
                     this.trigersField.descr=true,
                     this.trigersField.date=true,

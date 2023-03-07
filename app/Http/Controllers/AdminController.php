@@ -111,7 +111,6 @@ class AdminController extends Controller
         }
         else return response('Неа, доступ запрещен!');
     }
-
     //страница групп
     public function getPostGroup(Request $request){
         $token = PersonalAccessToken::where('token', $request->post('token'))->first();

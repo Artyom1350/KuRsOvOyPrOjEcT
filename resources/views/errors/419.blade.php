@@ -11,7 +11,7 @@
 
 <div class="container text-center d-flex justify-content-center align-items-center">
     <div class="wrap m-auto h-auto">
-        <h2>403</h2>
+        <h2>419</h2>
         <p>Доступ к данной странице ограничен.</p>
         @if(auth()->user()->roll==1)
             <p><small>Перейдите на <a href="{{ route('home_admin') }}">главную страницу.</a> </small></p>

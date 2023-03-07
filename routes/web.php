@@ -69,7 +69,6 @@ Route::middleware('auth')->group(function(){
         Route::post('/admin/token',[AdminController::class,'getAdminToken'])->name('takeAdminToken');
 
 
-
         Route::get('/admin_panel/home_admin',[AdminController::class, 'index'])->name('home_admin');//главная админа
         Route::get('/admin_panel/user_admin',[AdminController::class, 'userPage'])->name('user_admin');//юзеры
         Route::get('/admin_panel/group_admin',[AdminController::class, 'groupPage'])->name('group_admin');//группы

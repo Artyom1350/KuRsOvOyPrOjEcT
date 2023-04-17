@@ -5,6 +5,6 @@
 @section('content')
 
 <div class="container mb-3">
-    <user-view-admin :users='@json($userInfo)'></user-view-admin>
+    <user-view-admin :users='@json($userInfo)' :token='@json($token)'></user-view-admin>
 </div>
 @endsection

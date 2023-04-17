@@ -28,7 +28,7 @@
         <div class="buttonWrap d-flex align-items-center">
             <button class="btn btn-danger w-25 " @click="closeModal">Закрыть</button>
         </div>
-    </div>  
+    </div>
 </template>
 
 <script>
@@ -39,25 +39,26 @@
                 textSearch:'',
                 statusAppl:[
                     'Не прочитано',
-                    'Прочитано', 
-                    'В работе', 
+                    'Прочитано',
+                    'В работе',
                     'Готово',
                 ],
             };
-            
+
         },
         mounted(){
             this.getUsers();
         },
         props:[
-            'idDocuments'
+            'idDocuments',
+            'token'
         ],
         methods:{
                 closeModal(){
                     this.$emit('close');
                 },
                 getUsers(){
-                    axios.post('/getAnswersUsers',{'id_doc':this.$props.idDocuments}).then((response)=>{
+                    axios.post('/api/myAppl/getAnswersUsers',{'id_doc':this.$props.idDocuments,'token':this.$props.token}).then((response)=>{
                         this.users=response.data.users;
                     });
                 },
@@ -81,7 +82,7 @@
                 getSearchPeople(){
                     for( var i=0;i< $('.people-unit').length;i++){
                         var el=$('.people-unit')[i];
-                        
+
                         if(el.outerText.includes(this.textSearch)){
                             el.style.display="table-row"
                         }else{
@@ -90,7 +91,7 @@
                     }
                 },
             },
-            
+
     }
 </script>
 
@@ -126,7 +127,7 @@
     }
 
     @media screen and (max-width:720px) {
-        
+
     }
     @media screen and (max-width:1080px) {
         .modalWindow{

@@ -6,7 +6,7 @@
 <link href="{{ asset('css/application.css') }}" rel="stylesheet">
 <!--:users='json($users)'-->
     <div class="container">
-        <change-appl :doc='@json($doc)' :users='@json($users)'></change-appl>
+        <change-appl :doc='@json($doc)' :users='@json($users)' :token='@json($token)'></change-appl>
     </div>
-    
+
 @endsection

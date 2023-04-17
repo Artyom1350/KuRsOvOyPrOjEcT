@@ -9,10 +9,7 @@
 
     <title> @yield('title') </title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/title.js') }}" defer></script>
-    
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -59,28 +56,31 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('myApplacation')}}" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <a href="{{route('myApplication')}}" class="nav-link myApplic py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                             Исходящие заявки
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('incApplacation')}}" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <a href="{{route('incApplication')}}" class="nav-link applicInProc py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                             Входящие заявки
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('allApplacation')}}" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <a href="{{route('allApplication')}}" class="nav-link personArea py-3 border-bottom rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                             Все заявки
                         </a>
                     </li>
                 </ul>
-            </div>  
-        </div>  
+            </div>
+        </div>
         @yield('content')
     </main>
     @endauth
     <footer class="d-flex align-items-center paddingBlock">
         &copy; СДО КГАПОУ "Авиатехникум"
     </footer>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/title.js') }}" defer></script>
 </body>
 </html>

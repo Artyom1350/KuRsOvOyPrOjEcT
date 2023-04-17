@@ -1,8 +1,8 @@
 <template>
     <div class="wrap">
-        <div class="d-flex align-items-start justify-content-between" :class="{ 
+        <div class="d-flex align-items-start justify-content-between" :class="{
             'flex-column':windowWidth<=720}">
-            <div class="usersView" 
+            <div class="usersView"
                 :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 class="mt-3 text-center"><b>Пользователи</b></h3>
                 <hr>
@@ -54,7 +54,7 @@
                     </button>
                 </div>
             </div>
-            <div class="form_users" 
+            <div class="form_users"
                 :class="{'w-50':windowWidth>720, 'ml-5':windowWidth>1080, 'ml-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 v-if="!trigerChange" class="mt-3 text-center"><b>Форма добавления</b></h3>
                 <h3 v-if="trigerChange" class="mt-3 text-center"><b>Форма изменения</b></h3>
@@ -62,19 +62,19 @@
                     <div class="mb-3">
                         <label for="surname" class="form-label">Фамилия</label>
                         <input v-model="formUser.surname" type="text" class="form-control" :class="(( trigerChangesurname & v$.formUser.surname.$invalid)) ? 'is-invalid' : '' "  id="surname">
-                        <span class="invalid-feedback" v-if="(trigerChangesurname &  v$.formUser.surname.required.$invalid)">Поле должно быть заполнено</span>                        
+                        <span class="invalid-feedback" v-if="(trigerChangesurname &  v$.formUser.surname.required.$invalid)">Поле должно быть заполнено</span>
                         <span class="invalid-feedback" v-if="(trigerChangesurname & v$.formUser.surname.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Имя</label>
                         <input v-model="formUser.name" type="text" class="form-control" :class="(( trigerChangename & v$.formUser.name.$invalid)) ? 'is-invalid' : '' "  id="name">
-                        <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.required.$invalid)">Поле должно быть заполнено</span>                        
+                        <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.required.$invalid)">Поле должно быть заполнено</span>
                         <span class="invalid-feedback" v-if="(trigerChangename & v$.formUser.name.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
                         <label for="patronymic" class="form-label">Отчество</label>
                         <input v-model="formUser.patronymic" type="text" class="form-control" :class="(( trigerChangepatronymic & v$.formUser.patronymic.$invalid)) ? 'is-invalid' : '' "  id="patronymic">
-                        <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.required.$invalid)">Поле должно быть заполнено</span>                        
+                        <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.required.$invalid)">Поле должно быть заполнено</span>
                         <span class="invalid-feedback" v-if="(trigerChangepatronymic & v$.formUser.patronymic.maxLength.$invalid)">Максимальное количество символов 82</span>
                     </div>
                     <div class="mb-3">
@@ -97,7 +97,7 @@
                         <select :class="(( trigerChangedepartment & v$.formUser.department.$invalid)) ? 'is-invalid' : '' "  v-model="formUser.department" @change="changeDep()" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех отделений -->
                             <option v-for="(department,index) in departmentData" :value="department.id">{{ department.name }}</option>
-                        </select>  
+                        </select>
                         <span class="invalid-feedback" v-if="(trigerChangedepartment & v$.formUser.department.required.$invalid)">Должен быть сделан выбор</span>
                     </div>
                     <div class="mb-3">
@@ -105,7 +105,7 @@
                         <select :class="(( trigerChangepost & v$.formUser.post.$invalid)) ? 'is-invalid' : '' " v-model="formUser.post" class="form-select form-control" id="department">
                             <!-- цикл для вывода всех Должностей -->
                             <option v-for="(departmentPart,index) in departmentPartsData" :value="departmentPart.id" >{{ departmentPart.name }}</option>
-                        </select>     
+                        </select>
                         <span class="invalid-feedback" v-if="(trigerChangepost & v$.formUser.post.required.$invalid)">Должен быть сделан выбор</span>
                     </div>
                     <button v-if=!trigerChange @click.prevent="addUser" type="submit" class="btn btn-primary btn-primary-users">Добавить</button>
@@ -127,9 +127,10 @@
             return{
                 v$:useVuelidate()
             }
-        }, 
+        },
         props:[
             'users',
+            'token',
         ],
         data(){
             return{
@@ -150,7 +151,6 @@
                 groupUser:'',
                 postsUsers:'',
                 textSearch:'',
-                token:'',
                 departmentData:[],
                 departmentPartsData:[],
                 trigerChangedepartment:false,
@@ -165,7 +165,7 @@
                 index:'',
                 windowWidth: window.innerWidth
             }
-            
+
         },
         watch:{
             formUser:{
@@ -194,26 +194,31 @@
                     }
                     if(data.department && !this.trigerChangedepartment){
                         this.trigerChangedepartment=true;
-                        this.getDepartmentParts(); 
+                        this.getDepartmentParts();
 
                     }
                 }
             },
-        },  
+        },
         methods:{
             changeDep(){
                 this.trigerChangedepartment=false;
                 this.trigerChangepost=false;
-            },  
+            },
             changeUserinForm(idUser,index){
                 swal('Если вы заполните пароль, то он измениться в БД!','','warning')
                     .then((val)=>{
                         this.trigerChange=true;
                         this.idUserChange=idUser;
                         this.index=index;
-                        var form=new FormData();
-                        form.append('id',this.idUserChange);
-                        form.append('token',this.token);
+                        //var form=new FormData();
+                        //form.append('id',this.idUserChange);
+                        //form.append('token',this.token);
+
+                        let form={
+                            id: this.idUser,
+                            token: this.$props.token,
+                        }
 
                         axios.post('/api/admin/getOneUser',form).then((response)=>{
                             this.formUser.surname=response.data.user.name.split(' ')[0];
@@ -229,23 +234,15 @@
                     }
                 );
             },
-            //Получение токена
-            getToken(){
-                axios.post('/admin/token').then((response)=>{
-                    this.token=response.data.token;
-                    this.getDepartment();
-
-                });
-            },
             //все департменты
             getDepartment(){
-                axios.post('/api/admin/getAllDepartments',{'token':this.token}).then((response)=>{
+                axios.post('/api/admin/getAllDepartments',{'token':this.$props.token}).then((response)=>{
                 this.departmentData=response.data.departments;
             });
             },
             //должности
             getDepartmentParts(){
-                axios.post('/api/admin/getDepartmentParts',{'token':this.token,'id':this.formUser.department}).then((response)=>{
+                axios.post('/api/admin/getDepartmentParts',{'token':this.$props.token,'id':this.formUser.department}).then((response)=>{
                     this.departmentPartsData=response.data.departmentParts;
                 });
             },
@@ -281,15 +278,24 @@
                 if(this.formCheck()){
 
                     // axios на изменение
-                    var form=new FormData();
+                    //var form=new FormData();
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                    form.append('name',name);
-                    form.append('email',this.formUser.email);
-                    form.append('password',this.formUser.password);
-                    form.append('department_part',this.formUser.post);
-                    form.append('id',this.formUser.id);
-                    form.append('token',this.token);
-                    
+                    //form.append('name',name);
+                    //form.append('email',this.formUser.email);
+                    //form.append('password',this.formUser.password);
+                    //form.append('department_part',this.formUser.post);
+                    //form.append('id',this.formUser.id);
+                    //form.append('token',this.token);
+
+                    let form={
+                        name: name,
+                        email:this.formUser.email,
+                        password: this.formUser.password,
+                        department_part: this.formUser.post,
+                        id: this.formUser.id,
+                        token: this.$props.token
+                    }
+
                     axios.post('/api/admin/changeUser',form).then((response)=>{
                         swal('Изменение прошли успешно', '', 'success');
                         this.trigerChange=false;
@@ -308,10 +314,10 @@
                     this.trigerChangesurname=true;
                     this.trigerChangepatronymic=true;
                 }
-                
+
             },
             removeUser(idUser){
-                swal('Точно хотите удалить пользователя '+ this.usersData[idUser].name,'','warning', { 
+                swal('Точно хотите удалить пользователя '+ this.usersData[idUser].name,'','warning', {
                     buttons:{
                         sucsess:{
                             text:'Да',
@@ -321,12 +327,12 @@
                             text:'Нет',
                             value:false
                         }
-                    } 
+                    }
                 }).then(
                     (answer)=>{
                         if(answer){
                             swal('Хорошо, удаляем.','','success').then((val)=>{
-                                axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.token}).then((response)=>{
+                                axios.post('/api/admin/destroyUser',{'id':this.usersData[idUser].id,'token':this.$props.token}).then((response)=>{
                                     swal('Удаление прошло успешно!','','success');
                                     this.usersData.splice(idUser,1)
                                 })});
@@ -356,27 +362,37 @@
                     if(this.formUser.password=='' && this.trigerChange){
                         return true;
                     }
-                    return false    
+                    return false
                 }
-            },  
+            },
             formCheckAdd(){
                 if(this.trigerValidPassword & !this.v$.formUser.$invalid){
                     return true
                 }
                 else{
-                    return false    
+                    return false
                 }
-            },  
+            },
             addUser(){
                 this.trigerValidPassword=true;
                 if(this.formCheckAdd()){
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                    var form=new FormData();
-                    form.append('name',name);
-                    form.append('email',this.formUser.email);
-                    form.append('password',this.formUser.password);
-                    form.append('department_part',this.formUser.post);
-                    form.append('token',this.token);
+                    //var form=new FormData();
+                    //form.append('name',name);
+                    //form.append('email',this.formUser.email);
+                    //form.append('password',this.formUser.password);
+                    //form.append('department_part',this.formUser.post);
+                    //form.append('token',this.token);
+
+                    let form={
+                        name:name,
+                        email: this.formUser.email,
+                        password: this.formUser.password,
+                        department_part: this.formUser.post,
+                        token: this.$props.token
+                    }
+
+
                     axios.post('/api/admin/addUser',form).then((response)=>{
                         swal('Добавление прошло успешно!', '','success');
                         this.usersData.push(response.data);
@@ -397,10 +413,11 @@
             importFile(){
                 if(this.$refs.file!=null){
                     let data=new FormData();
-                    data.append('file',this.$refs.file.files[0])
+                    data.append('file',this.$refs.file.files[0]);
+                    data.append('token',this.$props.token);
                     axios.post('/api/admin/importUsers',data).then((response)=>{
                         swal('Добавление прошло успешно!','', 'success').then((val)=>{
-                            window.location.reload();                 
+                            window.location.reload();
                         });
                     });
                 }
@@ -423,7 +440,7 @@
                     link.click()
                 });
             },
-            changeMessage(){    
+            changeMessage(){
                 if(this.$refs.file!=null){
                     this.file=this.$refs.file.files[0];
                     let countFiles = '';
@@ -438,7 +455,7 @@
                     this.$refs.file=$('.field')[0];
                     this.$refs.file.files=null;
                     this.changeMessage();
-                }                 
+                }
             },
             getSearchPeople(){
                     for( var i=0;i< $('.user').length;i++){
@@ -453,7 +470,6 @@
 
         },
         mounted(){
-            this.getToken();
             // axios на запрос всех отделений (id, name) и циклов выводится в select
             window.onresize = () => {
                 this.windowWidth = window.innerWidth
@@ -485,7 +501,7 @@
                         required,
                         minLength:minLength(10),
                         maxLength:maxLength(50),
-                        
+
                     },
                     post:{
                         required
@@ -515,7 +531,7 @@
     width: 100%;
 }
 .form_users{
-    width: 100%;    
+    width: 100%;
 }
 @media screen and (min-width:1080px) {
     .fileImport{
@@ -536,16 +552,16 @@
     }
     .btn-adaptiv-export{
         border-radius: 0 0.25rem 0.25rem 0  ;
-    }   
+    }
     form button{
         margin-bottom: 10px;
-    }  
+    }
 
 }
 @media screen and (max-width:1080px){
     .buttonImportExp .btn{
         width: 50%;
-    } 
+    }
     .buttonImportExp>div {
         width: 100%;
     }
@@ -561,7 +577,7 @@
     form .btn-danger-users{
         width: 56%;
     }
-    
+
 }
 @media screen and (max-width:992px) {
     form .btn-primary-users{

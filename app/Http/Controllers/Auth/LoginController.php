@@ -43,14 +43,13 @@ class LoginController extends Controller
         return redirect('home');
     }*/
 
-    protected function authenticated(){
-        if(auth()->user()->role==1){
+    protected function authenticated()
+    {
+        if (auth()->user()->role == 1) {
             return redirect(route('login_admin'));
-        }
-        else{
+        } else {
             return redirect(route('login_user'));
         }
-
     }
 
     public function __construct()

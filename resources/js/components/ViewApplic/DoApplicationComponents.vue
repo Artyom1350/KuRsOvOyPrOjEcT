@@ -17,7 +17,7 @@
             <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && (v$.descriptionAppl.maxLength.$invalid || v$.descriptionAppl.required.$invalid) ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
             <span v-if="v$.descriptionAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
-            
+
         </div>
         <!-- дата -->
         <div class="mb-3">
@@ -54,7 +54,7 @@
 
         </div>
         <!-- файл -->
-        <div class="mb-3 d-flex" >       
+        <div class="mb-3 d-flex" >
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
                 <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
@@ -67,14 +67,14 @@
             </label>
             <input v-if="(windowWidth<=720)" type="button" class="btn btn-danger field__file-button-remove" value="X" @click="delFile()"/>
             <input v-if="(windowWidth>720)" type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
-        </div>  
+        </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
         <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
-    </form> 
-    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
+    </form>
+    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" :token="$props.token" @udpadeParrentArray="updateArrays"></ModalWindow>
 </div>
-    
+
 </template>
 
 <script>
@@ -88,7 +88,7 @@
             return{
                 v$:useVuelidate()
             }
-        },  
+        },
         mounted() {
             this.control=$('#field__file-2')[0];
             window.onresize = () => {
@@ -120,6 +120,9 @@
                 windowWidth: window.innerWidth
             }
         },
+        props:[
+            'token'
+        ],
         watch:{
             peopleSelect(){
                 if(this.groupSelect[0]||this.peopleSelect[0]){
@@ -156,7 +159,7 @@
                         }else{
                             this.incorrectDate=false
                         }
-                    }   
+                    }
                 }
                 else{
                     this.incorrectDate=true
@@ -173,10 +176,10 @@
                     }
                 }else{
                     this.incorrectFile=true
-                } 
+                }
             this.trigersField.file=true
             },
-        },  
+        },
         methods:{
             changeMessage(){
 
@@ -199,7 +202,7 @@
 
                     this.changeMessage();
                 }
-                
+
             },
             delFile(){
                 $('#field__file-2')[0].value = '';
@@ -220,7 +223,7 @@
             },
             checkDate(inputDay,mouth){
                 let day=Number(inputDay);
-            
+
                 if ((day>=1 && day<=8) && mouth==0){
                     return false;
                 }
@@ -246,7 +249,7 @@
                     return false;
                 }
                 else return true;
-            
+
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
@@ -269,7 +272,9 @@
                     form.append('groupSelect',groupMas);
                     form.append('file',this.file);
                     form.append('fileName',this.file.name);
-                    axios.post('/myAppl/addApplication',form,config)
+                    form.append('token',this.$props.token);
+                    
+                    axios.post('/api/myAppl/addApplication',form,config)
                     .then(response=>
                         this.getAnswer()
                     );
@@ -283,7 +288,7 @@
                     this.trigersField.date=true,
                     this.trigersField.file=true
                 }
-            },  
+            },
             getAnswer(){
                 swal('Заявка успешно создана!','', "success")
                 .then((val)=>{
@@ -317,7 +322,7 @@
     .errorMessageGroup{
         border: 2px solid red;
         border-radius: 15px;
-        
+
     }
     .errorMessage{
         border: 2px solid red;
@@ -427,7 +432,7 @@
         }
         .field__file-wrapper {
             width: 85%;
-        } 
+        }
         .field__file-button-remove{
             width: 15%;
         }

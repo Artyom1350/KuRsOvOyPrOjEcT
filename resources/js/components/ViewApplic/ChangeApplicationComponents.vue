@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        
+
     <form class=" d-block m-auto" :class="(this.windowWidth>1080) ? 'w-50' : ''" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="nameApplicate" class="form-label">Название:</label>
@@ -16,7 +16,7 @@
             <textarea class="form-control" name="descripAppl" id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl" :class="(trigersField.descr && (v$.descriptionAppl.maxLength.$invalid || v$.descriptionAppl.required.$invalid) ? 'is-invalid' : '')"></textarea>
             <span v-if="v$.descriptionAppl.maxLength.$invalid" class="invalid-feedback ">Поле должно быть заполнено не более 255 символами</span>
             <span v-if="v$.descriptionAppl.required.$invalid" class="invalid-feedback ">Поле должно быть заполнено</span>
-            
+
         </div>
         <!-- дата -->
         <div class="mb-3">
@@ -39,7 +39,7 @@
                                     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                                 </svg>
                             </div>
-                                
+
                         </div>
                     </div>
                     <div v-if="peopleSelect[0]" class="wrap-grpeo">
@@ -62,8 +62,8 @@
         </div>
         <!-- файл -->
         <p>Ранее выбранный файл: <a class="link_document" :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
-        
-        <div class="mb-3 d-flex" > 
+
+        <div class="mb-3 d-flex" >
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
                 <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
@@ -77,7 +77,7 @@
             </label>
             <input v-if="(windowWidth<=720)" type="button" class="btn btn-danger field__file-button-remove" value="X" @click="delFile()"/>
             <input v-if="(windowWidth>720)" type="button" class="btn btn-danger field__file-button-remove" value="Отменить выбор" @click="delFile()"/>
-        </div>  
+        </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
         <button type="submit" class="btn btn-danger" @click.prevent="deleteDoc()">Удалить заявку?</button>
@@ -86,7 +86,7 @@
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 
 </div>
-    
+
 </template>
 
 <script>
@@ -101,7 +101,7 @@
             return{
                 v$:useVuelidate()
             }
-        },  
+        },
         mounted() {
             this.control=$('#field__file-2')[0];
             window.onresize = () => {
@@ -111,7 +111,7 @@
         components:{
             ModalWindow
         },
-        props:['doc','users'],
+        props:['doc','users', 'token'],
         data(){
             return{
                 trigersField:{
@@ -170,7 +170,7 @@
                         }else{
                             this.incorrectDate=false
                         }
-                    }   
+                    }
                 }
                 else{
                     this.incorrectDate=true
@@ -188,10 +188,10 @@
                     }
                 }else{
                     this.incorrectFile=true
-                } 
+                }
             this.trigersField.file=true
             },
-        },  
+        },
         methods:{
             changeMessage(){
 
@@ -214,7 +214,7 @@
 
                     this.changeMessage();
                 }
-                
+
             },
             delFile(){
                 $('#field__file-2')[0].value = '';
@@ -252,7 +252,7 @@
                 })
                 .then(willDelete => {
                     if(willDelete){
-                        axios.post('/myAppl/deleteDoc',{'id':this.$props.doc[0].id})
+                        axios.post('/api/myAppl/deleteDoc',{'id':this.$props.doc[0].id, 'token':this.$props.token})
                         .then(response=>
                             this.getAnswerRemove()
                         );
@@ -260,7 +260,7 @@
                 });
             },
             getAnswerApplic(){
-                if(!this.incorrectDate && this.issetGroupPeopl && 
+                if(!this.incorrectDate && this.issetGroupPeopl &&
                 !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid || this.v$.file.$invalid){
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
@@ -282,7 +282,8 @@
                     form.append('fileName',this.file.name);
                     form.append('dateAppl',this.dateAppl);
                     form.append('doc_id',this.$props.doc[0].id);
-                    axios.post('/changeApplSend',form,config)
+                    form.append('token',this.$props.token);
+                    axios.post('/api/myAppl/changeApplSend',form,config)
                     .then(response=>
                         this.getAnswerChange()
                     );
@@ -293,14 +294,13 @@
                     this.trigersField.date=true;
                     this.trigersField.file=true;
                 }
-            },  
+            },
             getAnswerChange(){
                 swal('Заявка успешно изменена!','', 'success').then((val)=>{
                     window.location.href='/myAppl'
                 });
             },
             getAnswerRemove(){
-                
                 swal('Заявка удалена!','','success')
                 .then((value)=>{
                     window.location.href='/myAppl'
@@ -333,7 +333,7 @@
     .errorMessageGroup{
         border: 2px solid red;
         border-radius: 15px;
-        
+
     }
     .errorMessage{
         border: 2px solid red;
@@ -456,10 +456,10 @@
         }
         .field__file-wrapper {
             width: 85%;
-        } 
+        }
         .field__file-button-remove{
             width: 15%;
         }
     }
-    
+
 </style>

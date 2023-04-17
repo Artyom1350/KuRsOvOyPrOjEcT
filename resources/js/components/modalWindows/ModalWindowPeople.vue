@@ -33,7 +33,7 @@
             <button class="btn btn-primary" :class="(this.windowWidth>1080) ? 'w-25' : 'w-50 mr-2'"  @click="closeModal" :disabled="!disabledButton">Выбрать</button>
             <button class="btn btn-danger"  :class="(this.windowWidth>1080) ? 'w-25' : 'w-50 ml-2'" @click="closeModal">Отмена</button>
         </div>
-    </div>  
+    </div>
 </template>
 
 <script>
@@ -49,7 +49,7 @@
                 textSearchGroup:'',
                 windowWidth: window.innerWidth
             };
-            
+
         },
         mounted(){
             window.onresize = () => {
@@ -59,6 +59,7 @@
         props:[
             'groupSelectParrent',
             'peopleSelectParrent',
+            'token',
         ],
         methods:{
                 closeModal(){
@@ -80,25 +81,25 @@
                     })
                 },
                 getUsers(token){
-                    axios.post('/api/getUsers',{'token':token}).then((response)=>{
+                    axios.post('/api/myAppl/getUsers',{'token':token}).then((response)=>{
                     this.users=response.data.users;
                     });
                 },
                 getGroups(token){
-                    axios.get('/getDepartment').then((response)=>{
+                    axios.post('/api/myAppl/getDepartment',{'token':token}).then((response)=>{
                         this.groups=response.data.department;
                     })
                 },
                 getSearchPeople(){
-                    
+
                     for( var i=0;i< $('.people-unit').length;i++){
                         var el=$('.people-unit')[i];
-                        
+
                         if(el.outerText.includes(this.textSearch)){
                             el.style.display="block"
                         }else{
                             el.style.display="none"
-                            
+
                         }
                     }
                 },
@@ -114,10 +115,8 @@
                 }
             },
             created(){
-                axios.post('/user/token').then((response)=>{
-                    this.getUsers(response.data.token);
-                    this.getGroups(response.data.token);
-                })
+                this.getUsers(this.$props.token);
+                this.getGroups(this.$props.token);
             }
     }
 </script>

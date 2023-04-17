@@ -11,7 +11,7 @@
         <div class="mb-3">
             <label for="descripApplicate" class="form-label">Описание:</label>
             <textarea class="form-control" name="descripAppl" readonly id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl"></textarea>
-            
+
         </div>
         <!-- дата -->
         <div class="mb-3">
@@ -29,7 +29,7 @@
         </div>
     </form>
 </div>
-    
+
 </template>
 
 <script>
@@ -38,7 +38,8 @@ import swal from 'sweetalert';
 
     export default {
         props:[
-            "applic"
+            "applic",
+            'token'
         ],
         data(){
             return{
@@ -50,8 +51,8 @@ import swal from 'sweetalert';
                 file:this.$props.applic.fileName,
                 statusAppl:[
                     'Не прочитано',
-                    'Прочитано', 
-                    'В работе', 
+                    'Прочитано',
+                    'В работе',
                     'Готово',
                 ],
                 statusApplSelect:this.$props.applic.status,
@@ -60,12 +61,19 @@ import swal from 'sweetalert';
         watch:{
             statusApplSelect:function(){
                 var val=this.statusApplSelect;
+                let form={
+                    doc_id: this.$props.applic.doc_id,
+                    status: val,
+                    token: this.$props.token
+                }
 
-                var form=new FormData();
-                form.append('doc_id',this.$props.applic.doc_id);
-                form.append('status',val);
 
-                axios.post('/updateStatusDocument',form)
+                //var form=new FormData();
+                //form.append('doc_id',this.$props.applic.doc_id);
+                //form.append('status',val);
+                //form.append('token')
+
+                axios.post('/api/incAppl/updateStatusDocument',form)
                 .then(response=>swal('Статус изменен!','','success'));
             }
         }

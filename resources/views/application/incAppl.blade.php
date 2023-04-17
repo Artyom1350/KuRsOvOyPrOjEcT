@@ -8,10 +8,10 @@
     <div class="container">
         @if ($incAplData)
             <h2 class="text-center mb-3">Входящие заявки</h2>
-            <inc-applic :incdata='@json($incAplData)'></inc-applic>
+            <inc-applic :incdata='@json($incAplData)' :token='@json($token)'></inc-applic>
         @else
             <h2 class="text-center">Нет входящих заявок</h2>
         @endif
     </div>
-    
+
 @endsection

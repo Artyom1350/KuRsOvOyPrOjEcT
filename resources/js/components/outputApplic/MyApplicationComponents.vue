@@ -33,17 +33,15 @@
                                 </svg>
                             </button>
                         </a>
-                    
                     </div>
                 </div>
-                
             </div>
         </div>
         <div class="makeAppl d-block ml-auto mt-3">
             <input v-if="!trigerPagin && trigerGlobalPagin" class="btn btn-primary " type="button" value="Показать ещё" @click="pagination">
             <input v-if="trigerPagin && trigerGlobalPagin" class="btn btn-primary " type="button" value="Скрыть всё" @click="notPagination">
         </div>
-        <ModalWindowAnsw v-if="trigerModal" @close="trigerModal=false" :idDocuments="idDocumentOpen"></ModalWindowAnsw>
+        <ModalWindowAnsw v-if="trigerModal" @close="trigerModal=false" :idDocuments="idDocumentOpen" :token="$props.token"></ModalWindowAnsw>
     </div>
 </template>
 
@@ -51,7 +49,7 @@
     import ModalWindowAnsw from '../modalWindows/ModalWindowAnswer.vue';
 
     export default {
-        props: ['mydata'],
+        props: ['mydata','token',],
         data(){
             return{
                 trigerModal:false,
@@ -75,9 +73,9 @@
                 else this.countPagination=999999999999999;
                 for( var i=0;i< $('.wrap-cardInput').length;i++){
                     var el=$('.wrap-cardInput')[i];
-                    
+
                     if(el.outerText.includes(this.textSearchInput)){
-                        
+
                         el.style.display="block"
                     }else{
                         el.style.display="none"

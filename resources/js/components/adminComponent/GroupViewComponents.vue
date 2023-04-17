@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <div class="mt-2 d-flex align-items-start justify-content-between" :class="{ 
+        <div class="mt-2 d-flex align-items-start justify-content-between" :class="{
             'flex-column':windowWidth<=720}">
             <div class="usersView" :class="{'w-50':windowWidth>720, 'mr-4':windowWidth>1080, 'mr-2':(windowWidth<=1080 && windowWidth>720)}">
                 <h3 class="text-center"><b>Структурные подразделения</b></h3>
@@ -94,7 +94,7 @@
                 <button @click.prevent="addPost()" type="submit" class="btn btn-primary btn-primary-users">Добавить должность</button>
                 <button @click.prevent="clearForm()" type="submit" class="btn btn-danger btn-danger-users">Очистить форму</button>
             </div>
-            
+
         </div>
     </div>
 </template>
@@ -108,9 +108,10 @@
             return{
                 v$:useVuelidate()
             }
-        }, 
+        },
         props:[
             'groupinfo',
+            'token'
         ],
         data(){
             return{
@@ -126,12 +127,11 @@
                 // потом почистить и заполнять при изменении групп
                 trigerChangeNameForm:false,
                 trigerPostFill:false,
-                token:'',
                 globalIndex:'',
                 trigerIdForm:false,
                 windowWidth: window.innerWidth
             }
-            
+
         },
         methods:{
             removePost(index){
@@ -151,7 +151,7 @@
                 }).then((answer)=>
                 {
                     if(answer){
-                        axios.post('/api/admin/destroyPost',{'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                        axios.post('/api/admin/destroyPost',{'id':this.postData[index].id,'token':this.$props.token}).then((response)=>{
                             swal('Должность успешно удалена!', '', 'success');
                             this.postData.splice(index,1);
                         })
@@ -176,7 +176,7 @@
                 }).then(
                     (name)=>{
                         if(name){
-                            axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.token}).then((response)=>{
+                            axios.post('/api/admin/changePost',{'name':name,'id':this.postData[index].id,'token':this.$props.token}).then((response)=>{
                                 swal('Должность успешно изменена!', '', 'success');
                                 this.postData[index].name=name;
                             });
@@ -187,7 +187,7 @@
                             });
                         }
                     }
-                );                
+                );
             },
             exportFile(){
                 axios.post('/api/admin/downloadGroupsAndParts', {
@@ -215,7 +215,7 @@
                 // name.split(' ') и по очерёдно присваиваем к formGroup
             },
             getPostGroup(id){
-                axios.post('/api/admin/getPostGroup',{'id':id,'token':this.token}).then((response)=>{
+                axios.post('/api/admin/getPostGroup',{'id':id,'token':this.$props.token}).then((response)=>{
                     this.postData=response.data;
                 });
             },
@@ -226,7 +226,7 @@
                 }
                 else{
                     this.trigerChange=false;
-                    axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.token,'name':this.formGroup.name}).then((response)=>{
+                    axios.post('/api/admin/changeGroup',{'id':this.formGroup.id,'token':this.$props.token,'name':this.formGroup.name}).then((response)=>{
                         swal('Группа успешно изменена','','success').then(
                             (result)=>{
                                 this.groupsData[this.globalIndex]=response.data;
@@ -255,7 +255,7 @@
                     if(answer2){
                         swal('Хорошо, удаляем.').then(
                             setInterval(function(){
-                            axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.token}).then((response)=>{
+                            axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.$props.token}).then((response)=>{
                                 swal('Запись успешно удалена','','success');
                                 this.groupsData.splice(index,1);
                             })},1500)
@@ -270,7 +270,7 @@
                 }
                 else{
                     // alert('нет, но как бы да');
-                    axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.token}).then((response)=>{
+                    axios.post('/api/admin/addGroup',{'name':this.formGroup.name,'token':this.$props.token}).then((response)=>{
                         swal('Группа успешно добавлена','','success');
                         this.groupsData.push(response.data);
                         this.clearForm();
@@ -295,7 +295,7 @@
                     swal("Файл не выбран.",'','warning');
                 }
             },
-            changeMessage(){    
+            changeMessage(){
                 if(this.$refs.file!=null){
                     this.file=this.$refs.file.files[0];
                     let countFiles = '';
@@ -310,12 +310,7 @@
                     this.$refs.file=$('.field')[0];
                     this.$refs.file.files=null;
                     this.changeMessage();
-                }                 
-            },
-            getToken(){
-                axios.post('/admin/token').then((response)=>{
-                    this.token=response.data.token;
-                });
+                }
             },
             getSearchGroup(){
                     for( var i=0;i< $('.user').length;i++){
@@ -334,7 +329,7 @@
                             content:'input'
                         }).then((postName)=>{
                             if(postName){
-                                axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.token,'name':postName}).then((response)=>{
+                                axios.post('/api/admin/addPost',{'id':this.formGroup.id,'token':this.$props.token,'name':postName}).then((response)=>{
                                     swal('Должность успешно добавлена!','','success');
                                     this.postData.push(response.data);
                                 });
@@ -350,9 +345,6 @@
                         swal('Нужно выбрать группу!','','warning');
                     }
                 }
-        },
-        created(){
-            this.getToken();
         },
         mounted(){
             // axios на запрос всех отделений (id, name) и циклов выводится в select
@@ -374,7 +366,7 @@
                 },
             },
             postData(){
-                
+
                 if(this.postData==""||this.postData==null){
                     this.trigerPostFill=false;
                 }
@@ -397,7 +389,7 @@
                 }
             }
         },
-        
+
     }
 </script>
 <style>
@@ -433,15 +425,15 @@
     }
     .btn-adaptiv-export{
         border-radius: 0 0.25rem 0.25rem 0  ;
-    }   
+    }
     form button{
         margin-bottom: 10px;
-    }  
+    }
 }
 @media screen and (max-width:1080px){
     .buttonImportExp .btn{
         width: 50%;
-    } 
+    }
     .btn-import{
         border-radius: 0.25rem 0 0 0.25rem;
     }

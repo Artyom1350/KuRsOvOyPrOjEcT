@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Users\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\AccessUser;
-use App\Models\ApiHelper;
 use App\Models\Department;
 use App\Models\Document;
 use Illuminate\Http\Request;
@@ -17,9 +16,6 @@ class UserCrudController extends Controller
     /** Добавление новой заявки */
     public function addApplication(Request $request)
     {
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         //переменные для работы
         $users = array();
         $group = array();
@@ -86,9 +82,6 @@ class UserCrudController extends Controller
     /** Редактирование заявки */
     public function changeApplSend(Request $request)
     {
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         //переменные для работы
         $users = array();
         $group = array();
@@ -114,9 +107,12 @@ class UserCrudController extends Controller
         $docEdit->description = $request->post('descriptionAppl');
 
         //если есть файл удаляем старый и записываем новый
-        if ($request->post('file') != null) {
+        if ($request->file('file') != null) {
             $file = $request->file('file');
-            Storage::delete($docEdit->path);
+            try{
+                Storage::delete($docEdit->path);
+            }
+            catch(\Exception $e){}
             $storePath = Storage::disk('local')->put('documents', $file);
             $fileName = basename($storePath);
             $filePath = $path . '/' . $fileName;
@@ -164,9 +160,6 @@ class UserCrudController extends Controller
 
     /** Обновление статуса входящей заявки */
     public function updateStatusDocument(Request $request){
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         $current_user=PersonalAccessToken::where('token', $request->post('token'))->first()->tokenable->id;
         $doc=AccessUser::where('document_id',$request->post('doc_id'))->where('user_id',$current_user)->first();
         $doc->status=$request->post('status');
@@ -176,9 +169,6 @@ class UserCrudController extends Controller
 
     /** Удаление заявки */
     public function deleteDocument(Request $request){
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         Document::find($request->post('id'))->delete();
         return response('da');
     }

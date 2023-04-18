@@ -19,6 +19,9 @@ class isAdmin
     {
         if(Auth::user()){
             if(auth()->user()->role==1){
+                if(count(auth()->user()->tokens)==0){
+                    auth()->user()->createToken('admin');
+                }
                 return $next($request);       
             }
             return redirect(route('home'));

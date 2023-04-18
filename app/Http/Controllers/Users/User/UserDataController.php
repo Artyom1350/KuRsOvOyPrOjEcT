@@ -6,20 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessUser;
 use App\Models\Department;
 use App\Models\User;
-use App\Models\ApiHelper;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Str;
 
 class UserDataController extends Controller
 {
     /** Получение пользователей для добавления/редактирования заявки */
     public function getUsers(Request $request)
     {
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         $token = PersonalAccessToken::where('token', $request->post('token'))->first();
         $user = $token->tokenable;
         $users = User::whereKeyNot($user->id)->get()->where('role', 0);
@@ -29,9 +26,6 @@ class UserDataController extends Controller
     /** Получение всех структурных подразделений для добавления/педактирования заявки */
     public function getDepartment(Request $request)
     {
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         $department = Department::all();
         return response()->json(['department' => $department]);
     }
@@ -39,9 +33,6 @@ class UserDataController extends Controller
     /** Получение ответов пользователей на исходящую заявку */
     public function getUnswersUsers(Request $request)
     {
-        if (!ApiHelper::tokenProv($request->post('token'))) {
-            return response()->json(['message' => 'Access is denied'], 401);
-        }
         $access = AccessUser::where('document_id', $request->post('id_doc'))->get();
         $appl = array();
         foreach ($access as $acc) {
@@ -62,5 +53,24 @@ class UserDataController extends Controller
             return response()->json('da');
         }
     }
+
+    /** Скачивание файла, прикрепленного к заявке */
+    public function downloadApplTest(Request $request){
+        $doc=Document::where('id',$request->post('id'))->first();
+        try{
+
+            $headers = [
+                'Content-Description' => 'File Transfer',
+                'Content-Type' => 'application/pdf',
+                'filename'=>Str::slug($doc->file),
+            ];
+
+            return response()->download(storage_path('\app/'.$doc->path),$doc->file, $headers);
+        }
+        catch(\Exception $e){
+            return response()->json('File not found!');
+        }
+    }
+    
 
 }

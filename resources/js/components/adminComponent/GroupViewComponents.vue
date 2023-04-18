@@ -230,8 +230,7 @@
                         swal('Группа успешно изменена','','success').then(
                             (result)=>{
                                 this.groupsData[this.globalIndex]=response.data;
-                            this.clearForm();
-                            //window.location.reload();
+                                this.clearForm();
                             }
                         );
                     });
@@ -249,22 +248,29 @@
                 this.trigerPostFill=false;
             },
             removeGroup(index){
-                let answer=confirm('Точно хотите удалить отделение '+this.groupsData[index].name);
+                let answer=confirm('Точно хотите удалить отделение '+this.groupinfo[index].name);
                 if(answer){
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
                         swal('Хорошо, удаляем.').then(
-                            setInterval(function(){
+                            //setInterval(function(){
+                            //axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.$props.token}).then((response)=>{
+                            //    swal('Запись успешно удалена','','success');
+                            //    this.groupsData.splice(index,1);
+                            //})},1500)
+
+                            setTimeout(()=>{
                             axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.$props.token}).then((response)=>{
                                 swal('Запись успешно удалена','','success');
                                 this.groupsData.splice(index,1);
                             })},1500)
+
                         );
                     }
                 }
             },
             addGroup(){
-                // axios на добавлени
+                // axios на добавление
                 if(this.v$.formGroup.$invalid && !this.trigerPostFill){
                     // alert('да, но как бы нет');
                 }

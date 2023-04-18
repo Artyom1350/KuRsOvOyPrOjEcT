@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
+use App\Models\ApiHelper;
 
-class isUser
+class provApi
 {
     /**
      * Handle an incoming request.
@@ -17,14 +17,9 @@ class isUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()) {
-            if (auth()->user()->role == 0) {
-                if(count(auth()->user()->tokens)==0){
-                    auth()->user()->createToken('user');
-                }
-                return $next($request);
-            }
-            return redirect(route('home_admin'));
+        if(!ApiHelper::tokenProv($request->post('token'))) {
+            return response()->json(['message' => 'Access is denied'], 401);
         }
+        return $next($request);
     }
 }

@@ -11,7 +11,6 @@
         <div class="mb-3">
             <label for="descripApplicate" class="form-label">Описание:</label>
             <textarea class="form-control" name="descripAppl" readonly id="descripApplicate" rows="3" placeholder="Описание" v-model="descriptionAppl"></textarea>
-
         </div>
         <!-- дата -->
         <div class="mb-3">
@@ -19,7 +18,8 @@
             <input type="date" class="form-control" id="dateApplicate" readonly name="dateAppl" placeholder="Дата" v-model="dateAppl">
         </div>
         <div class="mb-3 d-flex">
-            <a :href="'/myAppl/Download/'+this.$props.applic.doc_id" class="mr-3"><input type="button" class="btn btn-primary btn-download" value="Скачать файл"/></a>
+            <!-- <a :href="'/myAppl/Download/'+this.$props.applic.doc_id" class="mr-3"><input type="button" class="btn btn-primary btn-download" value="Скачать файл"/></a> -->
+            <input type="button" class="mr-3 btn btn-primary btn-download" value="Скачать файл" @click="download()" />
         </div>
         <div class="mb-3">
             <label class="mr-1 mt-auto mb-auto" for="statusApplSelect">Статус: </label>
@@ -75,6 +75,30 @@ import swal from 'sweetalert';
 
                 axios.post('/api/incAppl/updateStatusDocument',form)
                 .then(response=>swal('Статус изменен!','','success'));
+            }
+        },
+        methods:{
+            download(){
+                let headers={
+                    responseType:'blob'
+                }
+                console.log(this.$props.applic.doc_id)
+                axios.post('/api/myAppl/Download',{'id':this.$props.applic.doc_id,'token':this.$props.token},headers).then((res)=>{
+                    if(res.headers['filename']){                    
+                        const blob = new Blob([res.data], { type: res.headers['content-type'] })
+                        const downloadUrl = window.URL.createObjectURL(blob)
+                        const linkUrl = document.createElement('a')
+                        linkUrl.download = res.headers['filename']
+                        linkUrl.href = downloadUrl
+                        document.body.appendChild(linkUrl)
+                        linkUrl.click()
+                        document.body.removeChild(linkUrl)
+                        linkUrl.remove()
+                    }
+                    else{
+                        alert('Файл не найден!');
+                    }
+                })
             }
         }
     }

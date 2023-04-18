@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- файл -->
-        <p>Ранее выбранный файл: <a class="link_document" :href="'/myAppl/Download/'+this.$props.doc[0].id"> {{ this.$props.doc[0].file }}</a></p>
+        <p>Ранее выбранный файл: <a class="link_document" @click="downloadDocument()" style="cursor:pointer"> {{ this.$props.doc[0].file }}</a></p>
 
         <div class="mb-3 d-flex" >
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
@@ -220,6 +220,27 @@
                 $('#field__file-2')[0].value = '';
                 this.changeMessage();
             },
+            downloadDocument(){    
+                let headers={
+                    responseType:'blob'
+                }
+                axios.post('/api/myAppl/Download',{'id':this.$props.doc[0].id,'token':this.$props.token},headers).then((res)=>{
+                    if(res.headers['filename']){
+                        const blob = new Blob([res.data], { type: res.headers['content-type'] })
+                        const downloadUrl = window.URL.createObjectURL(blob)
+                        const linkUrl = document.createElement('a')
+                        linkUrl.download = this.$props.doc[0].file
+                        linkUrl.href = downloadUrl
+                        document.body.appendChild(linkUrl)
+                        linkUrl.click()
+                        document.body.removeChild(linkUrl)
+                        linkUrl.remove()
+                    }
+                    else{
+                        alert('Файл не найден!');
+                    }
+                })
+            },
             openModal(){
                 this.isModalOpen=true;
             },
@@ -283,6 +304,7 @@
                     form.append('dateAppl',this.dateAppl);
                     form.append('doc_id',this.$props.doc[0].id);
                     form.append('token',this.$props.token);
+
                     axios.post('/api/myAppl/changeApplSend',form,config)
                     .then(response=>
                         this.getAnswerChange()

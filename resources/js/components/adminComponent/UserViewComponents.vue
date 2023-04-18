@@ -205,6 +205,7 @@
                 this.trigerChangedepartment=false;
                 this.trigerChangepost=false;
             },
+            /** Получение пользователя на редактирование */
             changeUserinForm(idUser,index){
                 swal('Если вы заполните пароль, то он измениться в БД!','','warning')
                     .then((val)=>{
@@ -216,10 +217,9 @@
                         //form.append('token',this.token);
 
                         let form={
-                            id: this.idUser,
+                            id: this.idUserChange,
                             token: this.$props.token,
                         }
-
                         axios.post('/api/admin/getOneUser',form).then((response)=>{
                             this.formUser.surname=response.data.user.name.split(' ')[0];
                             this.formUser.name=response.data.user.name.split(' ')[1];
@@ -274,10 +274,10 @@
                 this.trigerChangepatronymic=false;
                 this.trigerValidPassword=false;
             },
+            /** запрос на изменение пользователя */
             changeUser(idUser){
                 if(this.formCheck()){
 
-                    // axios на изменение
                     //var form=new FormData();
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
                     //form.append('name',name);
@@ -299,7 +299,6 @@
                     axios.post('/api/admin/changeUser',form).then((response)=>{
                         swal('Изменение прошли успешно', '', 'success');
                         this.trigerChange=false;
-
                         this.usersData[this.index]=response.data;
                         this.clearForm();
                     });
@@ -509,6 +508,9 @@
                 },
             }
         },
+        mounted(){
+            this.getDepartment()
+        }
 
     }
 </script>

@@ -1,8 +1,5 @@
 <?php
-
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Users\Admin\AdminViewController;
-use App\Http\Controllers\Users\User\UserDataController;
 use App\Http\Controllers\Users\User\UserViewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;

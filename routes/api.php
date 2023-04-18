@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,7 +40,6 @@ Route::middleware('provApi')->group(function(){
     Route::post('/myAppl/deleteDoc', [UserCrudController::class, 'deleteDocument']);
     Route::post('/incAppl/updateStatusDocument', [UserCrudController::class, 'updateStatusDocument']);
     Route::post('/myAppl/Download', [UserDataController::class, 'downloadApplTest']);
-
 
     //admin
     //работа с юзерами

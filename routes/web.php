@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Users\Admin\AdminViewController;
 use App\Http\Controllers\Users\User\UserViewController;
+use App\Http\Controllers\Mail\SendMailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,3 +42,4 @@ Route::middleware('auth')->group(function () {
         }
     });
 });
+Route::get('/da',[SendMailController::class,'send']);

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessUser;
 use App\Models\Department;
 use App\Models\Document;
+use App\Models\EmailSender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -164,6 +165,21 @@ class UserCrudController extends Controller
         $doc=AccessUser::where('document_id',$request->post('doc_id'))->where('user_id',$current_user)->first();
         $doc->status=$request->post('status');
         $doc->save();
+
+        $accAll=AccessUser::where('document_id',$request->post('doc_id'))->get();
+        $bool=true;
+        foreach($accAll as $user){
+            if($user->status!=3){
+                $bool=false;
+                break;
+            }
+        }
+
+        $docTitle=Document::find($request->post('doc_id'))->title;
+        if($bool){
+            EmailSender::sendEmail($docTitle);
+        }
+
         return response()->json(['reg'=>$request->post('doc_id')]);
     }
 

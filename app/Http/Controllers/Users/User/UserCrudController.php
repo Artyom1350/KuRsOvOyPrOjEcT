@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessUser;
 use App\Models\Department;
 use App\Models\Document;
+use App\Models\User;
 use App\Models\EmailSender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -74,6 +75,7 @@ class UserCrudController extends Controller
                 'document_id' => $doc['id'],
                 'status' => 0
             ]);
+            EmailSender::sendEmailForUsers($request->post('nameAppl'),User::find($user)->email,$doc['id']);
         }
 
         //ответ

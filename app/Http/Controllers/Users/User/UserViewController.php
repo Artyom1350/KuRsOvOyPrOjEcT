@@ -112,16 +112,19 @@ class UserViewController extends Controller
     /** Входящая одна заявка */
     public function viewOne($id)
     {
-        $document = auth()->user()->access_users()->where('document_id', $id)->first()->document()->get();
-
-        $title = $document->first()['title'];
-        $user = $document->first()->user()->first()['name'];
-        $description = $document->first()['description'];
-        $dateAppl = $document->first()['dateAppl'];
-        $status = auth()->user()->access_users()->where('document_id', $id)->first()['status'];
-        $application = array('userName' => $user, 'fileName' => $document->first()->file, 'description' => $description, 'dateAppl' => $dateAppl, 'title' => $title, 'doc_id' => $id, 'status' => $status);
-        return view('application/OneAppl', ['applic' => $application, 'token'=>auth()->user()->tokens->first()->token]);
+        if(auth()->user()->access_users()->where('document_id', $id)->first()){
+            $document = auth()->user()->access_users()->where('document_id', $id)->first()->document()->get();
+            $title = $document->first()['title'];
+            $user = $document->first()->user()->first()['name'];
+            $description = $document->first()['description'];
+            $dateAppl = $document->first()['dateAppl'];
+            $status = auth()->user()->access_users()->where('document_id', $id)->first()['status'];
+            $application = array('userName' => $user, 'fileName' => $document->first()->file, 'description' => $description, 'dateAppl' => $dateAppl, 'title' => $title, 'doc_id' => $id, 'status' => $status);
+            return view('application/OneAppl', ['applic' => $application, 'token'=>auth()->user()->tokens->first()->token]);
+        }
+        return redirect()->route('home');
     }
+
 
     /** Страница создания заявки */
     public function doApplication()

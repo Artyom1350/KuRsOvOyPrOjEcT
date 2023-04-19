@@ -1,40 +1,40 @@
-@component('mail::message')
+{{-- @component('mail::message') --}}
     {{-- Greeting --}}
-    @if (! empty($greeting))
-    # {{ $greeting }}
-    @else
-    @if ($level == 'error')
-    # Whoops!
-    @else
-    # Hello!
-    @endif
-    @endif
+    {{-- @if (! empty($greeting)) --}}
+    {{-- # {{ $greeting }} --}}
+    {{-- @else --}}
+    {{-- @if ($level == 'error') --}}
+    {{-- # Whoops! --}}
+    {{-- @else --}}
+    {{-- # Hello! --}}
+    {{-- @endif --}}
+    {{-- @endif --}}
     {{-- Intro Lines --}}
-    @foreach ($introLines as $line)
-    {{ $line }}
-    @endforeach
+    {{-- @foreach ($introLines as $line) --}}
+    {{-- {{ $line }} --}}
+    {{-- @endforeach --}}
     {{-- Action Button --}}
-    @isset($actionText)
-    @component('mail::button', ['url' => $actionUrl, 'color' => $color])
-    {{ $actionText }}
-    @endcomponent
-    @endisset
+    {{-- @isset($actionText) --}}
+    {{-- @component('mail::button', ['url' => $actionUrl, 'color' => $color]) --}}
+    {{-- {{ $actionText }} --}}
+    {{-- @endcomponent --}}
+    {{-- @endisset --}}
     {{-- Outro Lines --}}
-    @foreach ($outroLines as $line)
-    {{ $line }}
-    @endforeach
+    {{-- @foreach ($outroLines as $line) --}}
+    {{-- {{ $line }} --}}
+    {{-- @endforeach --}}
     {{-- Salutation --}}
-    @if (! empty($salutation))
-    {{ $salutation }}
-    @else
-    Regards,
-    {{ config('app.name') }}
-    @endif
-@endcomponent
+    {{-- @if (! empty($salutation)) --}}
+    {{-- {{ $salutation }} --}}
+    {{-- @else --}}
+    {{-- Regards, --}}
+    {{-- {{ config('app.name') }} --}}
+    {{-- @endif --}}
+{{-- @endcomponent --}}
 <div>
     <header class="paddingBlock">
         <div class="logoWrap">
-            <img src="{{url('image/logo/logo.png')}}" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
+            <img src="https://upload.wikimedia.org/wikipedia/ru/1/13/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%9F%D0%B5%D1%80%D0%BC%D1%81%D0%BA%D0%B8%D0%B9_%D0%B0%D0%B2%D0%B8%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D1%83%D0%BC.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
         </div>
     </header>
     <main class="main d-flex ">

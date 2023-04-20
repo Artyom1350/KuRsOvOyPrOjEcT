@@ -20,7 +20,7 @@ class UserViewController extends Controller
         $da = auth()->user()->access_users()->get();
         foreach ($da as $accessDoc) {
             $doc = $accessDoc->document()->first();
-            $arr = array(date("d.m.Y", strtotime($doc['dateAppl'])) => $doc['title']);
+            $arr = array(date("d.m.Y", strtotime($doc['dateAppl'])) => '<a href="/incAppl/'.$doc->id.'" class="link-primary" style="color: #3490dc!important">'.$doc['title'].'</a>');
             $events += $arr;
         }
         $name = auth()->user()->name;

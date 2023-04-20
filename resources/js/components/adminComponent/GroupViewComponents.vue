@@ -284,7 +284,7 @@
                 }
             },
             importFile(){
-                if(this.$refs.file!=null){
+                if(this.$refs.file.files[0]!=null){
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0])
                     axios.post('/api/admin/importGroupsAndPosts',data/*,config*/).then((response)=>{

@@ -20,7 +20,6 @@ class ExcelController extends Controller
     }
     public function importUsers(Request $request){ 
         Excel::import(new UsersImport,$request->file('file'));
-        //return response()->json($request->file('file')->getClientOriginalName());
         return response("da");
     }
     public function importGroupsAndPosts(Request $request){

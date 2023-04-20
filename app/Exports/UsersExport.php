@@ -18,14 +18,13 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     */
     public function collection()
     {
-        return DB::table('users')->select('name','email','password','department_part_id','role')->get();
+        return DB::table('users')->select('name','email','department_part_id','role')->get();
     }
     
     public function headings(): array{
         return[
             'ФИО',
             'Email',
-            'Пароль',
             'Должность',
             'Роль',
         ];
@@ -33,7 +32,7 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class=> function(AfterSheet $event) {
                 $cellRange = 'A1:W1'; // All headers
 
                 $styleArray = [

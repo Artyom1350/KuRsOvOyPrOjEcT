@@ -277,16 +277,7 @@
             /** запрос на изменение пользователя */
             changeUser(idUser){
                 if(this.formCheck()){
-
-                    //var form=new FormData();
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                    //form.append('name',name);
-                    //form.append('email',this.formUser.email);
-                    //form.append('password',this.formUser.password);
-                    //form.append('department_part',this.formUser.post);
-                    //form.append('id',this.formUser.id);
-                    //form.append('token',this.token);
-
                     let form={
                         name: name,
                         email:this.formUser.email,
@@ -376,13 +367,6 @@
                 this.trigerValidPassword=true;
                 if(this.formCheckAdd()){
                     let name=this.formUser.surname+" "+this.formUser.name+" "+this.formUser.patronymic;
-                    //var form=new FormData();
-                    //form.append('name',name);
-                    //form.append('email',this.formUser.email);
-                    //form.append('password',this.formUser.password);
-                    //form.append('department_part',this.formUser.post);
-                    //form.append('token',this.token);
-
                     let form={
                         name:name,
                         email: this.formUser.email,
@@ -410,7 +394,7 @@
                 }
             },
             importFile(){
-                if(this.$refs.file!=null){
+                if(this.$refs.file.files[0]!=null){
                     let data=new FormData();
                     data.append('file',this.$refs.file.files[0]);
                     data.append('token',this.$props.token);

@@ -3,6 +3,8 @@
 @section('title',"Главная")
 
 @section('content')
+<?php
+?>
 <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
 
 <div class="container">

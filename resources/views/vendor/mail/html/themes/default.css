@@ -28,7 +28,7 @@ blockquote {
 }
 
 a {
-    color:#fff !important;
+    color: #3869d4;
 }
 
 a img {
@@ -62,7 +62,7 @@ h3 {
 p {
     font-size: 16px;
     line-height: 1.5em;
-    margin: auto;
+    margin-top: 0;
     text-align: left;
 }
 
@@ -100,9 +100,6 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
-    background: #fff;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
 }
 
 .header a {
@@ -126,6 +123,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
+    background-color: #edf2f7;
+    border-bottom: 1px solid #edf2f7;
+    border-top: 1px solid #edf2f7;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -160,16 +160,13 @@ img {
 /* Footer */
 
 .footer {
-    background: #fff;
-    height: 150px;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    font-size: x-large;
-    height: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
     text-align: center;
+    width: 570px;
 }
 
 .footer p {

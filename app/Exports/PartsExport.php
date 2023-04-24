@@ -18,8 +18,22 @@ class PartsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     */
     public function collection()
     {
+        $res=DepartmentPart::all();
+        $partsArray=array();
+        foreach($res as $part){
+            array_push($psrtsArray,[
+                'name'=>$part->name,
+                'department'=>$part->department()->first()->name
+            ]);
+        }
+        dd($partsArray);
         return DB::table('department_parts')->select('name','department_id')->get();
     }
+    public function department($id){
+
+    }
+
+
     private $fileName = 'da1';
     
     public function headings(): array{

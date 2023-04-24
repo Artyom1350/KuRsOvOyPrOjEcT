@@ -3,9 +3,9 @@
 namespace App\Exports;
 
 use App\Models\DepartmentPart;
+use App\Models\Department;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -18,9 +18,25 @@ class PartsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     */
     public function collection()
     {
-        return DB::table('department_parts')->select('name','department_id')->get();
+        $partsArray=array();
+        $res=Department::orderBy('name')->get();
+        foreach($res as $item){
+            $res1=$item->departmentsParts()->get();
+            foreach($res1 as $part){
+                array_push($partsArray,[
+                    'name'=>$part->name,
+                    'department'=>$item->name
+                ]);
+            }
+        }
+        return collect($partsArray);
     }
-    private $fileName = 'da1';
+    public function department($id){
+
+    }
+
+
+    private $fileName = 'department_parts';
     
     public function headings(): array{
         return[

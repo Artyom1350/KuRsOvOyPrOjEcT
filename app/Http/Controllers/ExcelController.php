@@ -19,10 +19,12 @@ class ExcelController extends Controller
         return Excel::download(new GroupsAndPosts,'da.xlsx');
     }
     public function importUsers(Request $request){ 
-        Excel::import(new UsersImport,$request->file('file'));
-        return response("da");
+        $import=new UsersImport();
+        $import->import($request->file('file'));
+        return response()->json($import->errors());
     }
     public function importGroupsAndPosts(Request $request){
+        
         Excel::import(new GroupsAndPostsImport,$request->file('file'));
         Excel::import(new GroupsAndPostsImportHelper,$request->file('file'));
         return response('da');

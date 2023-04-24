@@ -1,10 +1,7 @@
 <?php
 
 namespace App\Imports;
-
-use Illuminate\Support\Collection;
 use App\Models\Department;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 

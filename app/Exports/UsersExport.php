@@ -3,9 +3,9 @@
 namespace App\Exports;
 
 use App\Models\User;
+use App\Models\DepartmentPart;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -18,9 +18,39 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     */
     public function collection()
     {
-        return DB::table('users')->select('name','email','department_part_id','role')->get();
+        $res=User::all();
+        $usersArr=array();
+        foreach($res as $user){
+            array_push($usersArr,[
+                'name'=>$user->name,
+                'email'=>$user->email,
+                'department_part'=>$this->department_part($user->department_part_id),
+                'role'=>$this->role($user->role)
+            ]);
+        }
+        return collect($usersArr);
     }
-    
+    /** Роль строкой */
+    public function role($id){
+        if($id==0){
+            return 'пользователь';
+        }
+        else if($id==1){
+            return 'администратор';
+        }
+    }
+    /** Должность строкой */
+    public function department_part($id){
+        $part=DepartmentPart::find($id);
+
+        if($part==null){
+            return 'Нет должности';
+        }
+        else{
+            return $part->name;
+        }
+    }
+    /** Хеадер таблицы */
     public function headings(): array{
         return[
             'ФИО',
@@ -45,12 +75,14 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
                 ];
 
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
-                $event->sheet->getDelegate()->getStyle('A1:E1')->getAlignment()->setWrapText(true);
-                $event->sheet->getDelegate()->getStyle('A1:E1')->applyFromArray($styleArray);
+                $event->sheet->getDelegate()->getStyle('A1:D1')->getAlignment()->setWrapText(true);
+                $event->sheet->getDelegate()->getStyle('A1:D1')->applyFromArray($styleArray);
             },
 
         ];
     }
+
+    /** Название таблицы */
     public function title(): string
     {
         return 'Users';

@@ -2,9 +2,8 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
 use App\Models\DepartmentPart;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Department;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
@@ -12,9 +11,10 @@ class PostsImport implements ToModel, WithStartRow
 {
     public function model(array $row)
     {
+        $department=Department::find($row[1]);
         return new DepartmentPart([
            'name'=> $row[0],
-           'department_id'=>$row[1],
+           'department_id'=>$department->id,
         ]);
     }
     public function startRow(): int

@@ -80,8 +80,11 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <button type="submit" class="btn btn-danger" @click.prevent="deleteDoc()">Удалить заявку?</button>
-        <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Сохранить</button>
+        <div class="d-flex withLoader">
+            <button type="submit" class="btn btn-danger mr-2" @click.prevent="deleteDoc()">Удалить заявку?</button>
+            <button type="submit" class="btn btn-primary mr-2" @click.prevent="getAnswerApplic()">Сохранить</button>
+            <span class="loader" v-if="visibleLoad"></span>
+        </div>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
 
@@ -131,7 +134,9 @@
                 issetGroupPeopl:true,
                 incorrectDate:false,
                 incorrectFile:false,
-                windowWidth: window.innerWidth
+                windowWidth: window.innerWidth,
+                visibleLoad:false
+
             }
         },
         watch:{
@@ -283,6 +288,7 @@
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl &&
                 !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid || this.v$.file.$invalid){
+                    this.visibleLoad=true;
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
                         peopleMas.push(item['id']);
@@ -307,6 +313,7 @@
 
                     axios.post('/api/myAppl/changeApplSend',form,config)
                     .then(response=>
+                        this.visibleLoad=false,
                         this.getAnswerChange()
                     );
                 }else{

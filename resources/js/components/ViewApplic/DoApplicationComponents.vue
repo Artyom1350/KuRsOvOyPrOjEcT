@@ -70,7 +70,10 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <button type="submit" class="btn btn-primary" @click.prevent="getAnswerApplic()">Добавить</button>
+        <div class="d-flex withLoader">
+            <button type="submit" class="btn btn-primary mr-3" @click.prevent="getAnswerApplic()">Добавить</button>
+            <span class="loader" v-if="visibleLoad"></span>
+        </div>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" :token="$props.token" @udpadeParrentArray="updateArrays"></ModalWindow>
 </div>
@@ -117,7 +120,8 @@
                 issetGroupPeopl:false,
                 incorrectDate:false,
                 incorrectFile:false,
-                windowWidth: window.innerWidth
+                windowWidth: window.innerWidth,
+                visibleLoad:false
             }
         },
         props:[
@@ -253,6 +257,7 @@
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
+                    this.visibleLoad=true;
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
                         peopleMas.push(item['id']);
@@ -276,6 +281,7 @@
                     
                     axios.post('/api/myAppl/addApplication',form,config)
                     .then(response=>
+                        this.visibleLoad=false,
                         this.getAnswer()
                     );
                 }else{
@@ -322,7 +328,6 @@
     .errorMessageGroup{
         border: 2px solid red;
         border-radius: 15px;
-
     }
     .errorMessage{
         border: 2px solid red;
@@ -436,5 +441,23 @@
         .field__file-button-remove{
             width: 15%;
         }
+    }
+    .loader{
+        height: 100%;
+        animation: rotating 2s linear infinite;
+        background-image: url(../../../../public/image/icons/loader.png);
+        background-size: contain;
+        aspect-ratio: 1;
+    }
+    @keyframes rotating {
+        from{
+            transform: rotate(0deg);
+        }
+        to{
+            transform: rotate(360deg);
+        }
+    }
+    .withLoader{
+        height: 38px;
     }
 </style>

@@ -190,7 +190,7 @@
                 );
             },
             exportFile(){
-                axios.post('/api/admin/downloadGroupsAndParts', {
+                axios.post('/api/admin/downloadGroupsAndParts', {'token':this.$props.token
                 }, {
                     responseType: 'blob'
                 }).then((response) => {
@@ -286,8 +286,9 @@
             importFile(){
                 if(this.$refs.file.files[0]!=null){
                     let data=new FormData();
-                    data.append('file',this.$refs.file.files[0])
-                    axios.post('/api/admin/importGroupsAndPosts',data/*,config*/).then((response)=>{
+                    data.append('file',this.$refs.file.files[0]);
+                    data.append('token',this.$props.token);
+                    axios.post('/api/admin/importGroupsAndPosts',data).then((response)=>{
                         swal('Добавление прошло успешно!', '', 'success').then(
                             setInterval(
                                 function(){

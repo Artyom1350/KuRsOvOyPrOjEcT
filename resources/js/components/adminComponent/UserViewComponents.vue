@@ -409,7 +409,7 @@
                 }
             },
             exportFile(){
-                axios.post('/api/admin/downloadUser', {
+                axios.post('/api/admin/downloadUser', {'token':this.$props.token
                 }, {
                     responseType: 'blob'
                 }).then((response) => {

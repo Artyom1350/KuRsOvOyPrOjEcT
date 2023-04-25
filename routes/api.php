@@ -21,14 +21,6 @@ use App\Http\Controllers\Users\User\UserDataController;
 */
 
 
-
-
-//импорт/экспорт
-Route::post('/admin/downloadUser', [ExcelController::class, 'getUsers']);
-Route::post('/admin/downloadGroupsAndParts', [ExcelController::class, 'getGroupsAndParts']);
-Route::post('/admin/importUsers', [ExcelController::class, 'importUsers']);
-Route::post('/admin/importGroupsAndPosts', [ExcelController::class, 'importGroupsAndPosts']);
-
 //Новое апи
 Route::middleware('provApi')->group(function(){
     //user
@@ -58,6 +50,12 @@ Route::middleware('provApi')->group(function(){
     Route::post('/admin/addPost', [AdminCrudController::class, 'addPost']);
     Route::post('/admin/destroyPost', [AdminCrudController::class, 'destroyPost']);
     Route::post('/admin/changePost', [AdminCrudController::class, 'changePost']);
+
+    //импорт/экспорт
+    Route::post('/admin/downloadUser', [ExcelController::class, 'getUsers']);
+    Route::post('/admin/downloadGroupsAndParts', [ExcelController::class, 'getGroupsAndParts']);
+    Route::post('/admin/importUsers', [ExcelController::class, 'importUsers']);
+    Route::post('/admin/importGroupsAndPosts', [ExcelController::class, 'importGroupsAndPosts']);
 
 });
 

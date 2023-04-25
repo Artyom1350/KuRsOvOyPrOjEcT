@@ -115,7 +115,7 @@ class UserCrudController extends Controller
             $docEdit->description = $request->post('descriptionAppl');    
         }
         catch(\Exception $e){
-            return response()->json('error','Ошибка при редактировании!')            
+            return response()->json('error','Ошибка при редактировании!');            
         }
 
         //если есть файл удаляем старый и записываем новый

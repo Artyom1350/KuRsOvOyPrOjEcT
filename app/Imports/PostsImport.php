@@ -11,11 +11,27 @@ class PostsImport implements ToModel, WithStartRow
 {
     public function model(array $row)
     {
-        $department=Department::find($row[1]);
-        return new DepartmentPart([
-           'name'=> $row[0],
-           'department_id'=>$department->id,
-        ]);
+        $bool=true;
+        $department=Department::where('name',trim($row[1]))->first();
+
+        if($department==null) return;
+        $departmentPart=$department->departmentsParts()->get();
+
+        foreach($departmentPart as $item){
+            if($item->name==trim($row[0])){
+                $bool=false;
+                return;
+            } 
+        }
+
+        if($bool){
+            return new DepartmentPart([
+               'name'=> $row[0],
+               'department_id'=>$department->id,
+            ]);
+        }
+
+        return;
     }
     public function startRow(): int
     {

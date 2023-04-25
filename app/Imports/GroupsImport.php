@@ -9,6 +9,10 @@ class GroupsImport implements ToModel, WithStartRow
 {
     public function model(array $row)
     {
+        $departments=Department::where('name',trim($row[0]))->first();
+        foreach($departments as $item){
+            if($item->name==trim($row[0])) return;
+        }
         return new Department([
            'name'=> $row[0],
         ]);

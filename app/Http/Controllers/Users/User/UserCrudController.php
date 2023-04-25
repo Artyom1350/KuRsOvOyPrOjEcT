@@ -40,14 +40,19 @@ class UserCrudController extends Controller
         $fileName = basename($storePath);
         $filePath = $path . '/' . $fileName;
         //создание документа
-        $doc = Document::create([
-            'user_id' => $current_user,
-            'file' => $request->post('fileName'),
-            'title' => $request->post('nameAppl'),
-            'path' => $filePath,
-            'dateAppl' => $request->post('dateAppl'),
-            'description' => $request->post('descriptionAppl'),
-        ]);
+        try{
+            $doc = Document::create([
+                'user_id' => $current_user,
+                'file' => $request->post('fileName'),
+                'title' => $request->post('nameAppl'),
+                'path' => $filePath,
+                'dateAppl' => $request->post('dateAppl'),
+                'description' => $request->post('descriptionAppl'),
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json(['error','Ошибка создания документа']);
+        }
 
         //перебор юзеров, проверка на совпадение полученных id_user и занесение в массив
         if ($request->post('groupSelect') != null) {
@@ -79,7 +84,7 @@ class UserCrudController extends Controller
         }
 
         //ответ
-        return response("Заявка успешно создана");
+        return response()->json(['success',"Заявка успешно создана"]);
     }
 
     /** Редактирование заявки */
@@ -104,10 +109,14 @@ class UserCrudController extends Controller
 
         //работа с документом
         $docEdit = Document::find($request->post('doc_id'));
-
-        $docEdit->title = $request->post('nameAppl');
-        $docEdit->dateAppl = $request->post('dateAppl');
-        $docEdit->description = $request->post('descriptionAppl');
+        try{
+            $docEdit->title = $request->post('nameAppl');
+            $docEdit->dateAppl = $request->post('dateAppl');
+            $docEdit->description = $request->post('descriptionAppl');    
+        }
+        catch(\Exception $e){
+            return response()->json('error','Ошибка при редактировании!')            
+        }
 
         //если есть файл удаляем старый и записываем новый
         if ($request->file('file') != null) {
@@ -158,7 +167,7 @@ class UserCrudController extends Controller
             ]);
         }
         //Ответ
-        return response()->json($request);
+        return response()->json('success','Заявка успешно изменена!');
     }
 
     /** Обновление статуса входящей заявки */

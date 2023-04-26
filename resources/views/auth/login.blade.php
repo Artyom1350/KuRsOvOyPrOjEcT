@@ -28,6 +28,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <img src="image/logo/logo.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
+                                <h4><abbr title="Система Электронного Документаоборота">СЭД</abbr> "Авиатехникум"</h4>
                                 <form method="POST" action="{{ route('login') }}" id="logIn">
                                     @csrf
                                     <div class="form-group row row-form">

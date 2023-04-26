@@ -82,7 +82,7 @@ import swal from 'sweetalert';
                 let headers={
                     responseType:'blob'
                 }
-                console.log(this.$props.applic.doc_id)
+                //console.log(this.$props.applic.doc_id)
                 axios.post('/api/myAppl/Download',{'id':this.$props.applic.doc_id,'token':this.$props.token},headers).then((res)=>{
                     if(res.headers['filename']){                    
                         const blob = new Blob([res.data], { type: res.headers['content-type'] })
@@ -96,7 +96,9 @@ import swal from 'sweetalert';
                         linkUrl.remove()
                     }
                     else{
-                        alert('Файл не найден!');
+                        swal({
+                            title:'Файл не найден!',
+                            icon:'error'});
                     }
                 })
             }

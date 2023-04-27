@@ -20,8 +20,12 @@ class ExcelController extends Controller
     }
     public function importUsers(Request $request){ 
         $import=new UsersImport();
-        $import->import($request->file('file'));
-        
+        try{
+            $import->import($request->file('file'));
+        }
+        catch(\Exception $e){
+            return response()->json(['error','Ошибка в структуре файла!']);
+        }
         return response()->json($import->errors());
     }
     public function importGroupsAndPosts(Request $request){

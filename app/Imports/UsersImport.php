@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Department;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Validators\Failure;
-use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -15,11 +14,12 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
-use Maatwebsite\Excel\Row;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Row;
 
 HeadingRowFormatter::default('none');
-class UsersImport implements onEachRow,/* WithStartRow,*/SkipsOnError,WithHeadingRow ,SkipsOnFailure,WithValidation
+class UsersImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRow ,SkipsOnFailure,WithValidation
 {
     use Importable,SkipsErrors,SkipsFailures;
     private $error=[];

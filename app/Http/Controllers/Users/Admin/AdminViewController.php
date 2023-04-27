@@ -31,5 +31,11 @@ class AdminViewController extends Controller
         }
         return view('admin_panel/group_user', ['groups' => $data, 'token'=>auth()->user()->tokens->first()->token]);
     }
+    public function downloadTemplateUser(){
+        return response()->download(storage_path('\app/templates/Шаблон_пользователей.xlsx'), 'Шаблон_пользователей.xlsx');
+    }
+    public function downloadTemplateDP(){
+        return response()->download(storage_path('\app/templates/Шаблон_подразделений_и_должностей.xlsx'), 'Шаблон_подразделений_и_должностей.xlsx');
+    }
 
 }

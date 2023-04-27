@@ -85,7 +85,7 @@ class UsersExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     /** Название таблицы */
     public function title(): string
     {
-        return 'Users';
+        return 'Пользователи';
     }
     
 }

@@ -68,6 +68,6 @@ class PartsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEven
     }
     public function title(): string
     {
-        return 'DepartmentParts';
+        return 'Должности';
     }
 }

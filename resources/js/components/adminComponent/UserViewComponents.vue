@@ -418,7 +418,7 @@
                     }))
                     const link = document.createElement('a')
                     link.href = url
-                    link.setAttribute('download', 'users')
+                    link.setAttribute('download', 'Пользователи')
                     document.body.appendChild(link)
                     link.click()
                 });

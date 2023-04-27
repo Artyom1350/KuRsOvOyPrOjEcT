@@ -71,6 +71,7 @@
                 axios.post('/api/myAppl/Download',{'id':id,'token':this.$props.token},headers).then((res)=>{
                     if(res.headers['filename']){
                         const blob = new Blob([res.data], { type: res.headers['content-type'] })
+                        console.log(res.headers)
                         const downloadUrl = window.URL.createObjectURL(blob)
                         const linkUrl = document.createElement('a')
                         linkUrl.download = res.headers['filename']

@@ -13,14 +13,15 @@ use Excel;
 class ExcelController extends Controller
 {
     public function getUsers(Request $request){
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'Пользователи.xlsx');
     }
     public function getGroupsAndParts(Request $request){
-        return Excel::download(new GroupsAndPosts,'da.xlsx');
+        return Excel::download(new GroupsAndPosts,'подразделения_и_должности.xlsx');
     }
     public function importUsers(Request $request){ 
         $import=new UsersImport();
         $import->import($request->file('file'));
+        
         return response()->json($import->errors());
     }
     public function importGroupsAndPosts(Request $request){

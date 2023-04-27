@@ -199,7 +199,7 @@
                     }))
                     const link = document.createElement('a')
                     link.href = url
-                    link.setAttribute('download', 'GroupsAndParts')
+                    link.setAttribute('download', 'Подразделения_и_должности')
                     document.body.appendChild(link)
                     link.click()
                 });
@@ -211,8 +211,6 @@
                 this.formGroup.name=this.groupsData[index].name;
                 this.trigerPostFill=true;
                 this.globalIndex=index;
-                // axios на доставку одного подразделения(тип name, department_part_id)
-                // name.split(' ') и по очерёдно присваиваем к formGroup
             },
             getPostGroup(id){
                 axios.post('/api/admin/getPostGroup',{'id':id,'token':this.$props.token}).then((response)=>{
@@ -220,7 +218,6 @@
                 });
             },
             changeGroup(idGroup){
-                // axios на изменение
                 if(this.v$.formGroup.$invalid && this.trigerPostFill){
                     this.trigerChangeNameForm=true;
                 }
@@ -253,12 +250,6 @@
                     let answer2=confirm('Эти действия необратимы. Всё равно удалить?');
                     if(answer2){
                         swal('Хорошо, удаляем.').then(
-                            //setInterval(function(){
-                            //axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.$props.token}).then((response)=>{
-                            //    swal('Запись успешно удалена','','success');
-                            //    this.groupsData.splice(index,1);
-                            //})},1500)
-
                             setTimeout(()=>{
                             axios.post('/api/admin/destroyGroup',{'id':this.groupsData[index].id,'token':this.$props.token}).then((response)=>{
                                 swal('Запись успешно удалена','','success');

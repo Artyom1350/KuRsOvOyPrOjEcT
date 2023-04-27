@@ -44,6 +44,6 @@ class GroupsExport implements FromCollection,WithHeadings,ShouldAutoSize,WithEve
     }
     public function title(): string
     {
-        return 'Departments';
+        return 'Структурные подразделения';
     }
 }

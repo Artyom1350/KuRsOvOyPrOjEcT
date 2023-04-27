@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin_panel/home_admin', [AdminViewController::class, 'index'])->name('home_admin'); //главная админа
         Route::get('/admin_panel/user_admin', [AdminViewController::class, 'userPage'])->name('user_admin'); //юзеры
         Route::get('/admin_panel/group_admin', [AdminViewController::class, 'groupPage'])->name('group_admin'); //группы
+        
+        Route::get('/admin_panel/download_template_user',[AdminViewController::class,'downloadTemplateUser'])->name('download_template_user');
+        Route::get('/admin_panel/download_template_departments_and_parts',[AdminViewController::class,'downloadTemplateDP'])->name('download_template_departments_and_parts');
     });
     //кастомный выход с удалением токена UPD: токен теперь не надо удалять
     Route::post('/userLogout', function () {

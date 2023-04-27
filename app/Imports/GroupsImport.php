@@ -2,23 +2,57 @@
 
 namespace App\Imports;
 use App\Models\Department;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Validators\Failure;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Row;
 
-class GroupsImport implements ToModel, WithStartRow
+HeadingRowFormatter::default('none');
+class GroupsImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRow ,SkipsOnFailure,WithValidation,WithMultipleSheets 
 {
-    public function model(array $row)
+    use Importable,SkipsErrors,SkipsFailures;
+    private $error=[];
+
+    public function onRow(Row $row)
     {
-        $departments=Department::where('name',trim($row[0]))->first();
-        foreach($departments as $item){
-            if($item->name==trim($row[0])) return;
-        }
-        return new Department([
-           'name'=> $row[0],
-        ]);
+        $rowIndex=$row->getIndex();
+        $row=$row->toArray();
+        //Department::create([
+        //   'name'=> $row[0],
+        //]);
     }
-    public function startRow(): int
-    {
-        return 2;
+    public function sheets(): array{
+        return [
+            0 => $this,
+        ];
+    }
+    public function onFailure(Failure ...$failures){
+        $arr=array();
+        foreach($failures as $item){
+            array_push($this->error,[$item->row(),
+            ...$item->errors(),]);
+        }
+    }
+    public function errors(){
+        
+        return $this->error;
+    }
+
+
+    public function rules():array{
+        return [
+            'Название'=>[
+                'required',
+            ],
+        ];
     }
 }

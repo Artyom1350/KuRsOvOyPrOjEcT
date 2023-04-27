@@ -83,9 +83,6 @@ class UsersImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
             'Должность'=>[
                 'required'
             ],
-            'Роль'=>[
-                'required'
-            ]
         ];
     }
 }

@@ -186,9 +186,9 @@ class UserCrudController extends Controller
             }
         }
 
-        $docTitle=Document::find($request->post('doc_id'))->title;
+        $doc=Document::find($request->post('doc_id'));
         if($bool){
-            EmailSender::sendEmail($docTitle, 'cursovoyusertest@gmail.com');
+            EmailSender::sendEmail($doc->title,$doc->user()->first()->email);
         }
 
         return response()->json(['reg'=>$request->post('doc_id')]);

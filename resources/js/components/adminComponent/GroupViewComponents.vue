@@ -283,9 +283,11 @@
                         swal('Добавление прошло успешно!', '', 'success').then(
                             setInterval(
                                 function(){
-                                    window.location.reload();
+                                    //window.location.reload();
                                 }, 2000
-                            )
+                                
+                            ),
+                            console.log(response)
                         );
                     });
                 }

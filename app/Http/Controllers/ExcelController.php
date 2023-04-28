@@ -26,9 +26,9 @@ class ExcelController extends Controller
             $import->import($request->file('file'));
         }
         catch(\Exception $e){
-            return response()->json(['error','Ошибка в структуре файла!']);
+            return response()->json([['error','Ошибка в структуре файла!'],$import->errors()]);
         }
-        return response()->json($import->errors());
+        return response()->json([[],$import->errors()]);
     }
 
     public function importGroupsAndPosts(Request $request){
@@ -38,15 +38,15 @@ class ExcelController extends Controller
             $import->import($request->file('file'));
         }
         catch(\Exception $e){
-            return response()->json(['error','Ошибка в структуре файла! Структурные подразделения и должности не были импортированы!',$import->errors()]);
+            return response()->json([['error','Ошибка в структуре файла! Структурные подразделения и должности не были импортированы!'],$import->errors()]);
         }
         
         try{
             $import_1->import($request->file('file'));
         }
         catch(\Exception $e){
-            return response()->json(['error','Ошибка в структуре файла! Должности не были импортированы!',$import->errors(),$import_1->errors()]);
+            return response()->json([['error','Ошибка в структуре файла! Должности не были импортированы!'],$import->errors(),$import_1->errors()]);
         }
-        return response([$import->errors(),$import_1->errors()]);
+        return response([[],$import->errors(),$import_1->errors()]);
     }
 }

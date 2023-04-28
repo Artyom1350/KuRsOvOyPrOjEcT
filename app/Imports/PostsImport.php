@@ -39,15 +39,16 @@ class PostsImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
         foreach($departmentPart as $item){
             if($item->name==trim($row['Название'])){
                 $bool=false;
+                array_push($this->error,[$rowIndex,'Должность '.$row['Название'].' уже есть!']);
                 return;
             } 
         }
 
         if($bool){
-            //return new DepartmentPart([
-            //   'name'=> $row[0],
-            //   'department_id'=>$department->id,
-            //]);
+            DepartmentPart::create([
+               'name'=> $row['Название'],
+               'department_id'=>$department->id,
+            ]);
         }
 
         return;

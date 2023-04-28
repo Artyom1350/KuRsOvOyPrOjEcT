@@ -400,7 +400,8 @@
                     data.append('token',this.$props.token);
                     axios.post('/api/admin/importUsers',data).then((response)=>{
                         swal('Добавление прошло успешно!','', 'success').then((val)=>{
-                            window.location.reload();
+                            //window.location.reload();
+                            console.log(response);
                         });
                     });
                 }

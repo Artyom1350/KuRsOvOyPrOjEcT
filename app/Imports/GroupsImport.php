@@ -26,9 +26,14 @@ class GroupsImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingR
     {
         $rowIndex=$row->getIndex();
         $row=$row->toArray();
-        //Department::create([
-        //   'name'=> $row[0],
-        //]);
+        $department=Department::where('name',$row['Название'])->first();
+        if($department){
+            array_push($this->error,[$rowIndex,'структурное подразделение '.$row['Название'].' уже есть!']);
+            return;
+        }
+        Department::create([
+           'name'=> $row['Название'],
+        ]);
     }
     public function sheets(): array{
         return [

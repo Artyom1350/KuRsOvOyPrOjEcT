@@ -1,8 +1,6 @@
 <?php
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UsersExport;
 use App\Http\Controllers\Users\Admin\AdminDataController;
 use App\Http\Controllers\Users\Admin\AdminCrudController;
 

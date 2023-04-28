@@ -17,7 +17,6 @@ class EmailSender extends Model
     static function sendEmail($docTitle, $email){
         $mm = new SendMail($docTitle);
         Mail::to($email)->send($mm);
-
         return 'Mail has been send';
 
     }

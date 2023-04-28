@@ -17,7 +17,6 @@ class tokenAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(PersonalAccessToken::where('token',$request->post('token'))->first()->name);
         if((PersonalAccessToken::where('token',$request->post('token'))->first()->name)!="admin") {
             return response()->json(['message' => 'Access is denied'], 401);
         }

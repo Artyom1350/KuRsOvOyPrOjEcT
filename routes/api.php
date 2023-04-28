@@ -32,29 +32,30 @@ Route::middleware('provApi')->group(function(){
     Route::post('/myAppl/Download', [UserDataController::class, 'downloadApplTest']);
 
     //admin
-    //работа с юзерами
-    Route::post('/admin/getOneUser', [AdminDataController::class, 'getOneUser']);
-    Route::post('/admin/getAllDepartments', [AdminDataController::class, 'getAllDepartments']);
-    Route::post('/admin/getDepartmentParts', [AdminDataController::class, 'getDepartmentParts']);
-    Route::post('/admin/addUser', [AdminCrudController::class, 'addUser']);
-    Route::post('/admin/changeUser', [AdminCrudController::class, 'changeUser']);
-    Route::post('/admin/destroyUser', [AdminCrudController::class, 'destroyUser']);
-
-    //работа с группами
-    Route::post('/admin/getPostGroup', [AdminDataController::class, 'getPostGroup']);
-    Route::post('/admin/addGroup', [AdminCrudController::class, 'addGroup']);
-    Route::post('/admin/destroyGroup', [AdminCrudController::class, 'destroyGroup']);
-    Route::post('/admin/changeGroup', [AdminCrudController::class, 'changeGroup']);
-    Route::post('/admin/addPost', [AdminCrudController::class, 'addPost']);
-    Route::post('/admin/destroyPost', [AdminCrudController::class, 'destroyPost']);
-    Route::post('/admin/changePost', [AdminCrudController::class, 'changePost']);
-
-    //импорт/экспорт
-    Route::post('/admin/downloadUser', [ExcelController::class, 'getUsers']);
-    Route::post('/admin/downloadGroupsAndParts', [ExcelController::class, 'getGroupsAndParts']);
-    Route::post('/admin/importUsers', [ExcelController::class, 'importUsers']);
-    Route::post('/admin/importGroupsAndPosts', [ExcelController::class, 'importGroupsAndPosts']);
-
+    Route::middleware('tokenAdmin')->group(function(){
+        //работа с юзерами
+        Route::post('/admin/getOneUser', [AdminDataController::class, 'getOneUser']);
+        Route::post('/admin/getAllDepartments', [AdminDataController::class, 'getAllDepartments']);
+        Route::post('/admin/getDepartmentParts', [AdminDataController::class, 'getDepartmentParts']);
+        Route::post('/admin/addUser', [AdminCrudController::class, 'addUser']);
+        Route::post('/admin/changeUser', [AdminCrudController::class, 'changeUser']);
+        Route::post('/admin/destroyUser', [AdminCrudController::class, 'destroyUser']);
+            
+        //работа с группами
+        Route::post('/admin/getPostGroup', [AdminDataController::class, 'getPostGroup']);
+        Route::post('/admin/addGroup', [AdminCrudController::class, 'addGroup']);
+        Route::post('/admin/destroyGroup', [AdminCrudController::class, 'destroyGroup']);
+        Route::post('/admin/changeGroup', [AdminCrudController::class, 'changeGroup']);
+        Route::post('/admin/addPost', [AdminCrudController::class, 'addPost']);
+        Route::post('/admin/destroyPost', [AdminCrudController::class, 'destroyPost']);
+        Route::post('/admin/changePost', [AdminCrudController::class, 'changePost']);
+            
+        //импорт/экспорт
+        Route::post('/admin/downloadUser', [ExcelController::class, 'getUsers']);
+        Route::post('/admin/downloadGroupsAndParts', [ExcelController::class, 'getGroupsAndParts']);
+        Route::post('/admin/importUsers', [ExcelController::class, 'importUsers']);
+        Route::post('/admin/importGroupsAndPosts', [ExcelController::class, 'importGroupsAndPosts']);
+    });
 });
 
 

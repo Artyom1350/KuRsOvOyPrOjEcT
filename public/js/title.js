@@ -28,6 +28,18 @@ $('.personArea').hover(function(){
 },function(){
     $('.personArea').removeClass('active');
 });
+$('.templateUsers').hover(function(){
+    $('.templateUsers').addClass('active');
+},function(){
+    $('.templateUsers').removeClass('active');
+});
+$('.templateGroup').hover(function(){
+    $('.templateGroup').addClass('active');
+},function(){
+    $('.templateGroup').removeClass('active');
+});
+
+
 $('#watchPassword').change(function(){
     if($('#watchPassword').is(":checked")){
         $('#password').prop("type", "text");

@@ -50,7 +50,7 @@ class UserDataController extends Controller
             return Storage::download($doc->path,$doc->file);
         }
         catch(\Exception $e){
-            return response()->json('da');
+            return response()->json('File not found!');
         }
     }
 

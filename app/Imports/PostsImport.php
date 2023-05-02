@@ -31,7 +31,7 @@ class PostsImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
         $bool=true;
         $department=Department::where('name',trim($row['Отделение']))->first();
         if(!$department){
-            array_push($this->error,[$rowIndex,'Cтруктурное отделение '.$row['Отделение'].' не найдено!']);
+            array_push($this->error,[$rowIndex,'структурное отделение '.$row['Отделение'].' не найдено!']);
             return;
         } 
         $departmentPart=$department->departmentsParts()->get();
@@ -39,7 +39,7 @@ class PostsImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
         foreach($departmentPart as $item){
             if($item->name==trim($row['Название'])){
                 $bool=false;
-                array_push($this->error,[$rowIndex,'Должность '.$row['Название'].' уже есть!']);
+                array_push($this->error,[$rowIndex,'должность '.$row['Название'].' уже есть!']);
                 return;
             } 
         }

@@ -34,12 +34,12 @@ class UsersImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
         }
         $department=Department::where('name',trim($row['Отделение']))->first();
         if(!$department){
-            array_push($this->error,[$row_id,'Отделение не найдено!']);
+            array_push($this->error,[$row_id,'Отделение '.$row['Отделение'].' не найдено!']);
             return;
         }
         $department_part=$department->departmentsParts()->where('name',trim($row['Должность']))->first();    
         if(!$department_part){
-            array_push($this->error,[$row_id,'Должность не найдена!']);
+            array_push($this->error,[$row_id,'Должность '.$row['Должность'].' не найдена!']);
             return;
         }
         $role=0;

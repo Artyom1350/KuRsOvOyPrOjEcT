@@ -589,28 +589,38 @@ export default {
             let tBody = document.createElement("tbody");
             //заголовок
             let tr = document.createElement("tr");
-            let titleTable = ["Номер строки с ошибкой", "Описание ошибки"];
+            let titleTable = ["Строка", "Описание ошибки"];
             for (let i = 0; i < 2; i++) {
                 let td = document.createElement("th");
                 td.innerHTML = titleTable[i];
                 tr.appendChild(td);
             }
+            tr.classList.add('rowHead');
             tHead.appendChild(tr);
 
             //тело
 
             for (let j = 0; j < array.length; j++) {
                 let tr1 = document.createElement("tr");
+                tr1.classList.add('d-flex');
+                tr1.classList.add('w-100');
                 for (let i = 0; i < array[j].length; i++) {
                     let td = document.createElement("td");
                     td.innerHTML = array[j][i];
                     tr1.appendChild(td);
+                    if(i==1){
+                        td.classList.add('text-left');
+                    }
                 }
                 tBody.appendChild(tr1);
             }
+            tBody.classList.add('scrollY');
+            tHead.classList.add('stickyHead');
             main.appendChild(tHead);
             main.appendChild(tBody);
             main.classList.add("table");
+            main.classList.add('d-block');
+            main.classList.add('w-100');    
             main.classList.add("table-striped");
             return main;
         },
@@ -857,11 +867,44 @@ export default {
     }
 }
 .swal-content {
-    overflow: scroll;
-    height: 60%;
+    /* overflow-y: scroll; */
+    height: 70%;
+}
+.scrollY{
+    display: block;
+    height: 300px;
+    overflow-y: scroll;
+}
+.scrollY>tr>td:first-child{
+    display: block;
+    width: 15%;
+}
+.scrollY>tr>td:last-child{
+    display: block;
+    width: 85%;
+}
+
+.stickyHead{
+    display: block;
+    width: 100%;
+}
+.rowHead{
+    width: 100%;
+    display: flex;
+}
+.rowHead :first-child{
+    width: 15%;
+}
+.rowHead :last-child{
+    width: 85%;
+    /* text-align: left; */
 }
 .informationError {
-    width: 90% !important;
-    height: 500px !important;
+    width: 50% !important;
+    height: 550px !important;
+}
+.swal-footer{
+    margin-top: 0;
+    padding-top: 0;
 }
 </style>

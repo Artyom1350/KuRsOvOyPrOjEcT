@@ -197,7 +197,7 @@ class UserCrudController extends Controller
     /** Удаление заявки */
     public function deleteDocument(Request $request){
         Document::find($request->post('id'))->delete();
-        return response('da');
+        return response('success','Удаление прошло успешно!');
     }
 
 

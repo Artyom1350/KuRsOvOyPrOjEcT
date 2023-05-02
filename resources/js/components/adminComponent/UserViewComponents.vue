@@ -551,6 +551,18 @@ export default {
         },
     },
     methods: {
+        showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+        },
+        hideLoader(){
+            let loaderFind=document.getElementById('loader-test');
+
+            loaderFind.style.opacity=0;
+            loaderFind.style.top='-100%';
+        },
         changeDep() {
             this.trigerChangedepartment = false;
             this.trigerChangepost = false;
@@ -640,6 +652,7 @@ export default {
         /** запрос на изменение пользователя */
         changeUser(idUser) {
             if (this.formCheck()) {
+                this.showLoader();
                 let name =
                     this.formUser.surname +
                     " " +
@@ -656,6 +669,7 @@ export default {
                 };
 
                 axios.post("/api/admin/changeUser", form).then((response) => {
+                    this.hideLoader();
                     swal("Изменение прошли успешно", "", "success");
                     this.trigerChange = false;
                     this.usersData[this.index] = response.data;
@@ -693,12 +707,14 @@ export default {
             ).then((answer) => {
                 if (answer) {
                     swal("Хорошо, удаляем.", "", "success").then((val) => {
+                        this.showLoader();
                         axios
                             .post("/api/admin/destroyUser", {
                                 id: this.usersData[idUser].id,
                                 token: this.$props.token,
                             })
                             .then((response) => {
+                                this.hideLoader();
                                 swal("Удаление прошло успешно!", "", "success");
                                 this.usersData.splice(idUser, 1);
                             });
@@ -740,6 +756,7 @@ export default {
         addUser() {
             this.trigerValidPassword = true;
             if (this.formCheckAdd()) {
+                this.showLoader();
                 let name =
                     this.formUser.surname +
                     " " +
@@ -755,6 +772,7 @@ export default {
                 };
 
                 axios.post("/api/admin/addUser", form).then((response) => {
+                    this.hideLoader();
                     swal("Добавление прошло успешно!", "", "success");
                     this.usersData.push(response.data);
                     this.clearForm();
@@ -812,12 +830,15 @@ export default {
             return main;
         },
         importFile() {
+            
             var trigerError = false;
             if (this.$refs.file.files[0] != null) {
+                this.showLoader();
                 let data = new FormData();
                 data.append("file", this.$refs.file.files[0]);
                 data.append("token", this.$props.token);
                 axios.post("/api/admin/importUsers", data).then((response) => {
+                    this.hideLoader();
                     if (
                         response.data[0] != undefined &&
                         response.data[0] != null &&
@@ -843,19 +864,16 @@ export default {
                         });
                     }
                     if (!trigerError) {
-                        this.answerImportSucess();
+                        swal("Добавление прошло успешно!", "", "success").then(
+                            setInterval(function () {
+                                window.location.reload();
+                            }, 2000)
+                        );
                     }
                 });
             } else {
                 swal("Файл не выбран.", "", "warning");
             }
-        },
-        answerImportSucess() {
-            swal("Добавление прошло успешно!", "", "success").then(
-                setInterval(function () {
-                    window.location.reload();
-                }, 2000)
-            );
         },
         exportFile() {
             axios

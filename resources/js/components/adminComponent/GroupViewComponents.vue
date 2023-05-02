@@ -403,12 +403,14 @@ export default {
                 },
             }).then((answer) => {
                 if (answer) {
+                    this.showLoader();
                     axios
                         .post("/api/admin/destroyPost", {
                             id: this.postData[index].id,
                             token: this.$props.token,
                         })
                         .then((response) => {
+                            this.hideLoader();
                             swal("Должность успешно удалена!", "", "success");
                             this.postData.splice(index, 1);
                         });
@@ -431,6 +433,7 @@ export default {
                     },
                 },
             }).then((name) => {
+                this.showLoader();
                 if (name) {
                     axios
                         .post("/api/admin/changePost", {
@@ -439,6 +442,7 @@ export default {
                             token: this.$props.token,
                         })
                         .then((response) => {
+                            this.hideLoader();
                             swal("Должность успешно изменена!", "", "success");
                             this.postData[index].name = name;
                         });
@@ -495,6 +499,7 @@ export default {
                 this.trigerChangeNameForm = true;
             } else {
                 this.trigerChange = false;
+                this.showLoader();
                 axios
                     .post("/api/admin/changeGroup", {
                         id: this.formGroup.id,
@@ -502,6 +507,7 @@ export default {
                         name: this.formGroup.name,
                     })
                     .then((response) => {
+                        this.hideLoader();
                         swal("Группа успешно изменена", "", "success").then(
                             (result) => {
                                 this.groupsData[this.globalIndex] =
@@ -543,6 +549,7 @@ export default {
             }).then((isConfirm) => {
                 if (isConfirm) {
                     swal("Хорошо, удаляем.").then(
+                        this.showLoader(),
                         setTimeout(() => {
                             axios
                                 .post("/api/admin/destroyGroup", {
@@ -550,6 +557,7 @@ export default {
                                     token: this.$props.token,
                                 })
                                 .then((response) => {
+                                    this.hideLoader();
                                     swal(
                                         "Запись успешно удалена",
                                         "",
@@ -571,12 +579,14 @@ export default {
                 // alert('да, но как бы нет');
             } else {
                 // alert('нет, но как бы да');
+                this.showLoader();
                 axios
                     .post("/api/admin/addGroup", {
                         name: this.formGroup.name,
                         token: this.$props.token,
                     })
                     .then((response) => {
+                        this.hideLoader();
                         swal("Группа успешно добавлена", "", "success");
                         this.groupsData.push(response.data);
                         this.clearForm();
@@ -624,15 +634,29 @@ export default {
             main.classList.add("table-striped");
             return main;
         },
+        showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+        },
+        hideLoader(){
+            let loaderFind=document.getElementById('loader-test');
+
+            loaderFind.style.opacity=0;
+            loaderFind.style.top='-100%';
+        },
         importFile() {
             var trigerError = false;
             if (this.$refs.file.files[0] != null) {
+                this.showLoader();
                 let data = new FormData();
                 data.append("file", this.$refs.file.files[0]);
                 data.append("token", this.$props.token);
                 axios
                     .post("/api/admin/importGroupsAndPosts", data)
                     .then((response) => {
+                        this.hideLoader();
                         if (
                             response.data[0] != undefined &&
                             response.data[0] != null &&
@@ -690,19 +714,18 @@ export default {
                             });
                         }
                         if(!trigerError){
-                            this.answerImportSucess();
-                        }
-                    });
-            } else {
-                swal("Файл не выбран.", "", "warning");
-            }
-        },
-        answerImportSucess() {
-            swal("Добавление прошло успешно!", "", "success").then(
+                            this.hideLoader();
+                            swal("Добавление прошло успешно!", "", "success").then(
                 setInterval(function () {
                     window.location.reload();
                 }, 2000)
             );
+                        }
+                    });
+            } else {
+                this.hideLoader();
+                swal("Файл не выбран.", "", "warning");
+            }
         },
         changeMessage() {
             if (this.$refs.file != null) {
@@ -734,6 +757,7 @@ export default {
                     content: "input",
                 }).then((postName) => {
                     if (postName) {
+                        this.showLoader();
                         axios
                             .post("/api/admin/addPost", {
                                 id: this.formGroup.id,
@@ -741,6 +765,7 @@ export default {
                                 name: postName,
                             })
                             .then((response) => {
+                                this.hideLoader();
                                 swal(
                                     "Должность успешно добавлена!",
                                     "",

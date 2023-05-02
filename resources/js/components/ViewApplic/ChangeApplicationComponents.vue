@@ -80,13 +80,12 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <div class="d-flex withLoader">
+        <div class="d-flex">
             <button type="submit" class="btn btn-danger mr-2" @click.prevent="deleteDoc()">Удалить заявку?</button>
             <button type="submit" class="btn btn-primary mr-2" @click.prevent="getAnswerApplic()">Сохранить</button>
-            <span class="loader" v-if="visibleLoad"></span>
         </div>
     </form>
-    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" @udpadeParrentArray="updateArrays"></ModalWindow>
+    <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" :token="$props.token" @udpadeParrentArray="updateArrays"></ModalWindow>
 
 </div>
 
@@ -198,6 +197,18 @@
             },
         },
         methods:{
+            showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+            },
+            hideLoader(){
+                let loaderFind=document.getElementById('loader-test');
+
+                loaderFind.style.opacity=0;
+                loaderFind.style.top='-100%';
+            },
             changeMessage(){
 
                 if(this.$refs.file!=null){
@@ -231,6 +242,7 @@
                 }
                 axios.post('/api/myAppl/Download',{'id':this.$props.doc[0].id,'token':this.$props.token},headers).then((res)=>{
                     if(res.headers['filename']){
+                        this.showLoader();
                         const blob = new Blob([res.data], { type: res.headers['content-type'] })
                         const downloadUrl = window.URL.createObjectURL(blob)
                         const linkUrl = document.createElement('a')
@@ -240,9 +252,13 @@
                         linkUrl.click()
                         document.body.removeChild(linkUrl)
                         linkUrl.remove()
+                        this.hideLoader();
                     }
                     else{
-                        alert('Файл не найден!');
+                        swal({
+                            title:'Файл не найден!',
+                            icon:'warning'
+                        });
                     }
                 })
             },
@@ -278,17 +294,22 @@
                 })
                 .then(willDelete => {
                     if(willDelete){
+                        this.showLoader();
                         axios.post('/api/myAppl/deleteDoc',{'id':this.$props.doc[0].id, 'token':this.$props.token})
                         .then(response=>
-                            this.getAnswerRemove()
+                            this.hideLoader(),
+                            swal('Заявка удалена!','','success')
+                            .then((value)=>{
+                                window.location.href='/myAppl'
+                            })
                         );
                     }
                 });
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl &&
-                !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid || this.v$.file.$invalid){
-                    this.visibleLoad=true;
+                !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid && this.v$.file.$invalid && !this.incorrectFile){
+                    this.showLoader();
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
                         peopleMas.push(item['id']);
@@ -313,8 +334,10 @@
 
                     axios.post('/api/myAppl/changeApplSend',form,config)
                     .then(response=>
-                        this.visibleLoad=false,
-                        this.getAnswerChange()
+                        this.hideLoader(),
+                        swal('Заявка успешно изменена!','', 'success').then((val)=>{
+                            window.location.href='/myAppl'
+                        })
                     );
                 }else{
                     swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});
@@ -324,17 +347,6 @@
                     this.trigersField.file=true;
                 }
             },
-            getAnswerChange(){
-                swal('Заявка успешно изменена!','', 'success').then((val)=>{
-                    window.location.href='/myAppl'
-                });
-            },
-            getAnswerRemove(){
-                swal('Заявка удалена!','','success')
-                .then((value)=>{
-                    window.location.href='/myAppl'
-                });
-            }
         },
         validations (){
             return{
@@ -362,7 +374,6 @@
     .errorMessageGroup{
         border: 2px solid red;
         border-radius: 15px;
-
     }
     .errorMessage{
         border: 2px solid red;

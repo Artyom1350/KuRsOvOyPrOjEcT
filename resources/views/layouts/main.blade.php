@@ -18,6 +18,7 @@
 </head>
 <body>
     @auth
+    <div class="loader-test" id='loader-test'><img src="{{asset('image/icons/loader.png')}}" alt="Загрузчик авиатехникум"></div>
     <header class="paddingBlock">
         <div class="logoWrap">
             <a href="{{ route('home') }}">

@@ -185,6 +185,18 @@
             },
         },
         methods:{
+            showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+            },
+            hideLoader(){
+                let loaderFind=document.getElementById('loader-test');
+
+                loaderFind.style.opacity=0;
+                loaderFind.style.top='-100%';
+            },
             changeMessage(){
 
                 if(this.$refs.file!=null){
@@ -256,8 +268,8 @@
 
             },
             getAnswerApplic(){
-                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid){
-                    this.visibleLoad=true;
+                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid && !this.incorrectFile){
+                    this.showLoader();
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {
                         peopleMas.push(item['id']);
@@ -281,8 +293,11 @@
                     
                     axios.post('/api/myAppl/addApplication',form,config)
                     .then(response=>
-                        this.visibleLoad=false,
-                        this.getAnswer()
+                        this.hideLoader(),
+                        swal('Заявка успешно создана!','', "success")
+                        .then((val)=>{
+                            window.location.href='/myAppl'
+                        })
                     );
                 }else{
                     swal('Ошибка выполнения запроса.',
@@ -295,12 +310,6 @@
                     this.trigersField.file=true
                 }
             },
-            getAnswer(){
-                swal('Заявка успешно создана!','', "success")
-                .then((val)=>{
-                    window.location.href='/myAppl'
-                });
-            }
         },
         validations (){
             return{

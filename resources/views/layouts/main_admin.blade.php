@@ -21,7 +21,7 @@
 </head>
 <body>
     @auth
-    <div class="loader-test" id='loader-test'><img src="{{asset('image/icons/loader.png')}}" alt=""></div>
+    <div class="loader-test" id='loader-test'><img src="{{asset('image/icons/loader.png')}}" alt="Загрузчик авиатехникум"></div>
     <header class="paddingBlock">
         <div class="logoWrap">
             <a href="{{ route('home_admin') }}">
@@ -77,43 +77,10 @@
             </div>  
         </div>  
         @yield('content')
-        <button onclick="da()">da</button>
-        <script>
-            function da(){
-                let da1=document.getElementById('loader-test');
-                console.log(da1);
-                
-                da1.style.opacity=100;
-                da1.style.top=0;
-
-                setTimeout(() => {
-                    da1.style.opacity=0;
-                    da1.style.top='-100%';
-                }, 2000);
-            }
-            
-        </script>
     </main>
     @endauth
     <footer class="text-center d-flex align-items-center paddingBlock">
         &copy; СДО КГАПОУ "Авиатехникум"
     </footer>
-    <style>
-        .loader-test{
-            top:-100%;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            opacity: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(84, 84, 84, .2);
-            transition: top 1s, opacity 1s ease-out;
-        }
-        .loader-test>img{
-            animation: rotating 2s linear infinite;
-        }
-    </style>
 </body>
 </html>

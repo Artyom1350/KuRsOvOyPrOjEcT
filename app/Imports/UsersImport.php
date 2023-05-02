@@ -29,7 +29,7 @@ class UsersImport implements OnEachRow,SkipsEmptyRows,SkipsOnError,WithHeadingRo
         $row=$row->toArray();
 
         if(User::where('email',$row['Email'])->first()){
-            array_push($this->error,[$row_id,'Пользователь с таким Email уже есть!']);
+            array_push($this->error,[$row_id,'Пользователь с email '.$row['Email'].' уже есть!']);
             return;
         }
         $department=Department::where('name',trim($row['Отделение']))->first();

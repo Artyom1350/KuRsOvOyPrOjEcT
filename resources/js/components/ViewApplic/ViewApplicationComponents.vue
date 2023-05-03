@@ -94,6 +94,7 @@ import swal from 'sweetalert';
                 }
                 //console.log(this.$props.applic.doc_id)
                 axios.post('/api/myAppl/Download',{'id':this.$props.applic.doc_id,'token':this.$props.token},headers).then((res)=>{
+                    console.log(res.headers['filename']);
                     if(res.headers['filename']){                    
                         const blob = new Blob([res.data], { type: res.headers['content-type'] })
                         const downloadUrl = window.URL.createObjectURL(blob)

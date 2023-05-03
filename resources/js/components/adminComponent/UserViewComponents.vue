@@ -569,6 +569,7 @@ export default {
         },
         /** Получение пользователя на редактирование */
         changeUserinForm(idUser, index) {
+            this.showLoader();
             swal(
                 "Если вы заполните пароль, то он измениться в БД!",
                 "",
@@ -619,6 +620,7 @@ export default {
                 })
                 .then((response) => {
                     this.departmentPartsData = response.data.departmentParts;
+                    this.hideLoader();
                 });
         },
         clearForm() {

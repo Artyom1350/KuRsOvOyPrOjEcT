@@ -14,8 +14,8 @@ class EmailSender extends Model
 {
     use HasFactory;
 
-    static function sendEmail($docTitle, $email){
-        $mm = new SendMail($docTitle);
+    static function sendEmail($docTitle, $email,$docId){
+        $mm = new SendMail($docTitle,$docId);
         Mail::to($email)->send($mm);
         return 'Mail has been send';
 

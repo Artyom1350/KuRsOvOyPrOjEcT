@@ -16,9 +16,10 @@ class SendMail extends Mailable
      *
      * @return void
      */
-    public function __construct($mess)
+    public function __construct($mess,$id)
     {
         $this->mess = $mess;
+        $this->id=$id;
     }
 
     /**
@@ -28,6 +29,6 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.email',['title'=>$this->mess]);
+        return $this->view('email.email',['title'=>$this->mess,'id'=>$this->id])->subject("Уведомление");
     }
 }

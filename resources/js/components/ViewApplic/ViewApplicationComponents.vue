@@ -60,25 +60,35 @@ import swal from 'sweetalert';
         },
         watch:{
             statusApplSelect:function(){
+                this.showLoader();
                 var val=this.statusApplSelect;
                 let form={
                     doc_id: this.$props.applic.doc_id,
                     status: val,
                     token: this.$props.token
                 }
-
-
-                //var form=new FormData();
-                //form.append('doc_id',this.$props.applic.doc_id);
-                //form.append('status',val);
-                //form.append('token')
-
                 axios.post('/api/incAppl/updateStatusDocument',form)
-                .then(response=>swal('Статус изменен!','','success'));
+                .then((response)=>{
+                    this.hideLoader(),
+                    swal('Статус изменен!','','success');
+                });
             }
         },
         methods:{
+            showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+            },
+            hideLoader(){
+                let loaderFind=document.getElementById('loader-test');
+
+                loaderFind.style.opacity=0;
+                loaderFind.style.top='-100%';
+            },
             download(){
+                this.showLoader();
                 let headers={
                     responseType:'blob'
                 }
@@ -94,6 +104,7 @@ import swal from 'sweetalert';
                         linkUrl.click()
                         document.body.removeChild(linkUrl)
                         linkUrl.remove()
+                        this.hideLoader();
                     }
                     else{
                         swal({

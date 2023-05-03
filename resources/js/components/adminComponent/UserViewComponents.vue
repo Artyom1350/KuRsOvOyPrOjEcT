@@ -706,7 +706,6 @@ export default {
                 }
             ).then((answer) => {
                 if (answer) {
-                    swal("Хорошо, удаляем.", "", "success").then((val) => {
                         this.showLoader();
                         axios
                             .post("/api/admin/destroyUser", {
@@ -718,7 +717,6 @@ export default {
                                 swal("Удаление прошло успешно!", "", "success");
                                 this.usersData.splice(idUser, 1);
                             });
-                    });
                 }
             });
         },

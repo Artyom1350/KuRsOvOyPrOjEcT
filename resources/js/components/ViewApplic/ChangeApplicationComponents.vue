@@ -232,6 +232,23 @@
                 }
 
             },
+            check_response(data){
+                if(data[0]!='error'){
+                    return swal('Заявка успешно изменена!','', "success")
+                        .then((val)=>{
+                            window.location.href='/myAppl'
+                        })
+                    
+                }
+                else{
+                    return swal(data[1],'', "warning")
+                        .then((val)=>{
+                                // window.location.href='/myAppl'
+                        })
+                    
+                }
+            
+            },
             delFile(){
                 $('#field__file-2')[0].value = '';
                 this.changeMessage();
@@ -282,11 +299,11 @@
                     icon: "info",
                     dangerMode: true,
                     buttons: {
-                        success:{
+                        erro:{
                             text:'Да',
                             value:true
                         },
-                        erro:{
+                        success:{
                             text:'Нет',
                             value:false,
                         }
@@ -296,12 +313,13 @@
                     if(willDelete){
                         this.showLoader();
                         axios.post('/api/myAppl/deleteDoc',{'id':this.$props.doc[0].id, 'token':this.$props.token})
-                        .then(response=>
+                        .then((response)=>{
                             this.hideLoader(),
                             swal('Заявка удалена!','','success')
                             .then((value)=>{
                                 window.location.href='/myAppl'
                             })
+                        }
                         );
                     }
                 });
@@ -328,17 +346,13 @@
                     form.append('groupSelect',groupMas);
                     form.append('file',this.file);
                     form.append('fileName',this.file.name);
-                    form.append('dateAppl',this.dateAppl);
                     form.append('doc_id',this.$props.doc[0].id);
                     form.append('token',this.$props.token);
-
                     axios.post('/api/myAppl/changeApplSend',form,config)
-                    .then(response=>
+                    .then((response)=>{
                         this.hideLoader(),
-                        swal('Заявка успешно изменена!','', 'success').then((val)=>{
-                            window.location.href='/myAppl'
-                        })
-                    );
+                        this.check_response(response.data)
+                });
                 }else{
                     swal('Ошибка выполнения запроса.','Проверьте заполненность всех полей, выбора получателей и выбор файла', "error",{button:'Хорошо'});
                     this.trigersField.name=true;

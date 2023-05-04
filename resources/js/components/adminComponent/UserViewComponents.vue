@@ -569,6 +569,7 @@ export default {
         },
         /** Получение пользователя на редактирование */
         changeUserinForm(idUser, index) {
+            this.showLoader();
             swal(
                 "Если вы заполните пароль, то он измениться в БД!",
                 "",
@@ -619,6 +620,7 @@ export default {
                 })
                 .then((response) => {
                     this.departmentPartsData = response.data.departmentParts;
+                    this.hideLoader();
                 });
         },
         clearForm() {
@@ -706,7 +708,6 @@ export default {
                 }
             ).then((answer) => {
                 if (answer) {
-                    swal("Хорошо, удаляем.", "", "success").then((val) => {
                         this.showLoader();
                         axios
                             .post("/api/admin/destroyUser", {
@@ -718,7 +719,6 @@ export default {
                                 swal("Удаление прошло успешно!", "", "success");
                                 this.usersData.splice(idUser, 1);
                             });
-                    });
                 }
             });
         },

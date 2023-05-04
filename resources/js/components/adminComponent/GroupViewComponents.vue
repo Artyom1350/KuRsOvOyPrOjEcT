@@ -548,7 +548,6 @@ export default {
                 },
             }).then((isConfirm) => {
                 if (isConfirm) {
-                    swal("Хорошо, удаляем.").then(
                         this.showLoader(),
                         setTimeout(() => {
                             axios
@@ -564,9 +563,9 @@ export default {
                                         "success"
                                     );
                                     this.groupsData.splice(index, 1);
+                                    this.clearForm();
                                 });
-                        }, 1500)
-                    );
+                        }, 1500);
                 }
             });
         },

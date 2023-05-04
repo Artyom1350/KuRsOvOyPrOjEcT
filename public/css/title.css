@@ -238,6 +238,7 @@ box-shadow: 0 0 0 0.2rem rgba(231, 82, 78, 0.5);
     justify-content: center;
     background: rgba(84, 84, 84, .25);
     transition: top 1s, opacity 1s ease-out;
+    z-index: 2;
 }
 .loader-test>img{
     animation: rotating 2s linear infinite;

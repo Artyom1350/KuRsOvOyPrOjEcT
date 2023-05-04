@@ -292,12 +292,14 @@
                     form.append('token',this.$props.token);
                     
                     axios.post('/api/myAppl/addApplication',form,config)
-                    .then(response=>
+                    .then((response)=>{
                         this.hideLoader(),
                         swal('Заявка успешно создана!','', "success")
-                        .then((val)=>{
-                            window.location.href='/myAppl'
-                        })
+                            .then((val)=>{
+                                window.location.href='/myAppl'
+                            })
+                        
+                    }
                     );
                 }else{
                     swal('Ошибка выполнения запроса.',

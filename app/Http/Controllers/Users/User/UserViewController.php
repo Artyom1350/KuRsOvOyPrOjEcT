@@ -16,12 +16,21 @@ class UserViewController extends Controller
         //ВАЖНО!!!!!!!!!!!!!!!!
         //получение событий из БД
         //для примера можно добавить всякие праздники и т.д.
-        $events = array('31.1.2023' => 'Последний день января...');
-        $da = auth()->user()->access_users()->get();
-        foreach ($da as $accessDoc) {
-            $doc = $accessDoc->document()->first();
-            $arr = array(date("d.m.Y", strtotime($doc['dateAppl'])) => '<a href="/incAppl/'.$doc->id.'" class="link-primary" style="color: #3490dc!important">'.$doc['title'].'</a>');
-            $events += $arr;
+        $events = array();
+        $documents_access = auth()->user()->access_users()->get();
+        $docArr=array();
+        foreach($documents_access as $item){
+            array_push($docArr,$item->document()->first());
+        }
+        $linkArr=array();
+        for($i=0;$i<count($docArr);$i++){
+            $multiLink='<a href="/incAppl/'.$docArr[$i]->id.'" class="link-primary" style="color: #3490dc!important">'.$docArr[$i]->title.'</a><br>';
+            for($j=$i+1;$j<count($docArr);$j++){
+                if($docArr[$i]->dateAppl==$docArr[$j]->dateAppl){
+                    $multiLink.='<a href="/incAppl/'.$docArr[$j]->id.'" class="link-primary" style="color: #3490dc!important">'.$docArr[$j]->title.'</a><br>';
+                }
+            }
+            $events+=array(date("d.m.Y", strtotime($docArr[$i]->dateAppl)) =>$multiLink);
         }
         $name = auth()->user()->name;
         return view('home', ['calendar' => $calendar, 'events' => $events, 'name' => $name]);

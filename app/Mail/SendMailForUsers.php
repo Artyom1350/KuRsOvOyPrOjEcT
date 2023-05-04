@@ -29,6 +29,6 @@ class SendMailForUsers extends Mailable
      */
     public function build()
     {
-        return $this->view('email.emailSenders',['title'=>$this->mess, 'id'=>$this->id]);
+        return $this->view('email.emailSenders',['title'=>$this->mess, 'id'=>$this->id])->subject("Уведомление");
     }
 }

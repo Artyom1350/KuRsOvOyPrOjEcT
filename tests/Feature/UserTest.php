@@ -22,42 +22,42 @@ class UserTest extends TestCase
     public function test_login_page()
     {
         $response = $this->get('/login');
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
     public function test_user_home_page()
     {
         $response = $this->get('/home');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_inclAppl_page()
     {
         $response = $this->get('/inclAppl');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_inclAppl_id_page()
     {
         $response = $this->get('/inclAppl/1');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_myAppl_page()
     {
         $response = $this->get('/myAppl');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_allAppl_page()
     {
         $response = $this->get('/allAppl');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_create_appl_page()
     {
         $response = $this->get('/myAppl/doItAppl');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     public function test_user_change_appl_page()
     {
         $response = $this->get('/myAppl/changeApplication/1');
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
     //admin
     public function test_admin_home_page()

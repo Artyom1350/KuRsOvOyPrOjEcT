@@ -62,7 +62,7 @@ class UserDataController extends Controller
             $headers = [
                 'Content-Description' => 'File Transfer',
                 'Content-Type' => 'application/pdf',
-                'filename'=>Str::slug($doc->file),
+                'filename'=>substr(Str::slug($doc->file),0,-3),
             ];
 
             return response()->download(storage_path('\app/'.$doc->path),$doc->file, $headers);

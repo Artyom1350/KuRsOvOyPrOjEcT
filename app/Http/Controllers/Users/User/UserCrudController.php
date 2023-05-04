@@ -157,7 +157,9 @@ class UserCrudController extends Controller
             }
             $users = array_unique(array_merge($users, $arrProv1));
         }
-
+        if(count($users)==0){
+            return response()->json(['error','В выбранных группах отсутствуют пользователи!']);
+        }
         //записываем новый набор юзеров в AccessUser
         foreach ($users as $user) {
             AccessUser::create([
@@ -167,7 +169,7 @@ class UserCrudController extends Controller
             ]);
         }
         //Ответ
-        return response()->json('success','Заявка успешно изменена!');
+        return response()->json(['success','Заявка успешно изменена!']);
     }
 
     /** Обновление статуса входящей заявки */
@@ -188,7 +190,7 @@ class UserCrudController extends Controller
 
         $doc=Document::find($request->post('doc_id'));
         if($bool){
-            EmailSender::sendEmail($doc->title,$doc->user()->first()->email);
+            EmailSender::sendEmail($doc->title,$doc->user()->first()->email,$request->post('doc_id'));
         }
 
         return response()->json(['reg'=>$request->post('doc_id')]);
@@ -197,7 +199,7 @@ class UserCrudController extends Controller
     /** Удаление заявки */
     public function deleteDocument(Request $request){
         Document::find($request->post('id'))->delete();
-        return response('success','Удаление прошло успешно!');
+        return response(['success','Удаление прошло успешно!']);
     }
 
 

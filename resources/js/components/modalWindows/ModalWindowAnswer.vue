@@ -57,9 +57,23 @@
                 closeModal(){
                     this.$emit('close');
                 },
+                showLoader(){
+                let loaderFind=document.getElementById('loader-test');
+                
+                loaderFind.style.opacity=100;
+                loaderFind.style.top=0;
+                },
+                hideLoader(){
+                    let loaderFind=document.getElementById('loader-test');
+
+                    loaderFind.style.opacity=0;
+                    loaderFind.style.top='-100%';
+                },
                 getUsers(){
+                    this.showLoader();
                     axios.post('/api/myAppl/getAnswersUsers',{'id_doc':this.$props.idDocuments,'token':this.$props.token}).then((response)=>{
                         this.users=response.data.users;
+                        this.hideLoader();
                     });
                 },
                 getColor(id){

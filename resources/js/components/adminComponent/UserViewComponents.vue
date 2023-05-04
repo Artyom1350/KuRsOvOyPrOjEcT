@@ -454,7 +454,7 @@
                         v-if="trigerChange"
                         @click.prevent="changeUser(idUserChange)"
                         type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-primary btn-primary-users"
                     >
                         Изменить
                     </button>

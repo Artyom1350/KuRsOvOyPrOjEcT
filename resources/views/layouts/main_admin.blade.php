@@ -18,6 +18,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/title.css') }}" rel="stylesheet">
 
+    <!-- Icon -->
+    <link rel="icon" href="{{ url('favicon.ico') }}">
+    
 </head>
 <body>
     @auth

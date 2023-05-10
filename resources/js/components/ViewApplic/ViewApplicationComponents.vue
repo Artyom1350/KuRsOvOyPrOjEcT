@@ -21,9 +21,10 @@
             <!-- <a :href="'/myAppl/Download/'+this.$props.applic.doc_id" class="mr-3"><input type="button" class="btn btn-primary btn-download" value="Скачать файл"/></a> -->
             <input type="button" class="mr-3 btn btn-primary btn-download" value="Скачать файл" @click="download()" />
         </div>
+        
         <div class="mb-3">
             <label class="mr-1 mt-auto mb-auto" for="statusApplSelect">Статус: </label>
-            <select  id="statusApplSelect" class="form-select" v-model="statusApplSelect">
+            <select disabled="visibleStatus" id="statusApplSelect" class="form-select" v-model="statusApplSelect">
                 <option v-for="(stat, index) in statusAppl" :value="index">{{stat}}</option>
             </select>
         </div>
@@ -43,6 +44,8 @@ import swal from 'sweetalert';
         ],
         data(){
             return{
+                testDate:new Date(),
+                visibleStatus:false,
                 nameAppl:this.$props.applic.title,
                 descriptionAppl:this.$props.applic.description,
                 dateAppl:this.$props.applic.dateAppl,
@@ -60,18 +63,23 @@ import swal from 'sweetalert';
         },
         watch:{
             statusApplSelect:function(){
-                this.showLoader();
-                var val=this.statusApplSelect;
-                let form={
-                    doc_id: this.$props.applic.doc_id,
-                    status: val,
-                    token: this.$props.token
+                if(!this.visibleStatus){
+                    this.showLoader();
+                    var val=this.statusApplSelect;
+                    let form={
+                        doc_id: this.$props.applic.doc_id,
+                        status: val,
+                        token: this.$props.token
+                    }
+                    axios.post('/api/incAppl/updateStatusDocument',form)
+                    .then((response)=>{
+                        this.hideLoader(),
+                        swal('Статус изменен!','','success');
+                    });
                 }
-                axios.post('/api/incAppl/updateStatusDocument',form)
-                .then((response)=>{
-                    this.hideLoader(),
-                    swal('Статус изменен!','','success');
-                });
+                else{
+                    swal('Нельзя менять статус просроченных заявок','','warning');
+                }
             }
         },
         methods:{
@@ -113,6 +121,11 @@ import swal from 'sweetalert';
                             icon:'error'});
                     }
                 })
+            }
+        },
+        mounted(){
+            if((this.testDate-new Date(this.dateAppl.split('-')[0],this.dateAppl.split('-')[1],this.dateAppl.split('-')[2]))<0){
+                this.visibleStatus=true;
             }
         }
     }

@@ -70,10 +70,7 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
-        <div class="d-flex withLoader">
-            <button type="submit" class="btn btn-primary mr-3" @click.prevent="getAnswerApplic()">Добавить</button>
-            <span class="loader" v-if="visibleLoad"></span>
-        </div>
+        <button type="submit" class="btn btn-primary mr-3" @click.prevent="getAnswerApplic()">Добавить</button>
     </form>
     <ModalWindow v-if="isModalOpen" @close="isModalOpen=false" :groupSelectParrent="groupSelect" :peopleSelectParrent="peopleSelect" :token="$props.token" @udpadeParrentArray="updateArrays"></ModalWindow>
 </div>
@@ -451,6 +448,9 @@
         }
         .field__file-button-remove{
             width: 15%;
+        }
+        .errorMessage{
+            width: 85% !important;
         }
     }
     .loader{

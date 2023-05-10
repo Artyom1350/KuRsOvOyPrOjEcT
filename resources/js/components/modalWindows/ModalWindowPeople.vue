@@ -148,7 +148,8 @@
     }
     @media screen and (max-width:720px) {
         .people {
-            height: 20%;
+            max-height: 20%;
+            height: auto;
         }
         .grupPeople {
             height: 35%;

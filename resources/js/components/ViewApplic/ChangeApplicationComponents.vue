@@ -514,6 +514,9 @@
         .field__file-button-remove{
             width: 15%;
         }
+        .errorMessage{
+            width: 85% !important;
+        }
     }
 
 </style>

@@ -141,6 +141,7 @@
         left:0;
         right: 0;
         background: #fff;
+        min-height: 725px;
     }
 
     .displayNoneImportant{
@@ -152,7 +153,8 @@
             height: auto;
         }
         .grupPeople {
-            height: 35%;
+            max-height: 35%;
+            height: auto;
         }
     }
 </style>

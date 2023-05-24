@@ -202,7 +202,8 @@
                             class="form-control"
                             :class="
                                 trigerChangesurname &
-                                v$.formUser.surname.$invalid
+                                (v$.formUser.surname.$invalid |     
+                                checkNumber(formUser.surname))
                                     ? 'is-invalid'
                                     : ''
                             "
@@ -224,6 +225,14 @@
                             "
                             >Максимальное количество символов 82</span
                         >
+                        <span
+                            class="invalid-feedback"
+                            v-if="
+                                trigerChangesurname &
+                                checkNumber(formUser.surname)
+                            "
+                            >В фамилии не должно быть чисел и спец символов</span
+                        >
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Имя</label>
@@ -232,7 +241,7 @@
                             type="text"
                             class="form-control"
                             :class="
-                                trigerChangename & v$.formUser.name.$invalid
+                                trigerChangename & (v$.formUser.name.$invalid | checkNumber(formUser.name))
                                     ? 'is-invalid'
                                     : ''
                             "
@@ -254,6 +263,14 @@
                             "
                             >Максимальное количество символов 82</span
                         >
+                        <span
+                            class="invalid-feedback"
+                            v-if="
+                                trigerChangesurname &
+                                checkNumber(formUser.name)
+                            "
+                            >В имени не должно быть чисел и спец символов</span
+                        >
                     </div>
                     <div class="mb-3">
                         <label for="patronymic" class="form-label"
@@ -265,7 +282,9 @@
                             class="form-control"
                             :class="
                                 trigerChangepatronymic &
-                                v$.formUser.patronymic.$invalid
+                                (v$.formUser.patronymic.$invalid |
+                                checkNumber(formUser.patronymic)
+                                )
                                     ? 'is-invalid'
                                     : ''
                             "
@@ -286,6 +305,14 @@
                                 v$.formUser.patronymic.maxLength.$invalid
                             "
                             >Максимальное количество символов 82</span
+                        >
+                        <span
+                            class="invalid-feedback"
+                            v-if="
+                                trigerChangesurname &
+                                checkNumber(formUser.patronymic)
+                            "
+                            >В Отчестве не должно быть чисел и спец символов</span
                         >
                     </div>
                     <div class="mb-3">
@@ -510,9 +537,11 @@ export default {
             trigerChangeemail: false,
             trigerChangename: false,
             trigerChangesurname: false,
-            trigerChangesurname: false,
             trigerChangepatronymic: false,
             trigerValidPassword: false,
+            checkNumberSurname:false,
+            checkNumberName:false,
+            checkNumberPatronymic:false,
             index: "",
             windowWidth: window.innerWidth,
         };
@@ -521,6 +550,15 @@ export default {
         formUser: {
             deep: true,
             handler(data) {
+                if (data.patronymic) {
+                    this.checkNumberPatronymic=this.checkNumber(data.patronymic);
+                }
+                if (data.surname) {
+                    this.checkNumberSurname=this.checkNumber(data.surname);
+                }
+                if (data.name) {
+                    this.checkNumberName=this.checkNumber(data.name);
+                }
                 if (data.patronymic && !this.trigerChangepatronymic) {
                     this.trigerChangepatronymic = true;
                 }
@@ -551,6 +589,10 @@ export default {
         },
     },
     methods: {
+        checkNumber(stroke){
+            let re=/[0-9]|[!_+=*?%&]/g;
+            return re.test(stroke);
+        },
         showLoader(){
                 let loaderFind=document.getElementById('loader-test');
                 
@@ -647,7 +689,6 @@ export default {
             this.trigerChangeemail = false;
             this.trigerChangename = false;
             this.trigerChangesurname = false;
-            this.trigerChangesurname = false;
             this.trigerChangepatronymic = false;
             this.trigerValidPassword = false;
         },
@@ -683,7 +724,6 @@ export default {
                 this.trigerChangepassword = true;
                 this.trigerChangeemail = true;
                 this.trigerChangename = true;
-                this.trigerChangesurname = true;
                 this.trigerChangesurname = true;
                 this.trigerChangepatronymic = true;
             }
@@ -747,7 +787,9 @@ export default {
             }
         },
         formCheckAdd() {
-            if (this.trigerValidPassword & !this.v$.formUser.$invalid) {
+            if (this.trigerValidPassword & !this.v$.formUser.$invalid & !this.checkNumberSurname &
+                !this.checkNumberName &
+                !this.checkNumberPatronymic) {
                 return true;
             } else {
                 return false;
@@ -776,6 +818,10 @@ export default {
                     swal("Добавление прошло успешно!", "", "success");
                     this.usersData.push(response.data);
                     this.clearForm();
+                }).catch( (error)=>{
+                        swal("Ошибка выполнения запроса.","Возможно ошибка в заполнении полей (повторение email).", "warning");
+                        this.hideLoader();
+                        console.clear();
                 });
             } else {
                 this.trigerChangedepartment = true;
@@ -947,7 +993,7 @@ export default {
                 },
                 email: {
                     required,
-                    email,
+                    email
                 },
                 password: {
                     required,

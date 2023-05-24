@@ -24,7 +24,7 @@
         
         <div class="mb-3">
             <label class="mr-1 mt-auto mb-auto" for="statusApplSelect">Статус: </label>
-            <select disabled="visibleStatus" id="statusApplSelect" class="form-select" v-model="statusApplSelect">
+            <select :disabled="visibleStatus" id="statusApplSelect" class="form-select" v-model="statusApplSelect">
                 <option v-for="(stat, index) in statusAppl" :value="index">{{stat}}</option>
             </select>
         </div>
@@ -124,7 +124,7 @@ import swal from 'sweetalert';
             }
         },
         mounted(){
-            if((this.testDate-new Date(this.dateAppl.split('-')[0],this.dateAppl.split('-')[1],this.dateAppl.split('-')[2]))<0){
+            if(this.testDate>new Date(new Date(this.dateAppl))){
                 this.visibleStatus=true;
             }
         }

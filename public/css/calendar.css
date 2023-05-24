@@ -4,6 +4,7 @@
 	display: inline-block;
 	vertical-align: top;
 	font: 14px/1.2 Arial, sans-serif;
+	padding: 15px;
 }
 
 .calendar-head {
@@ -57,7 +58,9 @@
 .calendar-day.event:hover .calendar-popup {
 	display: block;
 }
-
+.calendar-day.event:click .calendar-popup {
+	display: block;
+}
 .calendar-popup {
 	display: none;
 	position: absolute;

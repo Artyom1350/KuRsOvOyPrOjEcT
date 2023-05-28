@@ -453,22 +453,4 @@
             width: 85% !important;
         }
     }
-    .loader{
-        height: 100%;
-        animation: rotating 2s linear infinite;
-        background-image: url(../../../../public/image/icons/loader.png);
-        background-size: contain;
-        aspect-ratio: 1;
-    }
-    @keyframes rotating {
-        from{
-            transform: rotate(0deg);
-        }
-        to{
-            transform: rotate(360deg);
-        }
-    }
-    .withLoader{
-        height: 38px;
-    }
 </style>

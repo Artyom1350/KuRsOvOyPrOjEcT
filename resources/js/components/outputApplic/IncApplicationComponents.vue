@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group mt-2">
-            <input type="text" class="form-control searchString" placeholder="Поиск отделений" name="search" @keyup="getsearch"
+            <input type="text" class="form-control searchString" placeholder="Поиск заявок" name="search" @keyup="getsearch"
             v-model="textSearch">
         </div>
         <div v-for="(applicat, index) in arrayAppl" :key="applicat.id">

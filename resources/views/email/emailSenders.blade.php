@@ -1,12 +1,13 @@
-<div> 
+<div style="display:flex; justify-content:center; align-items: center; flex-direction: column;"> 
     <header class="paddingBlock">
         <div class="logoWrap">
-            <img src="https://upload.wikimedia.org/wikipedia/ru/1/13/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%9F%D0%B5%D1%80%D0%BC%D1%81%D0%BA%D0%B8%D0%B9_%D0%B0%D0%B2%D0%B8%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D1%83%D0%BC.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
+            <img style="margin-right: -30px; width: 150px;" src="https://upload.wikimedia.org/wikipedia/ru/1/13/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%9F%D0%B5%D1%80%D0%BC%D1%81%D0%BA%D0%B8%D0%B9_%D0%B0%D0%B2%D0%B8%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9_%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D1%83%D0%BC.png" class="logo" alt="Логотип КГАПОУ Пермский Авиационный техникум">
         </div>
     </header>
     <main class="main d-flex ">
-        <div class="content">
-            <h1>Вам пришла новая заявка: <u>{{$title}}</u></h1>
+        <div class="content"
+        style="text-align:center">
+            <h1>Вам пришла новая заявка: <br> <u>{{$title}}</u></h1>
             <p>Ссылка на заявку: <a href="{{url('/incAppl/'.$id)}}">{{url('/incAppl')}}</a></p>
         </div>
     </main>

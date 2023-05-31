@@ -9,6 +9,6 @@
 
 <div class="container">
     <h3 class="h3">С возвращением, <?php echo $name?>!</h3>
-    <?echo $calendar->getMonth(date('n'), date('Y'),$events);?>
+    <?echo $calendar->getInterval(date('n.Y'), date('n.Y', strtotime('+2 month')),$events);?>
 </div>
 @endsection

@@ -109,4 +109,31 @@ class Calendar extends Model
 		$out .= '</tr></table></div>';
 		return htmlspecialchars_decode($out);
 	}
+	public static function  getInterval($start, $end, $events = array())
+	{
+		$curent = explode('.', $start);
+		$curent[0] = intval($curent[0]);
+		
+		$end = explode('.', $end);
+		$end[0] = intval($end[0]);
+ 
+		$begin = true;
+		$out = '<div class="calendar-wrp">';
+		do {
+			$out .= self::getMonth($curent[0], $curent[1], $events);
+ 
+			if ($curent[0] == $end[0] && $curent[1] == $end[1]) {
+				$begin = false;
+			}		
+ 
+			$curent[0]++;
+			if ($curent[0] == 13) {
+				$curent[0] = 1;
+				$curent[1]++;
+			}
+		} while ($begin == true);	
+		
+		$out .= '</div>';
+		return $out;
+	}
 }

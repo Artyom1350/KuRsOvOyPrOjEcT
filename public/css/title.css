@@ -23,6 +23,8 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 100px;
+    max-height: 150px;
 }
 body{
     height: 100vh;
@@ -95,6 +97,7 @@ p{
     .posRel{
         position: absolute;
         left: -200px;
+        z-index: 1;
     }
     .container h1{
         margin-top: 50px;

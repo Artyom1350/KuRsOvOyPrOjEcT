@@ -1,51 +1,64 @@
 .calendar-item {
 	width: 100%;
-	height: 85%;
+	aspect-ratio: 2;
 	display: inline-block;
 	vertical-align: top;
 	font: 14px/1.2 Arial, sans-serif;
+	padding: 15px;
 }
+
 .calendar-head {
 	text-align: center;
 	padding: 5px;
 	font-weight: 700;
 	font-size: 24px;
 }
+
 .calendar-item table {
 	border-collapse: collapse;
 	width: 100%;
 	height: 90%;
 }
+
 .calendar-item th {
 	font-size: 14px;
 	padding: 6px 8px;
 	text-align: center;
 	color: rgb(83, 83, 83);
-	font-weight:bold;
+	font-weight: bold;
 	height: 20px;
 }
+
 .calendar-item td {
 	font-size: 13px;
 	padding: 6px 5px;
 	text-align: center;
 	border: 2px solid #ddd;
 }
+
 .calendar-item tr th:nth-child(6), .calendar-item tr th:nth-child(7),
-.calendar-item tr td:nth-child(6), .calendar-item tr td:nth-child(7)  {
+.calendar-item tr td:nth-child(6), .calendar-item tr td:nth-child(7) {
 	color: #e65a5a;
-}	
+}
+
 .calendar-day.last {
 	color: #999 !important;
-}	
+}
+
 .calendar-day.today {
 	font-weight: bold;
 }
+
 .calendar-day.event {
 	background: #ffe2ad;
 	position: relative;
 	cursor: pointer;
 }
+
 .calendar-day.event:hover .calendar-popup {
+	display: block;
+}
+.calendar-day.event:click .calendar-popup {
 	display: block;
 }
 .calendar-popup {
@@ -59,30 +72,32 @@
 	text-align: left;
 	font-size: 17px;
 	z-index: 100;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	color: #000;
 }
+
 .calendar-popup:before {
-	content: ""; 
+	content: "";
 	border: solid transparent;
-	position: absolute;    
-	left: 8px;    
+	position: absolute;
+	left: 8px;
 	bottom: 100%;
 	border-bottom-color: #fff;
 	border-width: 9px;
 	margin-left: 0;
 }
+
 @media screen and (max-width:1080px) {
 	.calendar-item table {
-		aspect-ratio: 1.5 !important;
-		height: auto;
+		height: 300px;
 		margin-bottom: 20px;
 	}
 }
+
 @media screen and (max-width:720px) {
 	.calendar-item table {
-		aspect-ratio: 1 !important;
-		height: auto;
+		height: 300px;
 		margin-bottom: 20px;
 	}
 }

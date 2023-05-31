@@ -38,7 +38,11 @@ $('.templateGroup').hover(function(){
 },function(){
     $('.templateGroup').removeClass('active');
 });
-
+$('.instruct').hover(function(){
+    $('.instruct').addClass('active');
+},function(){
+    $('.instruct').removeClass('active');
+});
 
 $('#watchPassword').change(function(){
     if($('#watchPassword').is(":checked")){

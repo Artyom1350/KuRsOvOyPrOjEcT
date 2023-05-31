@@ -376,7 +376,7 @@
 
                     <div class="mb-3">
                         <label for="department" class="form-label"
-                            >Отделение</label
+                            >Структуроное подразделение</label
                         >
                         <br />
                         <select

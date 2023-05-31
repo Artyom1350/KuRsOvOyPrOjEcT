@@ -71,6 +71,11 @@
                             Все заявки
                         </a>
                     </li>
+                    <li class="nav-item ">
+                        <a href="{{asset('instruction/instruct_user.pdf')}}" class="nav-link instruct py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                            Руководство пользователя
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

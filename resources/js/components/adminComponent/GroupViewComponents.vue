@@ -108,8 +108,8 @@
                     "
                 >
                     <div class="mb-3 fileImport">
-                        <label for="formFile" class="form-label"
-                            >Выберите файл для импорта</label
+                        <label for="formFile" class="mt-1 form-label"
+                            ><b> Выберите файл для импорта</b></label
                         >
                         <input
                             class="form-control field addition"
@@ -195,7 +195,7 @@
                 <form>
                     <div class="mb-3">
                         <label for="department" class="form-label"
-                            ><b>Название отделения</b></label
+                            ><b>Название структурное подразделение</b></label
                         >
                         <br />
                         <textarea
@@ -238,17 +238,17 @@
                         v-if="!trigerChange"
                         @click.prevent="addGroup()"
                         type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-primary workGroup"
                     >
-                        Добавить отделение
+                        Добавить структурное подразделение
                     </button>
                     <button
                         v-if="trigerChange"
                         @click.prevent="changeGroup(formGroup.id)"
                         type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-primary workGroup"
                     >
-                        Изменить отделение
+                        Изменить структурное подразделение
                     </button>
                 </form>
                 <h4 class="text-centr mt-3">
@@ -575,6 +575,8 @@ export default {
         addGroup() {
             // axios на добавление
             if (this.v$.formGroup.$invalid && !this.trigerPostFill) {
+                this.trigerChangeNameForm=true;
+
                 // alert('да, но как бы нет');
             } else {
                 // alert('нет, но как бы да');
@@ -846,7 +848,56 @@ export default {
 .form_users h4 {
     font-size: 0.9rem;
 }
+
+.swal-content {
+    /* overflow-y: scroll; */
+    height: 70%;
+}
+.scrollY{
+    display: block;
+    height: 300px;
+    overflow-y: scroll;
+}
+.scrollY>tr>td:first-child{
+    display: block;
+    width: 15%;
+}
+.scrollY>tr>td:last-child{
+    display: block;
+    width: 85%;
+}
+
+.stickyHead{
+    display: block;
+    width: 100%;
+}
+.rowHead{
+    width: 100%;
+    display: flex;
+}
+.rowHead :first-child{
+    width: 15%;
+}
+.rowHead :last-child{
+    width: 85%;
+    /* text-align: left; */
+}
+.informationError {
+    width: 50% !important;
+    height: auto !important;
+}
+.swal-footer{
+    margin-top: 0;
+    padding-top: 0;
+}
 @media screen and (max-width: 720px) {
+    .workGroup{
+        width: 100% !important;
+        padding: 3px !important;
+    }
+    .informationError {
+        width: 100% !important;
+    }
     .addition {
         height: 36.5px;
         border-radius: 0.25rem 0 0 0.25rem;
@@ -889,46 +940,5 @@ export default {
     .btn-danger-users {
         width: 100%;
     }
-}
-.swal-content {
-    /* overflow-y: scroll; */
-    height: 70%;
-}
-.scrollY{
-    display: block;
-    height: 300px;
-    overflow-y: scroll;
-}
-.scrollY>tr>td:first-child{
-    display: block;
-    width: 15%;
-}
-.scrollY>tr>td:last-child{
-    display: block;
-    width: 85%;
-}
-
-.stickyHead{
-    display: block;
-    width: 100%;
-}
-.rowHead{
-    width: 100%;
-    display: flex;
-}
-.rowHead :first-child{
-    width: 15%;
-}
-.rowHead :last-child{
-    width: 85%;
-    /* text-align: left; */
-}
-.informationError {
-    width: 50% !important;
-    height: 550px !important;
-}
-.swal-footer{
-    margin-top: 0;
-    padding-top: 0;
 }
 </style>

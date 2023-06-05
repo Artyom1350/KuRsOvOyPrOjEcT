@@ -57,7 +57,7 @@
         <div class="mb-3 d-flex" >
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
-                <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
+                <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile || incorrectSizeFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
                 <div v-if="(windowWidth<=720)" class="field__file-button field__file-button-add">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -70,6 +70,7 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
+        <span v-if=" trigersField.file && incorrectSizeFile" class="invalid-feedbackCustom">Неверный размер файла <br> &#60; 5мб </span>
         <div class="d-flex withLoader">
             <button type="submit" class="btn btn-primary mr-3" @click.prevent="getAnswerApplic()">Добавить</button>
             <span class="loader" v-if="visibleLoad"></span>
@@ -121,7 +122,8 @@
                 incorrectDate:false,
                 incorrectFile:false,
                 windowWidth: window.innerWidth,
-                visibleLoad:false
+                visibleLoad:false,
+                incorrectSizeFile:false
             }
         },
         props:[
@@ -171,12 +173,18 @@
                 this.trigersField.date=true
             },
             file(){
-                if(this.$refs.file.files[0]){
-                    if(this.$refs.file.files[0].name.split('.')[1] != 'pdf'){
+                const fileInput=this.$refs.file.files[0];
+                if(fileInput){
+                    if(fileInput.name.split('.')[1] != 'pdf'){
                         this.incorrectFile=true
                     }
                     else{
                         this.incorrectFile=false
+                    }
+                    if(fileInput.size>1024*1024*5){
+                        this.incorrectSizeFile=true;
+                    }else{
+                        this.incorrectSizeFile=false;
                     }
                 }else{
                     this.incorrectFile=true
@@ -268,7 +276,7 @@
 
             },
             getAnswerApplic(){
-                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid && !this.incorrectFile){
+                if(!this.incorrectDate && this.issetGroupPeopl && !this.v$.$invalid && !this.incorrectFile && !this.incorrectSizeFile){
                     this.showLoader();
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {

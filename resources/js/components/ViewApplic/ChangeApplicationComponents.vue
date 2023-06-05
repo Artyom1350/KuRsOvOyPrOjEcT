@@ -66,7 +66,7 @@
         <div class="mb-3 d-flex" >
             <input accept=".pdf" ref="file" name="file" type="file" id="field__file-2" class="field field__file" @change="changeMessage()">
             <label  class="field__file-wrapper" for="field__file-2">
-                <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
+                <div :class="(((trigersField.file && v$.file.required.$invalid) || incorrectFile  || incorrectSizeFile) ? 'errorMessage' : 'field__file-fake')">{{ message }}</div>
 
                 <div v-if="(windowWidth<=720)" class="field__file-button field__file-button-add">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -80,6 +80,7 @@
         </div>
         <span v-if=" trigersField.file && v$.file.required.$invalid" class="invalid-feedbackCustom">Поле должно быть заполнено</span>
         <span v-if=" trigersField.file && incorrectFile" class="invalid-feedbackCustom">Неверный формат файла <br> Должен быть pdf</span>
+        <span v-if=" trigersField.file && incorrectSizeFile" class="invalid-feedbackCustom">Неверный размер файла <br> &#60; 5мб </span>
         <div class="d-flex">
             <button type="submit" class="btn btn-danger mr-2" @click.prevent="deleteDoc()">Удалить заявку?</button>
             <button type="submit" class="btn btn-primary mr-2" @click.prevent="getAnswerApplic()">Сохранить</button>
@@ -134,7 +135,8 @@
                 incorrectDate:false,
                 incorrectFile:false,
                 windowWidth: window.innerWidth,
-                visibleLoad:false
+                visibleLoad:false,
+                incorrectSizeFile:false
 
             }
         },
@@ -189,6 +191,11 @@
                     }
                     else{
                         this.incorrectFile=false
+                    }
+                    if(fileInput.size>1024*1024*5){
+                        this.incorrectSizeFile=true;
+                    }else{
+                        this.incorrectSizeFile=false;
                     }
                 }else{
                     this.incorrectFile=true
@@ -326,7 +333,7 @@
             },
             getAnswerApplic(){
                 if(!this.incorrectDate && this.issetGroupPeopl &&
-                !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid && this.v$.file.$invalid && !this.incorrectFile){
+                !this.v$.dateAppl.$invalid && !this.v$.nameAppl.$invalid && !this.v$.descriptionAppl.$invalid && this.v$.file.$invalid && !this.incorrectFile && !this.incorrectSizeFile){
                     this.showLoader();
                     var peopleMas=new Array();
                     this.peopleSelect.forEach(item => {

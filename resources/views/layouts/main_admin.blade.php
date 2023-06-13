@@ -74,7 +74,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{asset('instruction/instruct_admin.pdf')}}" class="nav-link instruct py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <a download href="{{asset('instruction/instruct_admin.pdf')}}" class="nav-link instruct py-3 border-bottom border-top rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
                             Руководство администратора
                         </a>
                     </li>

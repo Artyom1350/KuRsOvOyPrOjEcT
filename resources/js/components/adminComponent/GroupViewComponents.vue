@@ -502,9 +502,9 @@ export default {
                 this.showLoader();
                 axios
                     .post("/api/admin/changeGroup", {
-                        id: System.Web.HttpUtility.HtmlAttributeEncode(this.formGroup.id),
+                        id: this.formGroup.id,
                         token: this.$props.token,
-                        name: System.Web.HttpUtility.HtmlAttributeEncode(this.formGroup.name),
+                        name: this.formGroup.name,
                     })
                     .then((response) => {
                         this.hideLoader();
@@ -583,7 +583,7 @@ export default {
                 this.showLoader();
                 axios
                     .post("/api/admin/addGroup", {
-                        name: System.Web.HttpUtility.HtmlAttributeEncode(this.formGroup.name),
+                        name: this.formGroup.name,
                         token: this.$props.token,
                     })
                     .then((response) => {

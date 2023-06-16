@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        dd($this->namespace);
+        
         $this->configureRateLimiting();
 
         $this->routes(function () {

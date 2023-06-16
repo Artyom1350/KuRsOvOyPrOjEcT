@@ -10,7 +10,7 @@ import GroupViewAdmin from './components/adminComponent/GroupViewComponents.vue'
 import UserViewAdmin from './components/adminComponent/UserViewComponents.vue';
 
 require('./bootstrap');
-
+Vue.config.devtools=false;
 const container= new Vue({
     el:'.container',
     components:{

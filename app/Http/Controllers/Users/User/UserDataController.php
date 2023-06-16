@@ -65,7 +65,7 @@ class UserDataController extends Controller
                 'filename'=>substr(Str::slug($doc->file),0,-3),
             ];
 
-            return response()->download(storage_path('\app/'.$doc->path),$doc->file, $headers);
+            return response()->download(storage_path('app/'.$doc->path),$doc->file, $headers);
         }
         catch(\Exception $e){
             return response()->json('File not found!');

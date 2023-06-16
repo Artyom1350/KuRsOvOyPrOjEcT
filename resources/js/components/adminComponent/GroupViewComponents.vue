@@ -500,7 +500,8 @@ export default {
             } else {
                 this.trigerChange = false;
                 this.showLoader();
-                axios
+                try {
+                    axios
                     .post("/api/admin/changeGroup", {
                         id: this.formGroup.id,
                         token: this.$props.token,
@@ -516,6 +517,10 @@ export default {
                             }
                         );
                     });
+                } catch {
+                    this.hideLoader();
+                }
+                
             }
         },
         clearForm() {
@@ -548,8 +553,9 @@ export default {
                 },
             }).then((isConfirm) => {
                 if (isConfirm) {
-                        this.showLoader(),
-                        setTimeout(() => {
+                        this.showLoader();
+                        try {
+                            setTimeout(() => {
                             axios
                                 .post("/api/admin/destroyGroup", {
                                     id: this.$props.groupinfo[index].id,
@@ -566,6 +572,10 @@ export default {
                                     this.clearForm();
                                 });
                         }, 1500);
+                        } catch (error) {
+                            this.hideLoader();
+                        }
+                        
                 }
             });
         },

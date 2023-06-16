@@ -4,6 +4,8 @@ use App\Http\Controllers\Users\User\UserViewController;
 use App\Http\Controllers\Mail\SendMailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\isUser;
+use App\Http\Middleware\isAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,7 @@ Route::redirect('/', 'login');
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::middleware('isUser')->group(function () {
+    Route::middleware(isUser::class)->group(function () {
         Route::get('/home', [UserViewController::class, 'index'])->name('home');
         Route::get('/inclAppl', [UserViewController::class, 'incApplication'])->name('incApplication');
         Route::get('/incAppl/{id}', [UserViewController::class, 'viewOne'])->name('viewOne');
@@ -29,7 +31,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/myAppl/doItAppl', [UserViewController::class, 'doApplication'])->name('doApplication');
         Route::get('/myAppl/changeApplication/{id}', [UserViewController::class, 'changeAppl']);
     });
-    Route::middleware('isAdmin')->group(function () {
+    Route::middleware(isAdmin::class)->group(function () {
         Route::get('/admin_panel/home_admin', [AdminViewController::class, 'index'])->name('home_admin'); //главная админа
         Route::get('/admin_panel/user_admin', [AdminViewController::class, 'userPage'])->name('user_admin'); //юзеры
         Route::get('/admin_panel/group_admin', [AdminViewController::class, 'groupPage'])->name('group_admin'); //группы

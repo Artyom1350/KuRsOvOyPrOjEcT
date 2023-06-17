@@ -613,7 +613,7 @@ export default {
         changeUserinForm(idUser, index) {
             this.showLoader();
             swal(
-                "Если вы заполните пароль, то он измениться в БД!",
+                "Если вы заполните пароль, то он изменится в БД!",
                 "",
                 "warning"
             ).then((val) => {
